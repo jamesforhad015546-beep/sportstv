@@ -1,8 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  
+  <meta charset="UTF-8"></meta>
+  <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
   <title>Dark Mode Live Scores Tabs - New Design</title>
   <style>
     body {
@@ -107,2276 +108,1603 @@
       }
     }
   </style>
+  
+  
 </head>
 <body>
 
   <div class="tab">
-    <button class="tablinks" onclick="openTab(event, 'premier')" id="defaultOpen">Live Streaming</button>
     
-    <button class="tablinks" onclick="openTab(event, 'laliga')">Football Live Score</button>
-    <button class="tablinks" onclick="openTab(event, 'server2')">Football News</button>
-             <button class="tablinks" onclick="openTab(event, 'server4')">Football Highlights</button>
 
 
-     <button class="tablinks" onclick="openTab(event, 'server1')">Cricket Live Score</button>
-     <button class="tablinks" onclick="openTab(event, 'server3')">Cricket News</button>
-         <button class="tablinks" onclick="openTab(event, 'server4')">Cricket News</button>
+    <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'server2')">Live Event 1</button>
 
 
+    <button class="tablinks" onclick="openTab(event, 'server1')">
+  <img src="https://www.svgrepo.com/show/236509/football.svg" style="height: 20px; margin-right: 8px; vertical-align: middle; width: 20px;" /> 
+  Live Score &amp; Schedule
+   </button>
+    
+    <button class="tablinks" onclick="openTab(event, 'laliga')">
+  <img src="https://www.svgrepo.com/show/236509/football.svg" style="display: inline-block; height: 20px; margin-right: 8px; vertical-align: middle; width: 20px;" />
+  point Table
+   </button>
+    
+    <button class="tablinks" onclick="openTab(event, 'server3')">Add Free TV Channel</button>
+
+    <button class="tablinks" onclick="openTab(event, 'server4')">
+  <img src="https://www.svgrepo.com/show/405146/cricket-game.svg" style="height: 20px; margin-right: 8px; vertical-align: middle; width: 20px;" /> 
+  live Score
+    </button>
+    
+    
+    <!-- END OF 5 NEW DUPLICATED CHAMPIONS LEAGUE BUTTONS -->
+  </div>
+
+   
+<div class="tabcontent" id="server5">
+
+  
+</div>
+  
+  
+  <div class="tabcontent" id="server4"> 
+    
+    <!-- এই মেইন কন্টেইনারটি উপরের অংশটি হাইড করবে -->
+<div style="height: 600px; overflow: hidden; position: relative; width: 100%;">
+    
+    <iframe allowfullscreen="" id="frame" src="https://crex.com/" style="border: none; height: 650px; left: 0; position: absolute; top: -50px; width: 100%;">
+    </iframe>
+
+</div>
+    
   </div>
   
-    <div id="server2" class="tabcontent">
+<!-- SERVER 2 RESPONSIVE CONTENT START -->
+<div id="server2" class="tabcontent" style="display: block;">
+  
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+      :root {
+        --s2-bg: #020617; 
+        --s2-card-bg: #0f172a; 
+        --s2-card-hover: #1e293b;
+        --s2-accent: #3b82f6; 
+        --s2-timer-text: #38bdf8;
+        --s2-text: #f8fafc;
+        --s2-text-muted: #94a3b8;
+        --s2-border: rgba(255, 255, 255, 0.08);
+        --s2-live-color: #ef4444;
+      }
       
-      <iframe data-src="https://www.flashscore.com/news/football/" allowfullscreen loading="lazy"></iframe>
+      .s2-main-container { background-color: var(--s2-bg); font-family: 'Inter', sans-serif; color: var(--s2-text); width: 100%; letter-spacing: -0.01em; }
+      .s2-flex-body { display: flex; flex-direction: row; gap: 0; max-width: 100%; margin: 0; }
+
+      /* PLAYER SECTION */
+      .s2-player-section { flex: 4.5; background: #000; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+
+      /* FULL SCREEN & ORIENTATION */
+      .s2-player-section:fullscreen { width: 100vw; height: 100vh; background: #000; padding: 0; }
+      .s2-player-section:fullscreen .s2-player-header { background: rgba(15, 23, 42, 0.95); padding: 20px 40px; display: flex; align-items: center; border-bottom: 2px solid var(--s2-accent); position: relative;}
       
+      /* MATCH TITLE STYLE (PLAYER HEADER) */
+      #s2_current_match_title { 
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 18px;
+      }
+      .s2-title-team { color: #facc15; } 
+      .s2-title-vs { 
+        background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); 
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .s2-player-section:fullscreen #s2_current_match_title { 
+        position: absolute; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        font-size: 26px; 
+      }
+
+      /* GLASSY MOBILE FULLSCREEN BUTTON */
+      .s2-mobile-fs-btn { 
+        display: none; 
+        position: absolute; 
+        top: 75px; 
+        right: 15px; 
+        z-index: 30; 
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        border-radius: 12px; 
+        padding: 10px; 
+        cursor: pointer; 
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+        transition: 0.3s;
+      }
       
+      @media (max-width: 992px) { 
+          .s2-mobile-fs-btn { display: block; } 
+          .s2-flex-body { flex-direction: column; } 
+          .s2-sidebar-section { min-width: 100%; border-left: none; max-height: none; } 
+          #s2_current_match_title { font-size: 14px; gap: 6px; }
+          .s2-title-vs { font-size: 10px; padding: 1px 5px; }
+      }
+
+      #s2_exit_btn { display: none; background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 11px; z-index: 100; }
+      .s2-player-section:fullscreen #s2_exit_btn { display: block; }
+      .s2-player-section:fullscreen .s2-theater-btn-main { display: none; }
+      .s2-player-section:fullscreen .s2-video-wrapper { flex-grow: 1; padding-bottom: 0; display: flex; align-items: center; justify-content: center; }
+      .s2-player-section:fullscreen iframe { width: 100% !important; height: 100% !important; }
+
+      .s2-theater-btn-main { display: none; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 1px solid var(--s2-border); color: #fff; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 700; margin-right: 15px; }
+      @media (min-width: 1024px) { .s2-theater-btn-main { display: flex; } }
+
+      .s2-player-header { background: var(--s2-card-bg); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--s2-border); }
+      .s2-video-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+      .s2-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; }
+      
+      .s2-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; cursor: pointer; text-align: center; }
+      .s2-ph-center-row { display: flex; align-items: center; gap: 40px; margin-bottom: 15px; }
+      .s2-ph-flag { width: 70px; height: 70px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,255,255,0.1)); display: none; }
+      .s2-play-btn-circle { width: 80px; height: 80px; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); animation: s2-pulse 2s infinite; }
+      @keyframes s2-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+      .s2-play-btn-circle svg { fill: white; width: 35px; margin-left: 5px; }
+
+      .s2-server-row { padding: 15px; background: var(--s2-card-bg); display: flex; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--s2-border); }
+      .s2-srv-btn { padding: 9px 16px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--s2-border); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
+      .s2-srv-btn.active { background: var(--s2-accent); border-color: var(--s2-accent); }
+      .s2-tab-btn { background: rgba(59, 130, 246, 0.15); border-color: var(--s2-accent); }
+
+      .s2-streaming-note { background: #020617; padding: 12px 20px; font-size: 12px; color: var(--s2-text-muted); border-bottom: 1px solid var(--s2-border); line-height: 1.5; }
+
+      /* SIDEBAR */
+      .s2-sidebar-section { flex: 1.5; min-width: 360px; background: #070e1e; display: flex; flex-direction: column; max-height: 850px; border-left: 1px solid var(--s2-border); overflow: hidden; }
+      .s2-sidebar-fixed-header { flex-shrink: 0; z-index: 5; background: #070e1e; }
+      
+      .s2-list-title { 
+        padding: 18px; 
+        background: var(--s2-card-bg); 
+        border-bottom: 1px solid var(--s2-border);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 15px;
+      }
+      .s2-list-title-yellow { color: #facc15; }
+      .s2-list-title-orange-badge {
+        background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+      
+      .s2-filter-bar { display: flex; gap: 15px; padding: 15px; background: #0b1224; overflow-x: auto; border-bottom: 1px solid var(--s2-border); scrollbar-width: none; }
+      .s2-filter-item { display: flex; flex-direction: column; align-items: center; min-width: 65px; cursor: pointer; opacity: 0.6; }
+      .s2-filter-item.active { opacity: 1; }
+      .s2-filter-item img { width: 42px; height: 42px; object-fit: contain; background: #1e293b; padding: 8px; border-radius: 12px; margin-bottom: 8px; }
+      .s2-filter-item span { display: block !important; font-size: 11px; font-weight: 700; color: #cbd5e1; text-transform: uppercase; }
+
+      .s2-status-filter-row { display: flex; gap: 8px; padding: 10px 15px; background: #0b1224; border-bottom: 1px solid var(--s2-border); overflow-x: auto; scrollbar-width: none; }
+      .s2-st-btn { padding: 6px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--s2-border); color: #94a3b8; border-radius: 4px; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; white-space: nowrap; transition: 0.3s; }
+      .s2-st-btn.active { background: var(--s2-accent); color: #fff; border-color: var(--s2-accent); }
+
+      #s2_match_list_container { overflow-y: auto; padding: 12px 10px; flex-grow: 1; }
+      .s2-match-card { background: var(--s2-card-bg); border-radius: 12px; margin-bottom: 12px; cursor: pointer; border: 1px solid var(--s2-border); padding-bottom: 10px; overflow: hidden; transition: 0.3s;}
+      .s2-match-card.active { border-color: var(--s2-accent); background: linear-gradient(145deg, #1e293b, #0f172a); }
+      .s2-league-header { background: rgba(255, 255, 255, 0.03); color: #64748b; font-size: 9px; text-align: center; padding: 5px; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--s2-border); margin-bottom: 10px; }
+
+      .s2-match-main { display: grid; grid-template-columns: 85px 1fr 85px; align-items: center; padding: 0 5px; }
+      .s2-timer-val { color: var(--s2-timer-text); font-size: 12px; font-weight: 800; display: block; }
+      .s2-teams-box { display: flex; gap: 5px; justify-content: center; align-items: flex-start; }
+      .s2-team { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 68px; text-align: center; }
+      .s2-team img { width: 32px; height: 32px; object-fit: contain; margin-bottom: 6px; }
+      .s2-team-name { font-size: 10px; color: #fff; font-weight: 700; display: block; width: 100%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .s2-vs-divider { color: #475569; font-weight: 900; font-size: 9px; margin-top: 10px; background: rgba(255,255,255,0.05); padding: 2px 4px; border-radius: 4px;}
+      .s2-kickoff-time { font-size: 12px; font-weight: 800; color: #fff; text-align: right; padding-right: 5px; }
+
+      .s2-live-status { display: inline-flex; align-items: center; gap: 5px; background: rgba(239, 68, 68, 0.1); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444 !important; font-weight: 800; font-size: 9px; }
+      .s2-live-dot { width: 7px; height: 7px; background-color: #ef4444; border-radius: 50%; position: relative; }
+      .s2-live-dot::after { content: ''; width: 100%; height: 100%; background-color: #ef4444; border-radius: 50%; position: absolute; top: 0; left: 0; animation: s2-status-pulse 2s infinite; }
+      @keyframes s2-status-pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+      .s2-shimmer { background: linear-gradient(90deg, #ef4444 0%, #fca5a5 50%, #ef4444 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: s2-shimmer-text 2s linear infinite; }
+      
+      .s2-player-section:fullscreen {
+    cursor: pointer;
+}
+.s2-player-section:fullscreen .s2-server-row, 
+.s2-player-section:fullscreen .s2-player-header {
+    cursor: default; /* বাটন এরিয়াতে মাউস কার্সর স্বাভাবিক থাকবে */
+}
+      
+    </style>
+
+    <div class="s2-flex-body">
+      <div class="s2-player-section" id="s2_player_area">
+        <button class="s2-mobile-fs-btn" onclick="toggleS2Theater()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+
+        <div class="s2-player-header">
+          <button id="s2_exit_btn" onclick="exitS2FullScreen()">EXIT THEATER</button>
+          <div id="s2_current_match_title">Select Match</div>
+          <div style="display: flex; align-items: center;">
+            <button class="s2-theater-btn-main" onclick="toggleS2Theater()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+              <span>Theater Mode</span>
+            </button>
+            <div class="s2-live-status"><span class="s2-live-dot"></span><span class="s2-shimmer">LIVE EVENT</span></div>
+          </div>
+        </div>
+        
+        <div class="s2-video-wrapper">
+          <div id="s2_video_placeholder" class="s2-placeholder" onclick="startS2Streaming()">
+            <div class="s2-ph-center-row">
+                <img id="s2_ph_flag1" src="" class="s2-ph-flag">
+                <div class="s2-play-btn-circle" id="s2_main_play_btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <img id="s2_ph_flag2" src="" class="s2-ph-flag">
+            </div>
+            <h3 id="s2_placeholder_teams" style="color:white; margin:0; font-size: 20px; font-weight: 800;">Ready to Watch?</h3>
+            <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                <div id="s2_ph_kickoff_static" style="color: #94a3b8; font-size: 14px; font-weight: 600;"></div>
+                <div id="s2_ph_countdown" style="color: var(--s2-timer-text); font-weight: 800; font-size: 16px;">Choose an Event to start</div>
+            </div>
+          </div>
+          <iframe id="s2_iframe_player" 
+        sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" 
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
+        referrerpolicy="no-referrer" 
+        allowfullscreen 
+        src="about:blank">
+</iframe>
+        </div>
+        
+        <div class="s2-server-row" id="s2_servers_container"></div>
+        <div class="s2-streaming-note">
+          <span style="color: var(--s2-accent); font-weight: 800;">PRO TIP:</span> For best experience, use the <a href="https://brave.com/" target="_blank" style="color: #fff; text-decoration: underline; font-weight: 700;">Brave Browser</a>.
+        </div>
       </div>
-  
-  
-  <div id="server3" class="tabcontent">
-      
-      <iframe data-src="https://www.firstpost.com/firstcricket/" allowfullscreen loading="lazy"></iframe>
-      
-      
+
+      <div class="s2-sidebar-section">
+        <div class="s2-sidebar-fixed-header">
+            <div class="s2-list-title">
+              <span class="s2-list-title-yellow">Upcoming</span>
+              <span class="s2-list-title-yellow">&</span>
+              <span class="s2-list-title-orange-badge">Live</span>
+            </div>
+            <div class="s2-filter-bar" id="s2_category_filter">
+              <div class="s2-filter-item active" onclick="filterS2Category('All', this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/7542/7542602.png">
+                <span>All</span>
+              </div>
+            </div>
+            <div class="s2-status-filter-row">
+                <button class="s2-st-btn active" id="s2_all_st_btn" onclick="filterS2Status('All', this)">ALL</button>
+                <button class="s2-st-btn" id="s2_live_btn" onclick="filterS2Status('Live', this)">LIVE (0)</button>
+                <button class="s2-st-btn" id="s2_upcoming_btn" onclick="filterS2Status('Upcoming', this)">UPCOMING (0)</button>
+                <button class="s2-st-btn" id="s2_ended_btn" onclick="filterS2Status('Ended', this)">ENDED (0)</button>
+            </div>
+        </div>
+        <div id="s2_match_list_container"></div>
       </div>
-   <div id="server4" class="tabcontent">
-      
-<iframe src="https://www.scorebat.com/embed/videofeed/?token=MjIzMjA0XzE3NTM2MzYwNjdfYTUyOGFhMzk1OWMyZGE3MTQ2NThhNjI0OTQ4ODVjZGEyZWE3MjcxNg==" frameborder="0" width="600" height="760" allowfullscreen allow='autoplay; fullscreen' style="width:100%;height:760px;overflow:hidden;display:block;" class="_scorebatEmbeddedPlayer_"></iframe><script>(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) return;
-js = d.createElement(s); js.id = id;
-js.src = 'https://www.scorebat.com/embed/embed.js?v=arrv';
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'scorebat-jssdk'));</script>      
-      
-      </div>
+    </div>
 
+<script>
+  (function() {
+    let currentS2Url = ""; 
+    let activeCat = "All"; 
+    let activeStatus = "All";
+    let currentActiveMatchIdx = -1;
+
+    const liveMatches = [
+      { 
+        category: "Cricket",
+        categoryIcon: "https://www.svgrepo.com/show/405146/cricket-game.svg",
+        league: "Cricket | Series | 1st Test", team1: "AFG", 
+        logo1: "https://flagpedia.net/data/flags/w1160/af.webp?v=un", 
+        team2: "IND", logo2: "https://flagpedia.net/data/flags/w1160/in.webp", 
+        kickoffTime: "2026-06-08T10:00:00",
+        urls: ["https://khelaview.blogspot.com/p/willow-tv-iptv.html"],
+        tabButtons: [{ name: "STREAM 1 HD", link: "https://www.google.com" }] 
+      },
+      
+            { 
+        category: "Cricket",
+        categoryIcon: "https://www.svgrepo.com/show/405146/cricket-game.svg",
+        league: "Cricket | Series | 2nd ODI", team1: "BAN", 
+        logo1: "https://flagpedia.net/data/flags/w1160/bd.webp", 
+        team2: "AUS", logo2: "https://flagpedia.net/data/flags/w1160/au.webp", 
+        kickoffTime: "2026-06-11T11:00:00",
+        urls: ["https://khelaview.blogspot.com/p/t-sports_0963545693.html","https://khelaview.blogspot.com/p/click-to-play-video.html","https://khelaview.blogspot.com/p/ban-vs-aus.html"],
+        tabButtons: [{ name: "STREAM 1 HD", link: "https://www.google.com" }] 
+      },
+      
+      
+      { 
+        category: "Cricket",
+        categoryIcon: "https://www.svgrepo.com/show/405146/cricket-game.svg",
+        league: "Cricket | Series | 3rd ODI", team1: "Sri Lanka ", 
+        logo1: "https://flagpedia.net/data/flags/w1160/lk.webp", 
+        team2: "West Indies ", logo2: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMWB4nMBThrGxL_wQL7M24_i7w0QD_plK1aA&s", 
+        kickoffTime: "2026-06-09T01:00:00",
+        urls: ["https://khelaview.blogspot.com/p/willow-tv-iptv.html","https://khelaview.blogspot.com/p/click-to-play-video.html"],
+        tabButtons: [{ name: "STREAM 1 HD", link: "https://www.google.com" }] 
+      },
+      
+      
+      
+
+      
+      
+ 
+  {
+    "category": "Football",
+    "categoryIcon": "https://www.svgrepo.com/show/236509/football.svg",
+    "league": "International Friendly",
+    "team1": "Portugal",
+    "logo1": "https://flagcdn.com/w160/pt.png",
+    "team2": "Nigeria",
+    "logo2": "https://flagcdn.com/w160/ng.png",
+    "kickoffTime": "2026-06-11T01:45:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv1.php",
+      "https://ww2.sporttsonline.click/channels/bra/br1.php"
+    ],
+    "tabButtons": [
+      { "name": "STREAM 1 HD", "link": "https://ww2.sporttsonline.click/channels/hd/hd2.php" }
+
+    ]
+  },
+  {
+    "category": "Football",
+    "categoryIcon": "https://www.svgrepo.com/show/236509/football.svg",
+    "league": "International Friendly",
+    "team1": "England",
+    "logo1": "https://flagcdn.com/w160/gb-eng.png",
+    "team2": "Costa Rica",
+    "logo2": "https://flagcdn.com/w160/cr.png",
+    "kickoffTime": "2026-06-11T02:00:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv3.php",
+      "https://ww2.sporttsonline.click/channels/bra/br2.php"
+    ],
+    "tabButtons": [
+      { "name": "STREAM 1 HD", "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php" }
+ 
+    ]
+  },
+  {
+    "category": "Football",
+    "categoryIcon": "https://www.svgrepo.com/show/236509/football.svg",
+    "league": "International Friendly",
+    "team1": "Bolivia",
+    "logo1": "https://flagcdn.com/w160/bo.png",
+    "team2": "Algeria",
+    "logo2": "https://flagcdn.com/w160/dz.png",
+    "kickoffTime": "2026-06-11T02:00:00",
+    "urls": ["https://ww2.sporttsonline.click/channels/hd/hd5.php"],
+    "tabButtons": [{ "name": "STREAM 1 HD", "link": "https://ww2.sporttsonline.click/channels/hd/hd5.php" }]
+  },
+      
+      
+     
+  {
+    "category": "Football",
+    "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+    "league": "FIFA World Cup 2026™ | Group A",
+    "team1": "Mexico",
+    "logo1": "https://flagcdn.com/w160/mx.png",
+    "team2": "South Africa",
+    "logo2": "https://flagcdn.com/w160/za.png",
+    "kickoffTime": "2026-06-12T01:00:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv1.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv5.php",
+      "https://ww2.sporttsonline.click/channels/bra/br4.php",
+      "https://ww2.sporttsonline.click/channels/bra/br1.php"
+    ],
+    "tabButtons": [
+      {
+        "name": "STREAM HD 1",
+        "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+      }
+    ]
+  },
+  {
+    "category": "Football",
+    "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+    "league": "FIFA World Cup 2026™ | Group A",
+    "team1": "Korea Republic",
+    "logo1": "https://flagcdn.com/w160/kr.png",
+    "team2": "Czech Republic",
+    "logo2": "https://flagcdn.com/w160/cz.png",
+    "kickoffTime": "2026-06-12T08:00:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd5.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv5.php",
+      "https://ww2.sporttsonline.click/channels/bra/br3.php"
+    ],
+    "tabButtons": [
+      {
+        "name": "STREAM HD 1",
+        "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+      }
+    ]
+  },
+      
+      
+      {
+  "category": "Football",
+  "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+  "league": "FIFA World Cup 2026™ | Group B",
+  "team1": "Canada",
+  "logo1": "https://flagcdn.com/w160/ca.png",
+  "team2": "Bosnia and Herzegovina",
+  "logo2": "https://flagcdn.com/w160/ba.png",
+  "kickoffTime": "2026-06-13T01:00:00",
+  "urls": [
+    "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd5.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+    "https://ww2.sporttsonline.click/channels/pt/sporttv1.php",
+    "https://ww2.sporttsonline.click/channels/bra/br2.php",
+    "https://ww2.sporttsonline.click/channels/bra/br3.php"
+  ],
+  "tabButtons": [
+    {
+      "name": "STREAM HD 1",
+      "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+    }
+  ]
+},
+      
+   {
+  "category": "Football",
+  "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+  "league": "FIFA World Cup 2026™ | Group D",
+  "team1": "United States",
+  "logo1": "https://flagcdn.com/w160/us.png",
+  "team2": "Paraguay",
+  "logo2": "https://flagcdn.com/w160/py.png",
+  "kickoffTime": "2026-06-13T07:00:00",
+  "urls": [
+    "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd5.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+    "https://ww2.sporttsonline.click/channels/pt/sporttv5.php",
+    "https://ww2.sporttsonline.click/channels/bra/br1.php",
+    "https://ww2.sporttsonline.click/channels/bra/br4.php"
+  ],
+  "tabButtons": [
+    {
+      "name": "STREAM HD 1",
+      "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+    }
+  ]
+}
+
+
+     
+      
+      
+      
+      
+    ];
+
+// ফুলস্ক্রিন টগল করার মেইন ফাংশন
+    window.toggleS2Theater = async function() {
+      const elem = document.getElementById('s2_player_area');
+      
+      // যদি বর্তমানে ফুলস্ক্রিন না থাকে, তবে ফুলস্ক্রিন করো
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        try {
+          if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+          } else if (elem.webkitRequestFullscreen) {
+            await elem.webkitRequestFullscreen();
+          }
+          
+          // মোবাইল ল্যান্ডস্কেপ মোড (আড়াআড়ি)
+          if (screen.orientation && screen.orientation.lock) {
+            await screen.orientation.lock('landscape').catch(() => {});
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        // যদি অলরেডি ফুলস্ক্রিন থাকে, তবে এক্সিট করো
+        exitS2FullScreen();
+      }
+    };
+
+    // ফুলস্ক্রিন থেকে বের হওয়ার ফাংশন
+    window.exitS2FullScreen = function() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      
+      if (screen.orientation && screen.orientation.unlock) {
+        screen.orientation.unlock();
+      }
+    };
+
+    // স্মার্ট ক্লিক লজিক: ভিডিও এরিয়াতে ক্লিক করলে ফুলস্ক্রিন টগল হবে
+    // কিন্তু বাটনগুলোতে ক্লিক করলে যেন ফুলস্ক্রিন বন্ধ না হয়
+    document.getElementById('s2_player_area').addEventListener('click', function(e) {
+      // যদি ক্লিকটি বাটন (Button), লিঙ্ক (A) বা সার্ভার লিস্টের ওপর না হয়
+      if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('.s2-server-row')) {
+        // শুধুমাত্র ফুলস্ক্রিন মুডে থাকা অবস্থায় এই ক্লিক কাজ করবে (স্মার্ট এক্সিট)
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+            toggleS2Theater();
+        }
+      }
+    });
+    function getMatchDuration(category) { return category === "Cricket" ? 10 * 3600000 : 4 * 3600000; }
+
+    window.startS2Streaming = function() {
+      const p = document.getElementById('s2_iframe_player'); const ph = document.getElementById('s2_video_placeholder');
+      if(currentS2Url) { p.src = currentS2Url; p.style.display = "block"; ph.style.display = "none"; }
+    };
+
+    window.filterS2Category = function(cat, element) {
+      activeCat = cat; activeStatus = "All"; 
+      document.querySelectorAll('.s2-filter-item').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      renderMatchList();
+    };
+
+    window.filterS2Status = function(status, element) {
+      activeStatus = status; activeCat = "All"; 
+      document.querySelectorAll('.s2-st-btn').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      renderMatchList();
+    };
+
+    function formatDate(d) {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      return `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+    }
+
+    function renderMatchList() {
+      const listDiv = document.getElementById('s2_match_list_container'); listDiv.innerHTML = '';
+      const now = new Date().getTime();
+
+      // COUNTING LOGIC (RESTORED)
+      let totalLive = 0, totalUpcoming = 0, totalEnded = 0;
+      liveMatches.forEach(m => {
+        const k = new Date(m.kickoffTime).getTime();
+        const dur = getMatchDuration(m.category);
+        if(now >= k && now <= (k + dur)) totalLive++;
+        else if (now < k) totalUpcoming++;
+        else if (now > (k + dur)) totalEnded++;
+      });
+      document.getElementById('s2_live_btn').innerText = `LIVE (${totalLive})`;
+      document.getElementById('s2_upcoming_btn').innerText = `UPCOMING (${totalUpcoming})`;
+      document.getElementById('s2_ended_btn').innerText = `ENDED (${totalEnded})`;
+
+      let filtered = liveMatches.filter(match => {
+        const k = new Date(match.kickoffTime).getTime();
+        const dur = getMatchDuration(match.category);
+        const isLive = now >= k && now <= (k + dur);
+        const isUpcoming = now < k;
+        const isEnded = now > (k + dur);
+        if (activeCat !== "All") return match.category === activeCat;
+        if (activeStatus !== "All") {
+          if (activeStatus === "Live") return isLive;
+          if (activeStatus === "Upcoming") return isUpcoming;
+          if (activeStatus === "Ended") return isEnded;
+        }
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        const aK = new Date(a.kickoffTime).getTime();
+        const bK = new Date(b.kickoffTime).getTime();
+        const aDur = getMatchDuration(a.category);
+        const bDur = getMatchDuration(b.category);
+        let pA = (now >= aK && now <= (aK + aDur)) ? 0 : (now < aK ? 1 : 2);
+        let pB = (now >= bK && now <= (bK + bDur)) ? 0 : (now < bK ? 1 : 2);
+        if (pA !== pB) return pA - pB;
+        return aK - bK; 
+      });
+
+      filtered.forEach(match => {
+        const idx = liveMatches.indexOf(match); const k = new Date(match.kickoffTime);
+        const hrs = k.getHours() % 12 || 12; const mins = k.getMinutes().toString().padStart(2, '0');
+        const card = document.createElement('div'); card.className = 's2-match-card' + (idx === currentActiveMatchIdx ? ' active' : '');
+        card.innerHTML = `<div class="s2-league-header">${match.league}</div>
+          <div class="s2-match-main">
+            <div class="s2-timer-box"><span class="s2-timer-val" id="s2-timer-${idx}">--</span><span style="font-size:9px; color:#facc15; font-weight:600;">${formatDate(k)}</span></div>
+            <div class="s2-teams-box">
+              <div class="s2-team"><img src="${match.logo1}"><span class="s2-team-name">${match.team1}</span></div>
+              <div class="s2-vs-divider">VS</div>
+              <div class="s2-team"><img src="${match.logo2}"><span class="s2-team-name">${match.team2}</span></div>
+            </div>
+            <div class="s2-kickoff-time">${hrs}:${mins} ${k.getHours() >= 12 ? 'PM' : 'AM'}</div>
+          </div>`;
+        card.onclick = () => playS2Match(match, card, false, idx);
+        listDiv.appendChild(card);
+      });
+      updateTimers();
+    }
+
+    function playS2Match(ch, element, isAuto = false, idx = 0) {
+      currentActiveMatchIdx = idx;
+      const k = new Date(ch.kickoffTime);
+      document.getElementById('s2_current_match_title').innerHTML = `<span class="s2-title-team">${ch.team1}</span><span class="s2-title-vs">VS</span><span class="s2-title-team">${ch.team2}</span>`;
+      const hrs = k.getHours() % 12 || 12; const mins = k.getMinutes().toString().padStart(2, '0');
+      document.getElementById('s2_ph_kickoff_static').innerText = `${formatDate(k)} | ${hrs}:${mins} ${k.getHours() >= 12 ? 'PM' : 'AM'}`;
+      document.getElementById('s2_ph_flag1').src = ch.logo1; document.getElementById('s2_ph_flag1').style.display = 'block';
+      document.getElementById('s2_ph_flag2').src = ch.logo2; document.getElementById('s2_ph_flag2').style.display = 'block';
+      document.querySelectorAll('.s2-match-card').forEach(el => el.classList.remove('active'));
+      if(element) element.classList.add('active');
+      const p = document.getElementById('s2_iframe_player'); const ph = document.getElementById('s2_video_placeholder');
+      p.src = "about:blank"; p.style.display = "none"; ph.style.display = "flex";
+      document.getElementById('s2_placeholder_teams').innerText = `${ch.team1} VS ${ch.team2}`;
+      currentS2Url = ch.urls[0];
+      const srvBox = document.getElementById('s2_servers_container'); srvBox.innerHTML = '';
+      ch.urls.forEach((url, i) => {
+        const btn = document.createElement('button'); btn.className = 's2-srv-btn' + (i === 0 ? ' active' : '');
+        btn.innerText = `SERVER ${i+1}`; btn.onclick = () => {
+          document.querySelectorAll('.s2-srv-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); currentS2Url = url; startS2Streaming();
+        }; srvBox.appendChild(btn);
+      });
+      if(ch.tabButtons) {
+        ch.tabButtons.forEach(tab => {
+          const btn = document.createElement('button'); btn.className = 's2-srv-btn s2-tab-btn';
+          btn.innerText = tab.name; btn.onclick = () => window.open(tab.link, '_blank');
+          srvBox.appendChild(btn);
+        });
+      }
+      if(!isAuto) document.getElementById('s2_player_area').scrollIntoView({ behavior: 'smooth' });
+    }
+
+function updateTimers() {
+      const now = new Date().getTime();
+      liveMatches.forEach((match, idx) => {
+        const k = new Date(match.kickoffTime).getTime(); 
+        const diff = k - now; 
+        const dur = getMatchDuration(match.category);
+        const el = document.getElementById(`s2-timer-${idx}`);
+        const phCountdown = document.getElementById('s2_ph_countdown');
+        
+        let displayStr = "";
+        
+        if(now > (k + dur)) {
+          // খেলা শেষ হয়ে গেলে
+          displayStr = "ENDED";
+          if(idx === currentActiveMatchIdx && phCountdown) {
+            phCountdown.innerText = "Match Ended";
+          }
+        }
+        else if(diff <= 0) {
+          // খেলা যখন লাইভ (Live Now)
+          displayStr = `<span class="s2-live-status"><span class="s2-live-dot"></span> LIVE NOW</span>`;
+          if(idx === currentActiveMatchIdx && phCountdown) {
+            phCountdown.innerText = "Match Started - Watch Now!";
+            phCountdown.style.color = "#ef4444"; // লাইভ হলে লাল রঙ দেখাবে
+          }
+        }
+        else {
+          // খেলা শুরু হতে দেরি থাকলে (Countdown)
+          const d = Math.floor(diff / 86400000); 
+          const h = Math.floor((diff % 86400000) / 3600000);
+          const m = Math.floor((diff % 3600000) / 60000); 
+          const s = Math.floor((diff % 60000) / 1000);
+          
+          displayStr = d > 0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m`;
+          
+          if(idx === currentActiveMatchIdx && phCountdown) {
+            phCountdown.innerText = `Starts in: ${d > 0 ? d+'d ' : ''}${h}h ${m}m ${s}s`;
+            phCountdown.style.color = "var(--s2-timer-text)"; // সাধারণ রঙ
+          }
+        }
+        
+        if(el) el.innerHTML = displayStr;
+      });
+    }
+    
+    // এটি যেকোনো ফুলস্ক্রিন ইভেন্ট ডিটেক্ট করবে (ভিডিওর ভেতর বা বাইরে)
+    document.addEventListener('fullscreenchange', handleS2Orientation);
+    document.addEventListener('webkitfullscreenchange', handleS2Orientation);
+
+    async function handleS2Orientation() {
+      // যদি পেজে কোনো কিছু ফুলস্ক্রিন অবস্থায় থাকে
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        try {
+          // মোবাইল ল্যান্ডস্কেপ মোড লক করার চেষ্টা
+          if (screen.orientation && screen.orientation.lock) {
+            await screen.orientation.lock('landscape').catch(function(error) {
+              console.log("Orientation lock ignore: ", error);
+            });
+          }
+        } catch (err) {
+          console.log("Orientation error: ", err);
+        }
+      } else {
+        // ফুলস্ক্রিন থেকে বের হয়ে গেলে রোটেশন আনলক করে দিবে
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
+      }
+    }
+    function initS2Filter() {
+      const fb = document.getElementById('s2_category_filter');
+      const cats = []; liveMatches.forEach(m => { if(!cats.find(c => c.name === m.category)) cats.push({name: m.category, icon: m.categoryIcon}); });
+      cats.forEach(cat => {
+        const item = document.createElement('div'); item.className = 's2-filter-item';
+        item.onclick = function() { filterS2Category(cat.name, this); };
+        item.innerHTML = `<img src="${cat.icon}"><span>${cat.name}</span>`;
+        fb.appendChild(item);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => { initS2Filter(); renderMatchList(); setInterval(updateTimers, 1000); });
+  })();
+</script>
   
   
-
-
-  <div id="premier" class="tabcontent">
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <title>SportStream Hub</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- <style>
+  
+  
+  
+  
+</div>
+  
+  
+  <div class="tabcontent" id="server3">
+ 
+<!-- SERVER 3 RESPONSIVE CONTENT START -->
+<div class="s3-main-container">
+  
+  <style>
     :root {
-      --bg-main: #0A0B0F;          /* Deep Space Blue/Black */
-      --bg-card: #14171C;          /* Darker Card Background */
-      --bg-card-rgb: 20, 23, 28;    /* RGB for rgba */
-      --primary: #0052D4;          /* Vibrant Blue */
-      --primary-light: #4D8FFF;    /* Lighter Blue for highlights/hovers */
-      --accent: #FFD700;           /* Gold accent (can be used sparingly) */
-      --text-main: #F0F2F5;        /* Soft Off-White */
-      --text-muted: #8A94A6;       /* Muted Blue-Gray */
-      --border-color: #2C323D;    /* Subtle Border Color */
-      --shadow-color: rgba(0, 82, 212, 0.15); /* Blue Glow */
-      --live-red: #E53935;         /* Refined Red for LIVE */
-      --status-green: #00C853;     /* Bright, clean Green */
+      --s3-bg: #0A192F;
+      --s3-card-bg: #112240;
+      --s3-accent: #F97316; 
+      --s3-primary: #3B82F6; 
+      --s3-text: #CBD5E1;
+      --s3-border: #233554;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .s3-main-container {
+      background-color: var(--s3-bg);
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      padding: 15px;
+      color: var(--s3-text);
     }
 
-    body { /* This body is nested inside div#premier */
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Styles for the .container INSIDE #premier tab */
-    #premier .container {
-      width: 100%;
+    .s3-flex-body {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      max-width: 1500px;
       margin: 0 auto;
-      padding: clamp(10px, 2vw, 15px); /* Default padding */
     }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: clamp(10px, 2vw, 15px) 0; /* Uses internal padding of .container for sides */
-      margin-bottom: clamp(15px, 3vw, 20px);
-      border-bottom: 2px solid var(--border-color);
-      flex-wrap: wrap;
-      gap: clamp(10px, 2vw, 15px);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: clamp(6px, 1.5vw, 8px);
-      font-size: clamp(1.2rem, 3.5vw, 1.8rem);
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .logo-icon {
-      color: var(--accent);
-      font-size: clamp(1.5rem, 4vw, 2rem);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: clamp(10px, 2.5vw, 20px);
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-      position: relative;
-      font-size: clamp(0.8rem, 2.2vw, 1rem);
-      padding: 5px 0;
-    }
-
-    .nav-link:hover {
-      color: var(--accent);
-    }
-
-    .nav-link.active {
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -7px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background-color: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-      border-radius: 2px;
-    }
-
-    .live-badge {
-      background-color: var(--live-red);
-      color: white;
-      padding: clamp(5px, 1.5vw, 6px) clamp(10px, 2vw, 15px);
-      border-radius: 30px;
-      font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: clamp(4px, 1vw, 6px);
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); /* Updated to match --live-red */
-    }
-
-
-
-    @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 5px white; opacity: 1; }
-      50% { transform: scale(1.1); box-shadow: 0 0 10px white; opacity: 0.7; }
-      100% { transform: scale(0.95); box-shadow: 0 0 5px white; opacity: 1; }
-    }
-
-    .digital-clock {
-      font-size: clamp(0.8rem, 2.2vw, 1rem);
-      color: var(--text-muted);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: clamp(4px, 1vw, 6px);
-    }
-
-    .clock-icon {
-      color: var(--accent);
-    }
-
-    .content-wrapper {
-      display: flex;
-      gap: clamp(15px, 2.5vw, 20px);
-      flex-direction: column;
-    }
-
-    @media (min-width: 1024px) {
-      .content-wrapper {
-        flex-direction: row;
-      }
-    }
-
-    .player-section {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .player-card, .sidebar, .info-section {
-      background-color: var(--bg-card);
-      border-radius: 8px;
+    .s3-player-section {
+      flex: 4.5; 
+      background: var(--s3-card-bg);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 15px var(--shadow-color);
-      margin-bottom: clamp(15px, 2.5vw, 20px);
-      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 1px solid var(--s3-border);
     }
 
-    .player-header, .sidebar-header, .info-header {
-      padding: clamp(10px, 1.5vw, 12px) clamp(12px, 2vw, 15px);
-      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+    .s3-sidebar-section {
+      flex: 1.5;
+      min-width: 280px;
+      background: var(--s3-card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--s3-border);
+      display: flex;
+      flex-direction: column;
+      max-height: 800px; /* এখানে হাইট ফিক্সড করা হয়েছে যাতে স্ক্রল করা যায় */
+    }
+
+    .s3-video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; 
+      background: #000;
+    }
+    .s3-video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border: none;
+    }
+
+    .s3-player-header {
+      background: linear-gradient(90deg, #1E293B, #0F172A);
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid var(--s3-border);
+    }
+    .s3-ch-name-top {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .s3-server-row {
+      padding: 15px;
+      background: #0F172A;
+      display: flex;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: clamp(8px, 1.5vw, 10px);
-      color: var(--text-main); /* Ensure text is readable on gradient */
-      border-bottom: 1px solid var(--border-color);
     }
-    .sidebar-header, .info-header {
-        justify-content: flex-start;
-    }
-
-
-    .channel-title {
-      font-size: clamp(1rem, 2.8vw, 1.3rem);
-      font-weight: 600;
-      color: white; /* Make sure title is white on gradient */
-    }
-
-    .server-status {
-      display: flex;
-      align-items: center;
-      gap: clamp(4px, 1vw, 6px);
-      font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      color: white; /* Make sure status is white on gradient */
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--status-green);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--status-green);
-    }
-
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-      background-color: #000;
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .server-controls {
-      padding: clamp(10px, 1.5vw, 12px) clamp(12px, 2vw, 15px);
-      display: flex;
-      flex-wrap: wrap;
-      gap: clamp(6px, 1.5vw, 8px);
-      background-color: rgba(var(--bg-card-rgb), 0.7);
-      border-top: 1px solid var(--border-color);
-      justify-content: center;
-    }
-
-    .server-btn {
-      padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 15px);
-      background-color: var(--primary);
-      border: 1px solid var(--secondary);
-      border-radius: 5px;
-      color: white; /* Ensure text is white */
-      font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      font-weight: 500;
+    .s3-srv-btn {
+      padding: 8px 16px;
+      background: var(--s3-border);
+      color: #fff;
+      border: 1px solid transparent;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: clamp(4px, 1vw, 5px);
-      touch-action: manipulation;
-    }
-
-    .server-btn:hover {
-      background-color: var(--secondary);
-      color: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .server-btn.active {
-      background: var(--accent);
-      color: var(--bg-main);
+      font-size: 13px;
       font-weight: 600;
-      border-color: var(--accent);
-      box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
+      transition: 0.3s;
     }
-    .server-btn .fas {
-        margin-right: 5px;
-    }
-
-    .sidebar {
-      width: 100%;
-      max-width: 350px;
-      height: fit-content;
+    .s3-srv-btn.active {
+      background: var(--s3-accent);
+      color: #000;
     }
 
-    @media (min-width: 1024px) {
-      .sidebar {
-        width: 280px;
-        max-width: 280px;
-        flex-shrink: 0;
-      }
+    .s3-list-title {
+      padding: 15px;
+      background: #1E293B;
+      color: var(--s3-accent);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--s3-border);
     }
 
-    .sidebar-header .fas, .info-header .fas {
-        color: var(--accent);
-        font-size: clamp(1rem, 2.5vw, 1.3rem);
-    }
-
-    .search-box {
-      padding: clamp(10px, 1.5vw, 12px) clamp(12px, 2vw, 15px);
-      background-color: rgba(var(--bg-card-rgb), 0.4);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .search-input {
-      width: 100%;
-      padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
-      background-color: var(--bg-main);
-      border: 1px solid var(--border-color);
-      border-radius: 25px;
-      color: var(--text-main);
-      font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .search-input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-    }
-    .search-input::placeholder {
-        color: var(--text-muted);
-    }
-
-    .channel-tabs, .info-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--border-color);
-      flex-wrap: wrap;
-      gap: clamp(4px, 1vw, 5px);
-      padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 15px);
-      background-color: rgba(var(--bg-card-rgb),0.2);
-    }
-
-    .channel-tab, .info-tab {
-      padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2vw, 12px);
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-weight: 500;
-      cursor: pointer;
-      position: relative;
-      opacity: 0.9;
-      transition: all 0.3s;
-      font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      touch-action: manipulation;
-      border-radius: 4px;
-    }
-
-    .channel-tab:hover, .info-tab:hover {
-      opacity: 1;
-      color: var(--accent);
-      background-color: rgba(var(--accent-rgb), 0.1);
-    }
-
-    .channel-tab.active, .info-tab.active {
-      opacity: 1;
-      color: var(--accent);
-      font-weight: 600;
-      background-color: rgba(var(--accent-rgb), 0.15);
-    }
-
-    .channel-tab.active::after, .info-tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 3px;
-      background-color: var(--accent);
-      box-shadow: 0 0 5px var(--accent);
-      border-radius: 2px;
-    }
-
-    .channel-list {
-      max-height: 600px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .channel-panel {
-      display: none;
-    }
-
-    .channel-panel.active {
-      display: block;
-    }
-
-    .channel-item {
-      padding: clamp(10px, 1.5vw, 12px) clamp(12px, 2vw, 15px);
-      display: flex;
-      align-items: center;
-      gap: clamp(10px, 1.5vw, 14px);
-      cursor: pointer;
-      transition: all 0.3s;
-      border-bottom: 1px solid var(--border-color);
-      touch-action: manipulation;
-    }
-
-    .channel-item:last-child {
-      border-bottom: none;
-    }
-
-    .channel-item:hover {
-      background-color: rgba(var(--accent-rgb), 0.07);
-    }
-
-    .channel-item.active {
-      background-color: rgba(var(--accent-rgb), 0.12);
-      border-left: 4px solid var(--accent);
-      padding-left: calc(clamp(12px, 2vw, 15px) - 4px);
-    }
-    .channel-item.active .channel-name {
-        color: var(--accent);
-        font-weight: 600;
-    }
-
-    .channel-logo {
-      width: clamp(30px, 6vw, 36px);
-      height: clamp(30px, 6vw, 36px);
-      background-color: var(--secondary); /* Changed to secondary blue for better contrast with orange accent */
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white; /* Changed icon color to white for better visibility on blue */
-      font-size: clamp(0.9rem, 2.2vw, 1.1rem);
-      transition: transform 0.3s, background-color 0.3s;
-      box-shadow: 0 0 5px rgba(var(--secondary), 0.5); /* Shadow using secondary blue */
-    }
-    .channel-item:hover .channel-logo {
-        transform: scale(1.1);
-        background-color: var(--accent);
-        color: var(--bg-card);
-    }
-
-    .channel-info {
+    /* চ্যানেল লিস্ট স্ক্রল করার জন্য নিচের CSS টুকু */
+    #s3_channels_list_container {
+      overflow-y: auto; /* ভার্টিক্যাল স্ক্রল */
+      padding: 10px;
       flex-grow: 1;
     }
 
-    .channel-name {
-      font-weight: 500;
-      margin-bottom: 3px;
-      font-size: clamp(0.8rem, 2.2vw, 1rem);
-      color: var(--text-main);
+    .s3-chan-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 1px solid transparent;
     }
-
-    .channel-event {
-      font-size: clamp(0.6rem, 1.8vw, 0.8rem);
-      color: var(--text-muted);
+    .s3-chan-item:hover {
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateX(5px);
     }
+    .s3-chan-item.active {
+      background: linear-gradient(90deg, rgba(249, 115, 22, 0.2), transparent);
+      border-left: 4px solid var(--s3-accent);
+    }
+    .s3-chan-icon {
+      width: 40px; height: 40px;
+      background: var(--s3-border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-right: 15px; font-size: 18px;
+    }
+    .s3-chan-name { display: block; font-weight: 600; font-size: 14px; color: #F8FAFC; }
+    .s3-chan-status { font-size: 11px; color: #94A3B8; }
 
-    .channel-quality {
-      background-color: rgba(var(--accent-rgb), 0.2);
-      color: var(--accent);
-      padding: clamp(3px, 1vw, 4px) clamp(6px, 1.5vw, 8px);
+    .s3-live-tag {
+      background: #EF4444;
+      color: white;
+      padding: 3px 8px;
       border-radius: 4px;
-      font-size: clamp(0.6rem, 1.5vw, 0.7rem);
-      font-weight: 600;
-      border: 1px solid var(--accent);
+      font-size: 11px;
+      font-weight: 800;
     }
 
-    .info-section { }
+    #s3_channels_list_container::-webkit-scrollbar { width: 5px; }
+    #s3_channels_list_container::-webkit-scrollbar-thumb { background: var(--s3-accent); border-radius: 10px; }
 
-    /* Styles for .tab-panel INSIDE #premier .info-section */
-    #premier .info-section .tab-panel {
-      display: none;
-      padding: clamp(12px, 2vw, 15px); /* Default padding */
+    @media (max-width: 992px) {
+      .s3-main-container { padding: 0 !important; }
+      .s3-flex-body { flex-direction: column; gap: 0 !important; }
+      .s3-player-section, .s3-sidebar-section { width: 100% !important; border-radius: 0 !important; }
+      .s3-sidebar-section { max-height: 500px; } /* মোবাইলে একটি নির্দিষ্ট হাইট */
     }
+  </style>
 
-    #premier .info-section .tab-panel.active {
-      display: block;
-    }
+  <div class="s3-flex-body">
+    <!-- Player Section -->
+    <div class="s3-player-section" id="s3_player_top">
+      <div class="s3-player-header">
+        <div class="s3-ch-name-top">
+          <i class="fas fa-play-circle" style="color: var(--s3-accent);"></i>
+          <span id="s3_title_text">Select Channel</span>
+        </div>
+        <span class="s3-live-tag">LIVE</span>
+      </div>
+      
+      <div class="s3-video-wrapper">
+        <iframe allowfullscreen="" id="s3_iframe_player" src="about:blank"></iframe>
+      </div>
+      
+      <div class="s3-server-row" id="s3_servers_container"></div>
+    </div>
 
-    /* Styles for .responsive-iframe INSIDE #premier .info-section .tab-panel */
-    #premier .info-section .responsive-iframe {
-      position: relative;
+    <!-- Sidebar Section -->
+    <div class="s3-sidebar-section">
+      <div class="s3-list-title"><i class="fas fa-list-ul"></i> Ad Free Channels</div>
+      <div id="s3_channels_list_container">
+        <!-- Channels load here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const myChannels = [
+       { name: 'LaLiga TV', urls: ['','https://khelaview.blogspot.com/p/laliga-tv.html','https://khelaview.blogspot.com/p/laliga-sportz.html','https://khelaview.blogspot.com/p/tsn-5.html'] },
+        { name: 'Fubo Sports Network', urls: ['https://khelaview.blogspot.com/p/fubo-sports.html','https://khelaview.blogspot.com/p/fubo-sport-secure-player.html'] },
+        { name: 'Premier Sports 1', urls: ['https://khelaview.blogspot.com/p/premiersports-1.html'] },
+        
+        { name: 'Premier Sports 2', urls: ['https://khelaview.blogspot.com/p/bokul-sports-player-javascript-bokul_8.html'] },
+        { name: 'Universo TV', urls: ['https://khelaview.blogspot.com/p/t-sports.html'] },
+        
+       { name: 'T Sports ', urls: ['https://khelaview.blogspot.com/p/t-sports_0963545693.html'] },
+
+         { name: 'Fox ', urls: ['https://khelaview.blogspot.com/p/margin-0-padding-0-box-sizing-border.html'] },
+        
+        { name: 'DAZN ENG', urls: ['https://khelaview.blogspot.com/p/dazn-eng.html'] },
+        { name: 'Nova Sports', urls: ['https://khelaview.blogspot.com/p/nova-sports.html','https://khelaview.blogspot.com/p/nova-sports_02101215100.html'] },
+        { name: 'Ziggo Sports Tv 1 ', urls: ['https://khelaview.blogspot.com/p/ziggo-sports.html'] },
+        { name: 'Ziggo Sports Tv 2 ', urls: ['https://khelaview.blogspot.com/p/oqn6c1ari98bzf9fjqo-id-1776373628642286.html'] },
+        
+        { name: 'USA TV', urls: ['https://khelaview.blogspot.com/p/usa-tv.html'] },
+        { name: 'SportDIGI', urls: ['https://khelaview.blogspot.com/p/sportdigi.html','https://khelaview.blogspot.com/p/bein-sports-3_01702251778.html'] },
+        { name: 'Sky Sport 2', urls: ['https://khelaview.blogspot.com/p/bokul-sports-live-body-html-background_01744004052.html'] },
+        { name: 'Sky Sport 8', urls: ['https://khelaview.blogspot.com/p/sky-sports-8.html'] },
+        
+        { name: 'TNT Sports 1', urls: ['https://khelaview.blogspot.com/p/tnt-sports-1.html','https://khelaview.blogspot.com/p/bokul-sports-player-javascript-bokul.html'] },
+        { name: 'TNT Sports 2', urls: ['https://khelaview.blogspot.com/p/tnt-sports-2.html','https://khelaview.blogspot.com/p/tnt-sports-2_01153482812.html'] },
+        { name: 'TNT Sports 3', urls: ['https://khelaview.blogspot.com/p/tnt-sports-3.html','https://khelaview.blogspot.com/p/tnt-sports-3_0320725789.html'] },
+        { name: 'TNT Sports 4', urls: ['https://khelaview.blogspot.com/p/tnt-sports-4.html'] },
+        { name: 'TSN 2', urls: ['https://khelaview.blogspot.com/p/tsn-2.html'] },
+        { name: 'Bein Sports 1 ENG', urls: ['https://khelaview.blogspot.com/p/willow-tv-2.html'] },
+        { name: 'Bein Sports 2 ENG', urls: ['https://khelaview.blogspot.com/p/bein-sports-2-eng.html'] },
+        { name: 'Bein Sports 3 ENG', urls: ['https://khelaview.blogspot.com/p/bein-sports-3.html','https://khelaview.blogspot.com/p/premium-media-player-body-html-margin-0.html'] },
+        { name: 'PTV Sports', urls: ['https://khelaview.blogspot.com/p/ptv-sports.html'] },
+        { name: 'Fan Code 1', urls: ['https://khelaview.blogspot.com/p/fan-code.html'] },
+        { name: 'Fan Code 2', urls: ['https://khelaview.blogspot.com/p/t-sports_9.html'] },
+        { name: 'Fan Code 3', urls: ['https://khelaview.blogspot.com/p/plyr-hls-player-full-screen-big-margin0.html'] },
+        { name: 'Fan Code 4', urls: ['https://khelaview.blogspot.com/p/bein-sports-3_01230618824.html'] },
+        { name: 'Fox Deportes', urls: ['https://khelaview.blogspot.com/p/fox-deportes.html'] },
+        { name: 'Willow TV', urls: ['https://tvsen5.aynaott.com/willowhd/index.m3u8?e=1779346505&u=78be6644-0a65-48ec-81a4-089ac65a2619&token=a095eb076c6d0c0bdcfca9c6550ebccb','https://tvsen5.aynaott.com/willowhd/index.m3u8?e=1779178079&u=617d0e90-2bc6-4dc5-8897-f5638f8fd01a&token=d71d71025ad8ed99266bb333137dc3e0','https://khelaview.blogspot.com/p/plyr-hls-player-margin-0-padding-0-box.html','https://khelaview.blogspot.com/p/sky-sport-2_10.html'] }
+      ];
+
+      function playS3Channel(ch, element) {
+        const player = document.getElementById('s3_iframe_player');
+        document.getElementById('s3_title_text').innerText = ch.name;
+        document.querySelectorAll('.s3-chan-item').forEach(el => el.classList.remove('active'));
+        if(element) element.classList.add('active');
+
+        const srvBox = document.getElementById('s3_servers_container');
+        srvBox.innerHTML = '';
+        
+        ch.urls.forEach((url, i) => {
+          const btn = document.createElement('button');
+          btn.className = 's3-srv-btn' + (i === 0 ? ' active' : '');
+          btn.innerHTML = `<i class="fas fa-server"></i> Server ${i+1}`;
+          btn.onclick = function() {
+            document.querySelectorAll('.s3-srv-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            player.src = url;
+          };
+          srvBox.appendChild(btn);
+          if(i === 0) {
+            player.src = url;
+          }
+        });
+
+        // চ্যানেলে ক্লিক করলে প্লেয়ারের কাছে নিয়ে যাবে
+        document.getElementById('s3_player_top').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function initS3() {
+        const listDiv = document.getElementById('s3_channels_list_container');
+        if(!listDiv) return;
+        listDiv.innerHTML = '';
+        myChannels.forEach((ch, idx) => {
+          const div = document.createElement('div');
+          div.className = 's3-chan-item';
+          div.innerHTML = `
+            <div class="s3-chan-icon">📺</div>
+            <div class="s3-chan-info-text">
+              <span class="s3-chan-name">${ch.name}</span>
+              <span class="s3-chan-status">Online • 1080p</span>
+            </div>
+          `;
+          div.onclick = function() { playS3Channel(ch, div); };
+          listDiv.appendChild(div);
+          if(idx === 0) playS3Channel(ch, div);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', initS3);
+    })();
+  </script>
+</div>
+<!-- SERVER 3 RESPONSIVE CONTENT END -->
+   
+  </div>
+  
+  
+
+  <div class="tabcontent" id="laliga">
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8"></meta>
+  <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+  <title>Responsive Vertical Tabs with Search</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100%;
       width: 100%;
-      padding-bottom: 56.25%; /* Aspect ratio for video, adjust if needed for scores */
-      margin-top: clamp(12px, 2vw, 15px);
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
+    }
+
+    #verticalTabsContainer {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      background-color: #1a1d26;
       overflow: hidden;
     }
-     /* Styles for .video-embed-container (used in basketball tab) INSIDE #premier */
-    #premier .info-section .video-embed-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+
+    #sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 240px;
+      background: #141821;
+      border-right: 1px solid #222a3a;
     }
-    /* Styles for iframe items INSIDE #premier */
-    #premier .info-section .responsive-embed-item {
+
+    #titleBar {
+      height: 50px;
+      line-height: 50px;
+      padding: 0 20px;
+      color: #00e1ff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      border-bottom: 1px solid #222a3a;
+      background-color: #10141c;
+      user-select: none;
+    }
+
+    #tabSearchBar {
+      padding: 10px 20px;
+      background-color: #10141c;
+      border-bottom: 1px solid #222a3a;
+    }
+
+    #tabSearchBar input {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #1f2735;
+      color: #fff;
+    }
+
+    #verticalTabsMenu {
+      flex-grow: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #verticalTabsMenu button {
+      background: transparent;
+      border: none;
+      color: #a0a0a0;
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    #verticalTabsMenu button:hover {
+      background-color: rgba(0, 225, 255, 0.1);
+      color: #00e1ff;
+    }
+
+    #verticalTabsMenu button.active {
+      background-color: rgba(0, 225, 255, 0.2);
+      color: #fff;
+      border-left-color: #00e1ff;
+      box-shadow: 2px 0 8px #00e1ff;
+    }
+
+    #verticalTabsContent {
+      flex-grow: 1;
+      background: #232733;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabContent { /* This class is used by #laliga's internal tab system */
+      display: none;
+      flex-grow: 1;
+    }
+
+    #laliga .tabContent.active { /* Specificity for #laliga's internal active tab */
+      display: flex;
+    }
+
+    #laliga .tabContent iframe { /* Specificity for #laliga's internal iframes */
       width: 100%;
       height: 100%;
       border: none;
     }
 
-
-    ::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg-main);
-      border-radius: 5px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--primary);
-      border-radius: 5px;
-      border: 2px solid var(--bg-main);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--secondary);
-    }
-
-
-    @media (max-width: 1024px) { /* Screen sizes up to 1023px */
-      .content-wrapper {
+    /* MOBILE STYLES */
+    @media (max-width: 768px) {
+      #laliga #verticalTabsContainer { /* Scoped to #laliga */
         flex-direction: column;
       }
 
-      .sidebar {
-        max-width: 100%;
+      #laliga #sidebar { /* Scoped to #laliga */
         width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #222a3a;
       }
 
-      .video-container { /* This is the main video player container */
-        max-width: 100%;
+      #laliga #tabSearchBar { /* Scoped to #laliga */
+        order: 0;
+        border-bottom: none;
+        padding: 10px;
       }
 
-      .info-tabs,
-      .channel-tabs {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 768px) { /* General Mobile Breakpoint */
-      #premier .container { /* Full width for main content area in #premier tab on mobile */
-        padding-left: 0;
-        padding-right: 0;
-        /* Vertical padding can be kept or adjusted */
-        padding-top: clamp(10px, 2vw, 12px);
-        padding-bottom: clamp(10px, 2vw, 12px);
+      #laliga #verticalTabsMenu { /* Scoped to #laliga */
+        order: 1;
+        flex-direction: row;
+        height: 50px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
       }
 
-      #premier .info-section .tab-panel { /* Full width for score tabs in #premier on mobile */
-        padding-left: 0;
-        padding-right: 0;
-        /* Vertical padding can be kept or adjusted */
-        padding-top: clamp(10px, 2vw, 12px);
-        padding-bottom: clamp(10px, 2vw, 12px);
-      }
-      
-      #premier .info-section .responsive-iframe { /* Remove border for edge-to-edge iframes */
-          border-left: none;
-          border-right: none;
-          border-radius: 0; /* Also remove radius if borders are removed */
-      }
-      /* If main video player container or card needs border/radius adjustments */
-      #premier .player-card {
-          border-left: none;
-          border-right: none;
-          border-radius: 0;
-      }
-       #premier .video-container { /* Ensure no accidental radius from parent */
-          border-radius: 0;
+      #laliga #verticalTabsMenu::-webkit-scrollbar { /* Scoped to #laliga */
+        display: none;
       }
 
-
-      .header { /* Header adjustments for mobile */
-        flex-direction: column;
-        gap: clamp(8px, 2vw, 12px);
+      #laliga #verticalTabsMenu button { /* Scoped to #laliga */
+        flex: 0 0 auto;
+        padding: 12px 16px;
         text-align: center;
-      }
-      .header > div {
-          justify-content: center;
-      }
-      .nav-link.active::after {
-        bottom: -5px;
-      }
-      .server-controls {
-        justify-content: center;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        white-space: nowrap;
+        font-weight: 700;
       }
 
-      .video-container iframe, /* iframes for main player */
-      #premier .info-section .responsive-iframe iframe { /* iframes for scores */
-        height: 100%; /* Ensure they fill the aspect ratio container */
+      #laliga #verticalTabsMenu button.active { /* Scoped to #laliga */
+        border-bottom-color: #00e1ff;
+        background-color: rgba(0, 225, 255, 0.2);
+        color: white;
+        box-shadow: none;
+      }
+
+      #laliga #verticalTabsContent { /* Scoped to #laliga */
+        height: calc(100vh - 100px); /* Adjust if titleBar is also part of the 100px */
       }
     }
+  /* সব tabContent এর জন্য কমন ডিজাইন */
+  .tabContent {
+    width: 100%;
+    height: 600px; /* আপনার প্রয়োজন মতো হাইট দিন */
+    overflow: hidden; /* বাড়তি অংশ ঢেকে দেবে */
+    position: relative;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
 
-    @media (max-width: 480px) { /* Smaller Mobile Breakpoint */
-      #premier .container { /* Specific padding for very small screens, horizontal already 0 from 768px */
-        padding-top: clamp(8px, 2vw, 10px);
-        padding-bottom: clamp(8px, 2vw, 10px);
-      }
-      #premier .info-section .tab-panel { /* Specific padding for score tabs on very small screens */
-        padding-top: clamp(8px, 1.8vw, 10px);
-        padding-bottom: clamp(8px, 1.8vw, 10px);
-      }
+  /* এই কোডটি সব iframe-কে ৪৫ পিক্সেল উপরে তুলে লোগো হাইড করবে */
+  .tabContent iframe {
+    position: absolute;
+    top: -45px; /* লোগোর হাইট অনুযায়ী এটি কম-বেশি করতে পারেন */
+    left: 0;
+    width: 100%;
+    height: 645px; /* (মূল হাইট + উপরে যতটুকু সরালেন) */
+    border: none;
+  }
 
-
-      .logo {
-        font-size: clamp(1rem, 3vw, 1.4rem);
-      }
-      .logo-icon {
-        font-size: clamp(1.2rem, 3.5vw, 1.6rem);
-      }
-
-      .player-header,
-      .sidebar-header,
-      .info-header {
-        padding: clamp(8px, 1.5vw, 10px) clamp(10px, 1.8vw, 12px);
-      }
-
-      .server-btn {
-        padding: clamp(5px, 1.2vw, 6px) clamp(10px, 1.8vw, 12px);
-        font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-      }
-
-      .channel-item {
-        padding: clamp(8px, 1.5vw, 10px);
-        gap: clamp(6px, 1.5vw, 10px);
-      }
-      .channel-item.active {
-         padding-left: calc(clamp(8px, 1.5vw, 10px) - 4px);
-      }
-
-      .channel-logo {
-        width: clamp(26px, 5vw, 30px);
-        height: clamp(26px, 5vw, 30px);
-        font-size: clamp(0.8rem, 1.8vw, 1rem);
-      }
-
-      .channel-tab, .info-tab {
-        padding: clamp(5px, 1.2vw, 6px) clamp(8px, 1.8vw, 10px);
-        font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-      }
-      .channel-tab.active::after, .info-tab.active::after {
-        height: 2px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .logo {
-        font-size: clamp(0.9rem, 2.8vw, 1.2rem);
-      }
-      .nav-link {
-        font-size: clamp(0.7rem, 2vw, 0.9rem);
-      }
-      .live-badge {
-        font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-        padding: clamp(4px, 1.2vw, 5px) clamp(8px, 1.8vw, 10px);
-      }
-      .digital-clock {
-        font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-      }
-    }
-
+    
   </style>
 </head>
-<body> <!-- This is the nested body tag -->
-  <div class="container">
-
-
-    <div class="content-wrapper">
-      <main class="player-section">
-        <div class="player-card">
-          <div class="player-header">
-            <div class="channel-title" id="currentChannel">Select a channel to begin</div>
-            <div class="server-status">
-              <div class="status-dot"></div>
-              <span id="currentServer">No server selected</span>
-            </div>
-          </div>
-
-          <div class="video-container">
-            <iframe id="streamFrame" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-
-          <div class="server-controls" id="serverControls">
-            <!-- Server buttons will be added here -->
-          </div>
-        </div>
-
-        <div class="info-section">
-          <div class="info-content">
-            <div id="football-tab" class="tab-panel"> <!-- This panel will be made active by default JS change -->
-              <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Styles for this specific iframe's wrapper are now handled by the parent's CSS */
-        /* .responsive-iframe { ... } */
-        /* .responsive-iframe iframe { ... } */
-    </style>
-</head>
 <body>
-    <div class="responsive-iframe">
-        <iframe src="https://www.scorebat.com/embed/livescore/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg==" frameborder="0" allowfullscreen class="responsive-embed-item"></iframe>
-    </div>
-</body>
-</html>
-            </div>
 
-            <div id="basketball-tab" class="tab-panel">
-              <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-         /* Styles for this specific iframe's wrapper are now handled by the parent's CSS */
-        /* .responsive-iframe { ... } */
-        /* .responsive-iframe iframe { ... } */
-        /* .video-embed-container { ... } */
-    </style>
-</head>
-<body>
-    <div class="responsive-iframe">
-        <div class="video-embed-container">
-            <iframe class="responsive-embed-item" src="https://crex.live/" frameborder="0" allowfullscreen></iframe>
-        </div>
+<div id="verticalTabsContainer">
+  <aside id="sidebar">
+    <div id="titleBar">A-Z Details</div>
+    <div id="tabSearchBar">
+      <input id="tabSearchInput" placeholder="Search..." type="text" />
     </div>
-</body>
-</html>
-            </div>
-          </div>
-        </div>
-      </main>
+    <nav id="verticalTabsMenu">
+      
+      
 
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <i class="fas fa-satellite-dish"></i> Live Channels
-        </div>
-           <div class="search-box">
-          <input type="text" class="search-input" placeholder="Search channels...">
-        </div>
-        <div class="channel-tabs">
-          <button class="channel-tab all-tab active" onclick="openChannelTab('menu0')">All</button>
-          <button class="channel-tab" onclick="openChannelTab('menu1')">A</button>
-          <button class="channel-tab" onclick="openChannelTab('menu2')">B</button>
-          <button class="channel-tab" onclick="openChannelTab('menu3')">C</button>
-          <button class="channel-tab" onclick="openChannelTab('menu4')">D</button>
-          <button class="channel-tab" onclick="openChannelTab('menu5')">E</button>
-          <button class="channel-tab" onclick="openChannelTab('menu6')">F</button>
-          <button class="channel-tab" onclick="openChannelTab('menu7')">G</button>
-          <button class="channel-tab" onclick="openChannelTab('menu8')">H</button>
-          <button class="channel-tab" onclick="openChannelTab('menu9')">I</button>
-          <button class="channel-tab" onclick="openChannelTab('menu10')">J</button>
-          <button class="channel-tab" onclick="openChannelTab('menu11')">K</button>
-          <button class="channel-tab" onclick="openChannelTab('menu12')">L</button>
-          <button class="channel-tab" onclick="openChannelTab('menu13')">M</button>
-          <button class="channel-tab" onclick="openChannelTab('menu14')">N</button>
-          <button class="channel-tab" onclick="openChannelTab('menu15')">O</button>
-          <button class="channel-tab" onclick="openChannelTab('menu16')">P</button>
-          <button class="channel-tab" onclick="openChannelTab('menu17')">Q</button>
-          <button class="channel-tab" onclick="openChannelTab('menu18')">R</button>
-          <button class="channel-tab" onclick="openChannelTab('menu19')">S</button>
-          <button class="channel-tab" onclick="openChannelTab('menu20')">T</button>
-          <button class="channel-tab" onclick="openChannelTab('menu21')">U</button>
-          <button class="channel-tab" onclick="openChannelTab('menu22')">V</button>
-          <button class="channel-tab" onclick="openChannelTab('menu23')">W</button>
-          <button class="channel-tab" onclick="openChannelTab('menu24')">X</button>
-          <button class="channel-tab" onclick="openChannelTab('menu25')">Y</button>
-          <button class="channel-tab" onclick="openChannelTab('menu26')">Z</button>
-        </div>
 
-        <div class="channel-list">
-          <div id="menu0-tab" class="channel-panel active">
-            <!-- All channels will be dynamically added here -->
-          </div>
-           <div id="menu1-tab" class="channel-panel">
-             <div class="channel-item" onclick="selectChannel('A Sports', 'A Sports', ['https://stream.crichd.sc/update/asportshd.php', 'https://tv.mgsportstv.com/api/player/play.php?c=http://125.209.88.166:45793/BRN/ArySports.stream/playlist.m3u8'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">A Sports</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Astro Cricket', 'Astro Cricket', ['https://dlhd.link/stream/stream-370.php','https://dlhd.link/casting/stream-370.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Astro Cricket</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Astro Football', 'Astro Football', ['https://dlhd.link/stream/stream-124.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Astro Football</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Astro Premier League 1', 'Astro Premier League 1', ['https://dlhd.link/stream/stream-125.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Astro Premier League 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Astro Premier League 2', 'Astro Premier League 2', ['https://dlhd.link/stream/stream-126.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Astro Premier League 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu2-tab" class="channel-panel">
-            <div class="channel-item" onclick="selectChannel('bein sports Arabic 1', 'bein sports Arabic 1', ['https://dlhd.link/stream/stream-91.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 2', 'bein sports Arabic 2', ['https://dlhd.link/stream/stream-92.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 3', 'bein sports Arabic 3', ['https://dlhd.link/stream/stream-93.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 3</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 4', 'bein sports Arabic 4', ['https://dlhd.link/stream/stream-94.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 4</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 5', 'bein sports Arabic 5', ['https://dlhd.link/stream/stream-95.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 5</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 6', 'bein sports Arabic 6', ['https://dlhd.link/stream/stream-96.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 6</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 7', 'bein sports Arabic 7', ['https://dlhd.link/stream/stream-97.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 7</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 8', 'bein sports Arabic 8', ['https://dlhd.link/stream/stream-98.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 8</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports Arabic 9', 'bein sports Arabic 9', ['https://dlhd.link/stream/stream-99.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports Arabic 9</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 1', 'bein sports France 1', ['https://dlhd.link/stream/stream-116.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 2', 'bein sports France 2', ['https://dlhd.link/stream/stream-117.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 3', 'bein sports France 3', ['https://dlhd.link/stream/stream-118.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 3</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 4', 'bein sports France 4', ['https://dlhd.link/stream/stream-494.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 4</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 5', 'bein sports France 5', ['https://dlhd.link/stream/stream-495.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 5</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 6', 'bein sports France 6', ['https://dlhd.link/stream/stream-496.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 6</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 7', 'bein sports France 7', ['https://dlhd.link/stream/stream-497.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 7</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 8', 'bein sports France 8', ['https://dlhd.link/stream/stream-498.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 8</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 9', 'bein sports France 9', ['https://dlhd.link/stream/stream-499.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 9</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('bein sports France 10', 'bein sports France 10', ['https://dlhd.link/stream/stream-500.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">bein sports France 10</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS USA', 'beIN SPORTS USA', ['https://dlhd.link/stream/stream-425.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN Sports English 1', 'beIN Sports English 1', ['https://dlhd.link/stream/stream-61.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN Sports English 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN Sports English 2', 'beIN Sports English 2', ['https://dlhd.link/stream/stream-90.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN Sports English 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN Sports English 3', 'beIN Sports English 3', ['https://dlhd.sx/embed/stream-46.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN Sports English 3</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS Australia 1', 'beIN SPORTS Australia 1', ['https://dlhd.sx/embed/stream-491.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS Australia 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS Australia 2', 'beIN SPORTS Australia 2', ['https://dlhd.sx/embed/stream-492.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS Australia 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS Australia 3', 'beIN SPORTS Australia 3', ['https://dlhd.sx/embed/stream-493.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS Australia 3</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN Sports HD Qatar', 'beIN Sports HD Qatar', ['https://dlhd.sx/embed/stream-578.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN Sports HD Qatar</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS 1 Turkey', 'beIN SPORTS 1 Turkey', ['https://dlhd.sx/embed/stream-62.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS 1 Turkey</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS 2 Turkey', 'beIN SPORTS 2 Turkey', ['https://dlhd.sx/embed/stream-63.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS 2 Turkey</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS 3 Turkey', 'beIN SPORTS 3 Turkey', ['https://dlhd.sx/embed/stream-64.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS 3 Turkey</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS 4 Turkey', 'beIN SPORTS 4 Turkey', ['https://dlhd.sx/embed/stream-67.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS 4 Turkey</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('beIN SPORTS en Español', 'beIN SPORTS en Español', ['https://dlhd.link/stream/stream-372.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">beIN SPORTS en Español</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu3-tab" class="channel-panel">
-            <div class="channel-item" onclick="selectChannel('CBS Sports Golazo', 'CBS Sports Golazo', ['https://dlhd.link/cast/stream-93.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">CBS Sports Golazo</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Canal+ France', 'Canal+ France', ['https://dlhd.link/cast/stream-6.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Canal+ France</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Canal+ Foot France', 'Canal+ Foot France', ['https://dlhd.sx/embed/stream-463.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Canal+ Foot France</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Cosmote Sport 1 HD', 'Cosmote Sport 1 HD', ['https://dlhd.sx/embed/stream-622.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 1 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 2 HD', 'Cosmote Sport 2 HD', ['https://dlhd.sx/embed/stream-623.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 2 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 3 HD', 'Cosmote Sport 3 HD', ['https://dlhd.sx/embed/stream-624.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 3 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 4 HD', 'Cosmote Sport 4 HD', ['https://dlhd.sx/embed/stream-625.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 4 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 5 HD', 'Cosmote Sport 5 HD', ['https://dlhd.sx/embed/stream-626.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 5 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 6 HD', 'Cosmote Sport 6 HD', ['https://dlhd.sx/embed/stream-627.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 6 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 7 HD', 'Cosmote Sport 7 HD', ['https://dlhd.sx/embed/stream-628.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 7 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 8 HD', 'Cosmote Sport 8 HD', ['https://dlhd.sx/embed/stream-629.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 8 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Cosmote Sport 9 HD', 'Cosmote Sport 9 HD', ['https://dlhd.sx/embed/stream-630.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Cosmote Sport 9 HD</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu4-tab" class="channel-panel">
-             <div class="channel-item" onclick="selectChannel('DAZN 1 DE', 'DAZN 1 DE', ['https://dlhd.sx/embed/stream-426.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 1 DE</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN 2 DE', 'DAZN 2 DE', ['https://dlhd.sx/embed/stream-427.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 2 DE</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN 1 Spain', 'DAZN 1 Spain', ['https://dlhd.sx/embed/stream-445.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 1 Spain</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN 2 Spain', 'DAZN 2 Spain', ['https://dlhd.sx/embed/stream-446.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 2 Spain</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN 3 Spain', 'DAZN 3 Spain', ['https://dlhd.sx/embed/stream-447.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 3 Spain</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN F1 ES', 'DAZN F1 ES', ['https://dlhd.sx/embed/stream-537.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN F1 ES</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN 1 UK', 'DAZN 1 UK', ['https://dlhd.sx/embed/stream-230.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 1 UK</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN LaLiga', 'DAZN LaLiga', ['https://dlhd.sx/embed/stream-538.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN LaLiga</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('DAZN 2 LaLiga', 'DAZN 2 LaLiga', ['https://offerstore.xyz/DRM/live1.php?id=LALIGA_GB'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">DAZN 2 LaLiga</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Digi Sport 1 Romania', 'Digi Sport 1 Romania', ['https://dlhd.sx/embed/stream-400.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Digi Sport 1 Romania</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Digi Sport 2 Romania', 'Digi Sport 2 Romania', ['https://dlhd.sx/embed/stream-401.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Digi Sport 2 Romania</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Digi Sport 3 Romania', 'Digi Sport 3 Romania', ['https://dlhd.sx/embed/stream-402.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Digi Sport 3 Romania</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('Digi Sport 4 Romania', 'Digi Sport 4 Romania', ['https://dlhd.sx/embed/stream-403.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Digi Sport 4 Romania</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu5-tab" class="channel-panel">
-            <div class="channel-item" onclick="selectChannel('Eleven Sports 1 Poland', 'Eleven Sports 1 Poland', ['https://dlhd.sx/embed/stream-71.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 1 Poland</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Eleven Sports 2 Poland', 'Eleven Sports 2 Poland', ['https://dlhd.sx/embed/stream-72.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 2 Poland</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Eleven Sports 3 Poland', 'Eleven Sports 3 Poland', ['https://dlhd.sx/embed/stream-73.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 3 Poland</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Eleven Sports 4 Poland', 'Eleven Sports 4 Poland', ['https://dlhd.sx/embed/stream-73.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 4 Poland</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Eleven Sports 1 Portugal', 'Eleven Sports 1 Portugal', ['https://dlhd.sx/embed/stream-455.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 1 Portugal</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Eleven Sports 2 Portugal', 'Eleven Sports 2 Portugal', ['https://dlhd.sx/embed/stream-456.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 2 Portugal</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Eleven Sports 3 Portugal', 'Eleven Sports 3 Portugal', ['https://dlhd.sx/embed/stream-457.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 3 Portugal</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Eleven Sports 4 Portugal', 'Eleven Sports 4 Portugal', ['https://dlhd.sx/embed/stream-458.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 4 Portugal</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-        <div class="channel-item" onclick="selectChannel('Eleven Sports 5 Portugal', 'Eleven Sports 5 Portugal', ['https://dlhd.sx/embed/stream-459.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Eleven Sports 5 Portugal</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu6-tab" class="channel-panel">
-          <div class="channel-item" onclick="selectChannel('FOX Cricket', 'FOX Cricket', ['https://dlhd.sx/embed/stream-369.php', 'https://topembed.pw/channel/Fox501[Australia]'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Cricket</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Fox Sports- 1 USA', 'Fox Sports- 1 USA', ['https://dlhd.sx/embed/stream-39.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Fox Sports-1 USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('Fox Sports 2 USA', 'Fox Sports 2 USA', ['https://dlhd.sx/embed/stream-758.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Fox Sports 2 USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Deportes USA', 'FOX Deportes USA', ['https://dlhd.sx/embed/stream-643.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Deportes USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('FOX Soccer Plus', 'FOX Soccer Plus', ['https://dlhd.sx/embed/stream-756.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Soccer Plus</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Sports 502 AU', 'FOX Sports 502 AU', ['https://dlhd.sx/embed/stream-820.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Sports 502 AU</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Sports 503 AU', 'FOX Sports 503 AU', ['https://dlhd.sx/embed/stream-821.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Sports 503 AU</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Sports 504 AU', 'FOX Sports 504 AU', ['https://dlhd.sx/embed/stream-822.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Sports 504 AU</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Sports 505 AU', 'FOX Sports 505 AU', ['https://dlhd.sx/embed/stream-823.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Sports 505 AU</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Sports 506 AU', 'FOX Sports 506 AU', ['https://dlhd.sx/embed/stream-824.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Sports 506 AU</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('FOX Sports 507 AU', 'FOX Sports 507 AU', ['https://dlhd.sx/embed/stream-825.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FOX Sports 507 AU</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Fox Sports Argentina', 'Fox Sports Argentina', ['https://dlhd.sx/embed/stream-767.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Fox Sports Argentina</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-              <div class="channel-item" onclick="selectChannel('Fox Sports 2 Argentina', 'Fox Sports 2 Argentina', ['https://dlhd.sx/embed/stream-788.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Fox Sports 2 Argentina</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-              <div class="channel-item" onclick="selectChannel('Fox Sports 3 Argentina', 'Fox Sports 3 Argentina', ['https://dlhd.sx/embed/stream-789.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Fox Sports 3 Argentina</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            
-              <div class="channel-item" onclick="selectChannel('Fox Sports Premium MX', 'Fox Sports Premium MX', ['https://dlhd.sx/embed/stream-830.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Fox Sports Premium MX</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            
-              <div class="channel-item" onclick="selectChannel('FanCode', 'FanCode', ['https://geylangfood.com.sg/mpd/fanc2.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">FanCode</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-          </div>
-          <div id="menu7-tab" class="channel-panel"></div>
-          <div id="menu8-tab" class="channel-panel">
-          <div class="channel-item" onclick="selectChannel('Hot Star', 'Hot Star', ['https://userr3536.ifrem.net/iframe/frame.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Hot Star</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu9-tab" class="channel-panel"></div>
-          <div id="menu10-tab" class="channel-panel"></div>
-          <div id="menu11-tab" class="channel-panel"></div>
-          <div id="menu12-tab" class="channel-panel">
-            <!-- La Liga TV will be added here dynamically by addChannel -->
-          </div>
-          <div id="menu13-tab" class="channel-panel"></div>
-          <div id="menu14-tab" class="channel-panel"></div>
-          <div id="menu15-tab" class="channel-panel">
-          
-          <div class="channel-item" onclick="selectChannel('ovo ', 'ovo ', ['https://goalzlive.xyz/events/stream1/'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">ovo</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          
-          
-          
-          </div>
-          <div id="menu16-tab" class="channel-panel">
-          
-          <div class="channel-item" onclick="selectChannel('PTV Sports ', 'PTV Sports', ['https://dlhd.link/stream/stream-450.php','//streamcrichd.com/update/ptv.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">PTV Sports</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            </div>
-            
-          
-          
-          
-          
-          <div id="menu17-tab" class="channel-panel"></div>
-          <div id="menu18-tab" class="channel-panel"></div>
-          <div id="menu19-tab" class="channel-panel">
-            
-            
-             <div class="channel-item" onclick="selectChannel('Sony Sports ten 1 ', 'Sony Sports ten 1', ['https://sliv.fredflix.fun/play.php?id=sony_ten1hd'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Sony Sports ten 1 </div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            <div class="channel-item" onclick="selectChannel('Sony Sports ten 2 ', 'Sony Sports ten 2', ['https://sliv.fredflix.fun/play.php?id=sony_ten2hd'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Sony Sports ten 2 </div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-             <div class="channel-item" onclick="selectChannel('Sony Sports ten 3 ', 'Sony Sports ten 3', ['https://sliv.fredflix.fun/play.php?id=sony_ten3hd'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Sony Sports ten 3 </div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-             
-             <div class="channel-item" onclick="selectChannel('Sony Sports ten 4 ', 'Sony Sports ten 4', ['https://sliv.fredflix.fun/play.php?id=sony_ten4hd'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Sony Sports ten 4 </div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            
-               <div class="channel-item" onclick="selectChannel('Sony Sports ten 5 ', 'Sony Sports ten 5', ['https://sliv.fredflix.fun/play.php?id=sony_ten5hd'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Sony Sports ten 5 </div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-           <div class="channel-item" onclick="selectChannel('Star Sports 1 ', 'Star Sports 1', ['//streamcrichd.com/update/star.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Star Sports 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Star Sports 2 ', 'Star Sports 2', ['https://cdn.crichdplays.ru/embed2.php?id=starsp2'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Star Sports 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('StarZPlay CricLife', 'StarZPlay CricLife', ['https://dlhd.sx/embed/stream-284.php', 'https://dlhd.sx/embed/stream-282.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">StarZPlay CricLife</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            <div class="channel-item" onclick="selectChannel('Sky Sports Cricket', 'Sky Sports Cricket', ['https://dlhd.sx/embed/stream-65.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Sky Sports Cricket</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            <div class="channel-item" onclick="selectChannel('SporTV Brasil', 'SporTV Brasil', ['https://dlhd.sx/embed/stream-78.php'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">SporTV Brasil</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            
-          </div>
-          <div id="menu20-tab" class="channel-panel">
-          <div class="channel-item" onclick="selectChannel('TNT Sports 1 ', 'TNT Sports 1', ['https://dailyreport.com.bd/mpd/tnt1.php','https://cxh.pages.dev/tnt1/','//stream.crichd.sc/update/bt1.php','//streamcrichd.com/update/bt1.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-        <div class="channel-item" onclick="selectChannel('TNT Sports 2 ', 'TNT Sports 2', ['https://cxh.pages.dev/tnt2/','https://streamingon.org/embed/hd-9.php','https://api.dailyreport.com.bd/AGB.php?id=TNT_2_GB'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('TNT Sports 3 ', 'TNT Sports 3', ['https://geylangfood.com.sg/mpd/tnt3.php','https://cxh.pages.dev/tnt3/','https://api.dailyreport.com.bd/AGB.php?id=TNT_3_GB','https://streamingon.org/embed/tv-9.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports 3</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          <div class="channel-item" onclick="selectChannel('TNT Sports 4 ', 'TNT Sports 4', ['https://modistreams.org/embed/ucl%2F2026-01-21%2Fsla-bar','https://cxh.pages.dev/tnt4/','https://streamingon.org/embed/tv-15.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports 4</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-             <div class="channel-item" onclick="selectChannel('TNT Sports USA ', 'TNT Sports USA', ['https://dlhd.sx/embed/stream-338.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('TNT Sports Argentina ', 'TNT Sports Argentina', ['https://otheremotions.com/good/?id=1'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports Argentina</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-               <div class="channel-item" onclick="selectChannel('TNT Sports HD Chile ', 'TNT Sports HD Chile', ['https://dlhd.sx/embed/stream-642.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TNT Sports HD Chile</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            <div class="channel-item" onclick="selectChannel('TruTV USA ', 'TruTV USA', ['https://dlhd.sx/embed/stream-341.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TruTV USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-             <div class="channel-item" onclick="selectChannel('TUDN USA ', 'TUDN USA', ['https://dlhd.sx/embed/stream-66.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TUDN USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-              <div class="channel-item" onclick="selectChannel('TBS USA ', 'TBS USA', ['https://dlhd.sx/embed/stream-336.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TBS USA</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            
-              <div class="channel-item" onclick="selectChannel('Telecinco Spain ', 'Telecinco Spain', ['https://dlhd.sx/embed/stream-532.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Telecinco Spain</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            
-            
-            
-            
-            
-               <div class="channel-item" onclick="selectChannel('TYC Sports Argentina ', 'TYC Sports Argentina', ['https://dlhd.sx/embed/stream-746.php'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">TYC Sports Argentina</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-            <div class="channel-item" onclick="selectChannel('T Sports Bangla', 'T Sports Bangla', ['https://cricrex.live/tsports/test2.php?id=1','https://aynaott.fredflix.fun/play.html?channel_id=fc95d30e-5323-4c12-bb38-7a1e3f04acc2'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">T Sports Bangla</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Toffee', 'Toffee', ['https://testbd4.netlify.app/toffee1'], this)">
-            <div class="channel-logo">
-              <i class="fa-solid fa-tv"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Toffee</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu21-tab" class="channel-panel"></div>
-          <div id="menu22-tab" class="channel-panel"></div>
-          <div id="menu23-tab" class="channel-panel">
-             <div class="channel-item" onclick="selectChannel('Willow Cricket 1', 'Willow Cricket 1', ['//streamcrichd.com/update/willowcricket.php', '//stream.crichd.sc/update/willowcricket.php','https://dlhd.link/stream/stream-346.php','https://dlhd.link/casting/stream-346.php','https://dailyreport.com.bd/mpd/willow.php'], this)">            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Willow Cricket 1</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-           <div class="channel-item" onclick="selectChannel('Willow Cricket 2', 'Willow Cricket 2', ['https://dlhd.link/stream/stream-598.php','https://dlhd.link/casting/stream-598.php','https://me.webcric.com/frame3.htm'], this)">
-            <div class="channel-logo">
-              <i class="fas fa-futbol"></i>
-            </div>
-            <div class="channel-info">
-              <div class="channel-name">Willow Cricket 2</div>
-            </div>
-            <div class="channel-quality">HD</div>
-          </div>
-          </div>
-          <div id="menu24-tab" class="channel-panel"></div>
-          <div id="menu25-tab" class="channel-panel"></div>
-          <div id="menu26-tab" class="channel-panel"></div>
-        </div>
-      </aside>
-    </div>
-  </div> <!-- End of .container INSIDE #premier -->
- <script>
-// Function to add a new channel to the appropriate menu tab and the All menu
-function addChannel(channelId, channelName, servers, quality = 'HD') {
-  const firstLetter = channelName.charAt(0).toUpperCase();
-  // Ensure menuIndex is for A-Z, otherwise it won't be added to a letter-specific tab.
-  let menuIndex = 0;
-  if (firstLetter >= 'A' && firstLetter <= 'Z') {
-    menuIndex = firstLetter.charCodeAt(0) - 64; // A=1, B=2, ..., Z=26
-  }
+      <button class="active" data-tab="tab1_laliga">FIFA World Cup</button> <!-- data-tab made unique for laliga -->
+      <button data-tab="tab2_laliga">Premier League</button>
+      <button data-tab="tab3_laliga">La Liga</button>
+      <button data-tab="tab4_laliga">Serie A</button>
+      <button data-tab="tab5_laliga">Bundesliga</button>
+      <button data-tab="tab6_laliga">Ligue 1</button>
+      <button data-tab="tab7_laliga">UEFA Champions League</button>
+      <button data-tab="tab8_laliga">UEFA Europa League</button>
+      <button data-tab="tab9_laliga">UEFA Conference League</button>
   
-  const allPanel = document.getElementById('menu0-tab');
 
-  if (!allPanel) return;
+      
+    </nav>
+  </aside>
 
-  const channelItemHTML = `
-    <div class="channel-logo">
-      <i class="fas fa-futbol"></i>
+  <section id="verticalTabsContent">
+    <div class="tabContent active" id="tab1_laliga"> <!-- id made unique for laliga -->
+      <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/fifa-world-cup/?token=MTg1ODI2XzE3NzkwNTU0NTdfZWY2MDg5YmI0Mzg2OWMzYjUyYTgyMTQzNTExNGJiMGUxMzU0YmIzZQ==&amp;pref=%7B%22nomaxwidth%22%3Atrue%7D"></iframe>
     </div>
-    <div class="channel-info">
-      <div class="channel-name">${channelName}</div>
-    </div>
-    <div class="channel-quality">${quality}</div>
-  `;
+<div class="tabContent" id="tab2_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/england-premier-league/?token=demo"></iframe>
+</div>
 
-  // Create item for specific letter panel (if menuIndex is valid)
-  if (menuIndex > 0) {
-    const panelId = `menu${menuIndex}-tab`;
-    const panel = document.getElementById(panelId);
-    if (panel) {
-      const specificChannelItem = document.createElement('div');
-      specificChannelItem.className = 'channel-item';
-      specificChannelItem.innerHTML = channelItemHTML;
-      specificChannelItem.onclick = function() { selectChannel(channelId, channelName, servers, this); };
-      panel.appendChild(specificChannelItem);
-    }
-  }
+<div class="tabContent" id="tab3_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/spain-la-liga/?token=demo"></iframe>
+</div>
 
-  // Create item for "All" panel
-  const allChannelItem = document.createElement('div');
-  allChannelItem.className = 'channel-item';
-  allChannelItem.innerHTML = channelItemHTML;
-  allChannelItem.onclick = function() { selectChannel(channelId, channelName, servers, this); };
-  allPanel.appendChild(allChannelItem);
-}
+<div class="tabContent" id="tab4_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/italy-serie-a/?token=demo"></iframe>
+</div>
 
-function populateAllMenu() {
-  const allPanel = document.getElementById('menu0-tab');
-  if (!allPanel) return;
-  allPanel.innerHTML = ''; // Clear previous items
+<div class="tabContent" id="tab5_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/germany-bundesliga/?token=demo"></iframe>
+</div>
 
-  for (let i = 1; i <= 26; i++) {
-    const panel = document.getElementById(`menu${i}-tab`);
-    if (panel) {
-      const channelItems = panel.querySelectorAll('.channel-item');
-      channelItems.forEach(item => {
-        const clonedItem = item.cloneNode(true);
-        // The onclick attribute string (e.g., "selectChannel('Name', ..., this)") is copied by cloneNode(true).
-        // 'this' within that string will correctly refer to clonedItem when clicked.
-        allPanel.appendChild(clonedItem);
-      });
-    }
-  }
-}
+<div class="tabContent" id="tab6_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/france-ligue-1/?token=demo"></iframe>
+</div>
 
+<div class="tabContent" id="tab7_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/uefa-champions-league/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg=="></iframe>
+</div>
 
-document.addEventListener('DOMContentLoaded', function() {
-  populateAllMenu(); // Populates 'All' tab from hardcoded channels first
+<div class="tabContent" id="tab8_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/uefa-europa-league/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg=="></iframe>
+</div>
 
-  // Define "La Liga TV" as the default channel
-  const defaultChannelData = {
-    id: 'la-liga-tv', // Unique ID for the channel
-    name: 'La Liga TV',
-    servers: [
-      'https://dlhd.sx/embed/stream-276.php',
-      '//stream.crichd.sc/update/laligauk.php'
-    ]
-    // Quality defaults to 'HD' in addChannel function
-  };
-  
-  // Add "La Liga TV" to its specific letter tab ('L') AND to the 'All' tab.
-  // This function sets .onclick property, which is fine for items added after populateAllMenu.
-  addChannel(defaultChannelData.id, defaultChannelData.name, defaultChannelData.servers);
+<div class="tabContent" id="tab9_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/uefa-conference-league/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg=="></iframe>
+</div>
+    
+   
+    
+    
+    
+  </section>
+</div>
 
-  // Example of adding other channels dynamically (currently empty in your code)
-  const channels = [ ]; 
-  channels.forEach(channel => {
-    addChannel(channel.id, channel.name, channel.servers);
-  });
-  
-  // Removed auto-activation of football-tab as per previous requirement.
-  // const defaultPremierInfoPanel = document.getElementById('football-tab');
-  // if (defaultPremierInfoPanel) {
-  //   // defaultPremierInfoPanel.classList.add('active'); 
-  // }
+<script>
+  // Script for #laliga tab's internal tabbing system
+  const laligaContainer = document.getElementById('laliga'); // Get the parent container
+  if (laligaContainer) {
+      const tabs_laliga = laligaContainer.querySelectorAll('#verticalTabsMenu button');
+      const contents_laliga = laligaContainer.querySelectorAll('#verticalTabsContent > .tabContent'); // Direct children
+      const searchInput_laliga = laligaContainer.querySelector('#tabSearchInput');
 
+      function activateTab_laliga(tab) {
+        tabs_laliga.forEach(t => t.classList.remove('active'));
+        contents_laliga.forEach(c => c.classList.remove('active'));
 
-  // Automatically select and load "La Liga TV"
-  const allPanelForDefaultSelection = document.getElementById('menu0-tab');
-  let laLigaChannelElement = null;
-
-  if (allPanelForDefaultSelection) {
-    // Find "La Liga TV" in the "All" tab. It was added by the addChannel call above.
-    const allChannelItems = allPanelForDefaultSelection.querySelectorAll('.channel-item');
-    for (let i = 0; i < allChannelItems.length; i++) {
-        const nameElement = allChannelItems[i].querySelector('.channel-name');
-        if (nameElement && nameElement.textContent === defaultChannelData.name) {
-            laLigaChannelElement = allChannelItems[i];
-            break; // Found it
-        }
-    }
-  }
-
-  if (laLigaChannelElement) {
-    laLigaChannelElement.click(); // Click "La Liga TV" if found in the UI list
-  } else {
-    // Fallback: If "La Liga TV" element wasn't found for clicking (e.g., list issue),
-    // select it directly by its data. This ensures it loads.
-    console.warn('"La Liga TV" element not found in UI for default click, selecting directly.');
-    selectChannel(defaultChannelData.id, defaultChannelData.name, defaultChannelData.servers, null);
-  }
-});
-
-function selectChannel(channelId, channelName, servers, channelElement = null) {
-  document.getElementById('currentChannel').textContent = channelName;
-
-  // Clear active state from all channel items everywhere
-  document.querySelectorAll('.channel-item').forEach(item => {
-    item.classList.remove('active');
-  });
-
-  if (channelElement) {
-    channelElement.classList.add('active'); // Activate the clicked element
-
-    // Sync active state between "All" tab and specific letter tabs
-    const allPanel = document.getElementById('menu0-tab');
-    const specificPanelParent = channelElement.closest('.channel-panel:not(#menu0-tab)');
-
-    if (allPanel) { // Ensure allPanel exists
-        if (specificPanelParent) { // Clicked in a specific letter tab
-            const correspondingItemInAll = Array.from(allPanel.querySelectorAll('.channel-item')).find(
-                item => item.querySelector('.channel-name') && item.querySelector('.channel-name').textContent === channelName
-            );
-            if (correspondingItemInAll) correspondingItemInAll.classList.add('active');
-        }
-        else if (channelElement.closest('#menu0-tab')) { // Clicked in "All" tab
-            const firstLetter = channelName.charAt(0).toUpperCase();
-            if (firstLetter >= 'A' && firstLetter <= 'Z') { 
-                const menuIndex = firstLetter.charCodeAt(0) - 64;
-                const specificPanel = document.getElementById(`menu${menuIndex}-tab`);
-                if (specificPanel) {
-                    const correspondingItemInSpecific = Array.from(specificPanel.querySelectorAll('.channel-item')).find(
-                        item => item.querySelector('.channel-name') && item.querySelector('.channel-name').textContent === channelName
-                    );
-                    if (correspondingItemInSpecific) correspondingItemInSpecific.classList.add('active');
-                }
+        tab.classList.add('active');
+        const targetId = tab.getAttribute('data-tab');
+        const targetContent = laligaContainer.querySelector(`#${targetId}`); // Query within laligaContainer
+        if (targetContent) {
+            targetContent.classList.add('active');
+            
+            const iframeInTarget = targetContent.querySelector('iframe');
+            if (iframeInTarget && iframeInTarget.dataset.originalSrc) { 
+                // This is generally handled by the main openTab's iframe logic when switching main tabs.
+                // If this internal tab was just hidden/shown without main tab change, this might be needed.
+                // However, the problem focuses on main tab switching.
             }
         }
-    }
+      }
+
+      tabs_laliga.forEach(tab => {
+        tab.addEventListener('click', () => activateTab_laliga(tab));
+      });
+
+      if (searchInput_laliga) {
+        searchInput_laliga.addEventListener('input', () => {
+          const query = searchInput_laliga.value.toLowerCase();
+          let firstMatch = null;
+
+          tabs_laliga.forEach(tab => {
+            const text = tab.textContent.toLowerCase();
+            const match = text.includes(query);
+            tab.style.display = match || query === "" ? "block" : "none";
+            if (match && !firstMatch) firstMatch = tab;
+          });
+
+          if (firstMatch) {
+            if (!firstMatch.classList.contains('active')) {
+                 activateTab_laliga(firstMatch);
+            }
+          } else if (query === "") {
+              const firstVisibleTab = Array.from(tabs_laliga).find(t => t.style.display !== "none");
+              if(firstVisibleTab && !firstVisibleTab.classList.contains('active')){
+                  activateTab_laliga(firstVisibleTab);
+              } else if (!firstVisibleTab && tabs_laliga.length > 0 && !tabs_laliga[0].classList.contains('active')) {
+                  activateTab_laliga(tabs_laliga[0]);
+              }
+          }
+        });
+      }
+      const defaultActiveButtonLaliga = laligaContainer.querySelector('#verticalTabsMenu button.active');
+      if (defaultActiveButtonLaliga) {
+          // Default already active, no explicit call needed here unless iframe needs reload logic specific to internal tabs.
+      } else if (tabs_laliga.length > 0) {
+          // activateTab_laliga(tabs_laliga[0]); // Activate first tab if none are marked active
+      }
+
   }
-
-
-  const serverControls = document.getElementById('serverControls');
-  serverControls.innerHTML = '';
-  let firstServerUrl = null;
-  let firstServerButtonElement = null; // To pass the button element to changeStream
-
-  if (servers && servers.length > 0) {
-    firstServerUrl = servers[0]; // Get the first server URL
-    servers.forEach((server, index) => {
-        const serverBtn = document.createElement('button');
-        serverBtn.className = 'server-btn';
-        serverBtn.innerHTML = `<i class="fas fa-server"></i> Server ${index + 1}`;
-        serverBtn.onclick = function() {
-          changeStream(this, server, channelName);
-          // Optional: If you want scroll on server change too on mobile
-          // if (window.innerWidth <= 768) {
-          //   const iframeElem = document.getElementById('streamFrame');
-          //   if (iframeElem) {
-          //     setTimeout(() => { iframeElem.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
-          //   }
-          // }
-        };
-        serverControls.appendChild(serverBtn);
-        if (index === 0) {
-            firstServerButtonElement = serverBtn; // Store the first button element
-        }
-    });
-  } else {
-     document.getElementById('streamFrame').src = 'about:blank'; // Clear iframe
-     document.getElementById('currentServer').textContent = 'No servers available';
-  }
-
-  // Load the first server if available (changeStream will also activate the button)
-  if (firstServerUrl) {
-      changeStream(firstServerButtonElement, firstServerUrl, channelName);
-  }
-
-  // Scroll to iframe on mobile after channel selection and first server has been set up to load
-  if (window.innerWidth <= 768) { // Mobile check (e.g., screen width <= 768px)
-    const iframeElement = document.getElementById('streamFrame');
-    if (iframeElement) {
-      // Use a small timeout to ensure the UI has updated and iframe is potentially rendered
-      setTimeout(() => {
-        iframeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 100); // 100ms delay, adjust if needed
-    }
-  }
-}
-
-
-function changeStream(button, url, channelName) {
-  document.getElementById('streamFrame').src = url;
-  document.getElementById('currentServer').textContent = `Playing: ${channelName}`;
-
-  // Deactivate all server buttons first
-  document.querySelectorAll('.server-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  // Activate the clicked/current server button
-  if(button) { // button might be null if called directly without a UI element
-     button.classList.add('active');
-  }
-}
-
-// This function seems unused as there are no .info-tabs .info-tab buttons in the HTML for #premier
-function openInfoTab(tabName) {
-  document.querySelectorAll('#premier .info-section .tab-panel').forEach(tab => {
-    tab.classList.remove('active');
-  });
-  document.querySelectorAll('#premier .info-tabs .info-tab').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  const tabPanel = document.getElementById(`${tabName}-tab`);
-  if(tabPanel) tabPanel.classList.add('active');
-  
-  const clickedButton = (typeof event !== 'undefined' && event && event.currentTarget) ? event.currentTarget : null;
-  if(clickedButton) clickedButton.classList.add('active');
-}
-
-function openChannelTab(tabName) {
-  document.querySelectorAll('.channel-panel').forEach(panel => {
-    panel.classList.remove('active');
-  });
-  document.querySelectorAll('.channel-tab').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  const panel = document.getElementById(`${tabName}-tab`);
-  if (panel) {
-    panel.classList.add('active');
-  }
-  
-  const clickedButton = (typeof event !== 'undefined' && event && event.currentTarget) ? event.currentTarget : null;
-  if(clickedButton) clickedButton.classList.add('active');
-
-
-  const searchInput = document.querySelector('.search-input');
-  const searchTerm = searchInput ? searchInput.value.toLowerCase() : "";
-  filterChannels(searchTerm);
-}
-
-const searchInputElement = document.querySelector('.search-input');
-if(searchInputElement) {
-    searchInputElement.addEventListener('input', function() {
-      const searchTerm = this.value.toLowerCase();
-      filterChannels(searchTerm);
-    });
-}
-
-function filterChannels(searchTerm) {
-  const activePanel = document.querySelector('.channel-panel.active');
-  if (!activePanel) return;
-
-  const channelItems = activePanel.querySelectorAll('.channel-item');
-  channelItems.forEach(item => {
-    const channelNameElement = item.querySelector('.channel-name');
-    if (channelNameElement) {
-        const channelName = channelNameElement.textContent.toLowerCase();
-        item.style.display = channelName.includes(searchTerm) ? 'flex' : 'none';
-    }
-  });
-}
 </script>
-</body> <!-- End of nested body -->
-</html> <!-- End of nested html -->
 
-  </div> <!-- End of div#premier -->
-
-  <div id="laliga" class="tabcontent">
-    <iframe data-src="https://www.scorebat.com/embed/livescore/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg==" allowfullscreen loading="lazy"></iframe>
+</body>
+</html>
   </div>
 
-  <div id="server1" class="tabcontent">
-    <iframe data-src="https://crex.com/" allowfullscreen loading="lazy"></iframe>
+  <div class="tabcontent" id="server1">
+   <!-- মেইন কন্টেইনার যা বাড়তি অংশগুলো ঢেকে রাখবে -->
+<div style="border: 1px solid #ddd; height: 600px; overflow: hidden; position: relative; width: 100%;">
+    
+    <iframe allowfullscreen="" id="frame" src="https://www.scorebat.com/embed/livescore/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg==" style="border: none; height: 650px; left: -45px; position: absolute; top: -48px; width: calc(100% + 45px);">
+    </iframe>
+
+</div>
   </div>
+  
+  
+ 
+  
 
   <script>
+    let previouslyActiveTabContent = null;
+
+    function randomlySelectChannelForTab(tabRootElement) {
+        if (!tabRootElement) {
+            // console.log("Tab root element not provided for random selection.");
+            return;
+        }
+
+        // Delay slightly to ensure any internal tab/channel setup has a chance to complete
+        // and a default channel might have been loaded by the tab's own script.
+        // Our random selection will then override this if applicable.
+        setTimeout(() => {
+            const activeChannelPanel = tabRootElement.querySelector('.channel-list .channel-panel.active');
+
+            if (activeChannelPanel) {
+                // Get all channel items within the active panel
+                const channelItems = activeChannelPanel.querySelectorAll('.channel-item');
+                
+                // Filter for items that are currently visible (not hidden by search, for example)
+                const visibleChannelItems = Array.from(channelItems).filter(item => {
+                    const computedStyle = window.getComputedStyle(item);
+                    return computedStyle.display !== 'none';
+                });
+
+                if (visibleChannelItems.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * visibleChannelItems.length);
+                    const randomChannelToSelect = visibleChannelItems[randomIndex];
+                    
+                    // console.log(`In tab ${tabRootElement.id}, randomly selecting channel: ${randomChannelToSelect.querySelector('.channel-name')?.textContent || 'Unknown Name'}`);
+                    
+                    // Simulate a click on the channel item to trigger its existing selection logic
+                    if (typeof randomChannelToSelect.click === 'function') {
+                        randomChannelToSelect.click();
+                    } else {
+                        // console.warn("Randomly selected channel item does not have a click method.", randomChannelToSelect);
+                    }
+                } else {
+                    // console.log(`No visible channels to select randomly in active panel of tab ${tabRootElement.id}.`);
+                }
+            } else {
+                // console.log(`No active channel panel found in tab ${tabRootElement.id} for random selection.`);
+            }
+        }, 100); // 100ms delay. This can be adjusted if necessary.
+    }
+
+
     function openTab(evt, tabName) {
-      document.querySelectorAll(".tabcontent").forEach(tc => tc.style.display = "none");
-      document.querySelectorAll(".tablinks").forEach(tl => tl.classList.remove("active"));
+        const currentTabContent = document.getElementById(tabName);
+        if (!currentTabContent) {
+            console.error("Target tab content not found:", tabName);
+            return;
+        }
 
-      const tabContent = document.getElementById(tabName);
-      tabContent.style.display = "block";
-      evt.currentTarget.classList.add("active");
+        // 1. Unload iframes in the previously active tab (if it's different from the current)
+        if (previouslyActiveTabContent && previouslyActiveTabContent !== currentTabContent) {
+            const iframesToUnload = previouslyActiveTabContent.querySelectorAll("iframe");
+            iframesToUnload.forEach(iframe => {
+                const currentIframeSrc = iframe.src;
+                if (currentIframeSrc && currentIframeSrc.toLowerCase() !== 'about:blank') {
+                    if (!iframe.dataset.originalSrc || iframe.dataset.originalSrc.toLowerCase() !== 'about:blank') {
+                         iframe.dataset.originalSrc = currentIframeSrc; 
+                    }
+                    iframe.src = 'about:blank'; 
+                } else if (!iframe.dataset.originalSrc && iframe.dataset.src) { 
+                     iframe.dataset.originalSrc = iframe.dataset.src;
+                }
+            });
+        }
 
-      const iframe = tabContent.querySelector("iframe[data-src]");
-      if (iframe && iframe.dataset.src) {
-        iframe.src = iframe.dataset.src;
-        iframe.removeAttribute("data-src");
-      }
+        // 2. Hide all tab contents and remove active class from tab links
+        document.querySelectorAll(".tabcontent").forEach(tc => {
+            if (tc !== currentTabContent) {
+                tc.style.display = "none";
+            }
+        });
+        document.querySelectorAll(".tablinks").forEach(tl => tl.classList.remove("active"));
+
+        // 3. Show the current tab and set active class on its link
+        currentTabContent.style.display = "block";
+        if (evt && evt.currentTarget) { 
+            evt.currentTarget.classList.add("active");
+        }
+
+        // 4. Randomly select a channel if the tab is a TV channel tab
+        const targetTabId = currentTabContent.id;
+        if (targetTabId === 'premier' || 
+            targetTabId === 'premier2' ||
+            targetTabId.startsWith('premier2_c')) { // Covers premier2_c1, premier2_c2, etc.
+            
+            randomlySelectChannelForTab(currentTabContent);
+        }
+
+        // 5. Load/Reload iframes in the current tab (main iframes like in 'laliga' or 'server1')
+        // The iframes within premier*, premier2* are handled by their respective selectChannel functions.
+        const iframesInCurrentTab = currentTabContent.querySelectorAll("iframe"); 
+        iframesInCurrentTab.forEach(iframe => {
+            // This logic primarily targets top-level iframes in tabs like 'laliga' or 'server1',
+            // or iframes inside info-sections of 'premier' tabs that are not the main player.
+            // The main player iframe (e.g. #streamFrame) in premier* tabs gets its src updated by selectChannel_...
+            // So, we need to be careful not to overwrite what selectChannel just did if random selection occurred.
+
+            // Only proceed if this iframe is NOT one of the main player iframes handled by selectChannel_...
+            if (iframe.id && (iframe.id.startsWith('streamFrame') || iframe.id.startsWith('streamFrame_2'))) {
+                 // This iframe's src is managed by selectChannel_... or changeStream_...
+                 // If it's blank and has an originalSrc, it means it was unloaded.
+                 // The random selection (if it happened) would have already set its src.
+                 // If random selection didn't happen (e.g., no channels),
+                 // and it was previously unloaded, we might want to restore its originalSrc.
+                 // However, for premier* tabs, a channel should be selected (default or random).
+                 // So, usually, we don't need to do much here for the main player iframe.
+                 // If it's still 'about:blank' after random selection attempt, it means no channel loaded.
+                 if (iframe.src.toLowerCase() === 'about:blank' && iframe.dataset.originalSrc && iframe.dataset.originalSrc.toLowerCase() !== 'about:blank') {
+                    // This case is tricky. If random selection failed to pick a channel,
+                    // and this iframe was previously active and then unloaded, should we restore it?
+                    // For now, let the selectChannel logic be the sole source of truth for these player iframes.
+                 }
+                 return; // Skip further processing for main player iframes here
+            }
+
+
+            let intendedSrc = iframe.dataset.originalSrc; 
+
+            if (!intendedSrc && iframe.dataset.src) { 
+                intendedSrc = iframe.dataset.src;
+                iframe.dataset.originalSrc = intendedSrc; 
+                iframe.removeAttribute("data-src"); 
+            }
+            
+            if (!intendedSrc && iframe.src && iframe.src.toLowerCase() !== 'about:blank') {
+                intendedSrc = iframe.src;
+                iframe.dataset.originalSrc = intendedSrc; 
+            }
+
+            if (intendedSrc && intendedSrc.toLowerCase() !== 'about:blank') {
+                if (iframe.src.toLowerCase() === 'about:blank' || iframe.src !== intendedSrc) {
+                    iframe.src = intendedSrc;
+                }
+            } else if (intendedSrc && intendedSrc.toLowerCase() === 'about:blank' && iframe.src.toLowerCase() !== 'about:blank') {
+                iframe.src = 'about:blank';
+            }
+        });
+        previouslyActiveTabContent = currentTabContent;
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-        const defaultOpenButton = document.getElementById("defaultOpen");
-        if (defaultOpenButton) {
-            defaultOpenButton.click();
-        }
-    });
+    const defaultOpenButton = document.getElementById("defaultOpen");
+    if (defaultOpenButton) {
+        const simulatedEvent = { currentTarget: defaultOpenButton };
+        const tabNameToOpen = 'server2'; // এটি পরিবর্তন করে server2 করা হয়েছে
+        openTab(simulatedEvent, tabNameToOpen);
+    }
+});
   </script>
 
 </body>
