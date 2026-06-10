@@ -1,1698 +1,1711 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html>
-<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html lang="en">
 <head>
-  <meta charset='UTF-8'/>
-  <meta content='width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes' name='viewport'/>
-  <title><data:blog.pageTitle/></title>
-
-  <b:include data='blog' name='all-head-content'/>
-
-  <b:skin><![CDATA[
+  
+  
+  <meta charset="UTF-8"></meta>
+  <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+  <title>Dark Mode Live Scores Tabs - New Design</title>
+  <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0A192F; /* UPDATED */
+      color: #CBD5E1; /* UPDATED */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden; /* Prevent horizontal scroll on main body */
     }
-    .sports-navbar {
+
+    .tab {
       display: flex;
-      align-items: center;
+      background-color: #1E293B; /* UPDATED */
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5); /* Kept original shadow, adjust if needed */
       overflow-x: auto;
-      background-color: #111;
-      padding: 12px 10px;
-      white-space: nowrap;
-      border-bottom: 1px solid #222;
-    }
-    .sports-navbar::-webkit-scrollbar {
-      display: none;
-    }
-    .sports-navbar .logo {
-      display: flex;
-      align-items: center;
-      font-size: 20px;
-      font-weight: bold;
-      margin-right: 20px;
-    }
-    .sports-navbar .logo a {
-      color: #fff;
-      text-decoration: none;
-      font-size: inherit;
-      font-weight: inherit;
-      display: flex;
-      align-items: center;
-      transition: color 0.3s ease;
-    }
-    .sports-navbar .logo a:hover {
-      color: #00e676;
-    }
-    .sports-navbar .logo img {
-      height: 28px;
-      margin-right: 10px;
-    }
-
-    .nav-links-wrapper {
-      display: flex;
-      align-items: center;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-    .nav-links-wrapper::-webkit-scrollbar {
-      display: none;
-    }
-
-    .sports-navbar .nav-links-wrapper a {
-      display: inline-flex;
-      align-items: center;
-      color: #ccc;
-      text-decoration: none;
-      font-size: 15px;
-      margin-right: 16px;
-      transition: color 0.3s ease;
-    }
-    .sports-navbar .nav-links-wrapper a:hover,
-    .sports-navbar .nav-links-wrapper a.nav-link-active {
-      color: #00e676;
-    }
-    .sports-navbar .nav-links-wrapper a img {
-      height: 22px;
-      width: 22px;
-      margin-right: 8px;
-    }
-
-    .clock-wrapper {
-      display: inline-flex;
-      align-items: center;
-      margin-left: auto;
-      padding-left: 20px;
-    }
-
-    /* Style for the new Date display */
-    .current-date-display {
-      color: #ccc;
-      font-size: 14px;
-      margin-right: 10px;
-      white-space: nowrap;
-    }
-
-    .digital-clock-display {
-      color: #00e676;
-      font-size: 15px;
-      font-weight: bold;
-      min-width: 75px;
-      text-align: right;
-      margin-right: 8px;
-    }
-
-    .clock-format-toggle-btn {
-      color: #a0a0a0;
-      font-size: 11px;
-      font-weight: normal;
-      cursor: pointer;
-      padding: 3px 6px;
-      border: 1px solid #333;
-      border-radius: 4px;
-      background-color: #222;
-      transition: color 0.2s ease, background-color 0.2s ease;
+      scrollbar-width: thin;
+      scrollbar-color: #3B82F6 transparent; /* UPDATED - primary blue */
       user-select: none;
+    }
+
+    .tab::-webkit-scrollbar {
+      height: 6px;
+    }
+    .tab::-webkit-scrollbar-thumb {
+      background-color: #3B82F6; /* UPDATED - primary blue */
+      border-radius: 3px;
+    }
+
+    .tab button {
+      flex: none;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 16px 30px;
+      color: #94A3B8; /* UPDATED - muted text */
+      font-size: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      transition:
+        color 0.3s ease,
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
       white-space: nowrap;
-    }
-    .clock-format-toggle-btn:hover {
-      color: #fff;
-      background-color: #00753a;
-    }
-
-    @media (min-width: 769px) {
-      .nav-links-wrapper {
-        margin-left: auto;
-        margin-right: auto;
-      }
+      border-radius: 0 0 10px 10px;
+      margin: 0 6px;
+      position: relative;
     }
 
-    @media (max-width: 768px) {
-      .sports-navbar {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        overflow-x: hidden;
-        white-space: normal;
-        padding: 10px;
-      }
-      .sports-navbar .logo {
-        order: 1;
-        margin-right: 10px;
-        font-size: 18px;
-      }
-      .sports-navbar .logo img {
-        height: 24px;
-      }
-      .clock-wrapper {
-        order: 2;
-        margin-left: 10px;
-        padding-left: 0;
-        /* Consider flex-shrink: 0; if items get too squeezed by a long logo text */
-        /* flex-shrink: 0; */
-      }
-      .current-date-display {
-        font-size: 12px;
-        margin-right: 8px;
-      }
-      .digital-clock-display {
-        font-size: 13px; /* Adjusted */
-        min-width: auto;
-        margin-right: 5px;
-      }
-      .clock-format-toggle-btn {
-        font-size: 9px; /* Adjusted */
-        padding: 2px 3px; /* Adjusted */
-      }
-      .nav-links-wrapper {
-        order: 3;
-        width: 100%;
-        margin-top: 10px;
-        padding-bottom: 8px;
-        justify-content: center;
-      }
-      .nav-links-wrapper::-webkit-scrollbar {
-        height: 5px;
-        display: block !important;
-      }
-      .nav-links-wrapper::-webkit-scrollbar-thumb {
-        background: #555;
-        border-radius: 3px;
-      }
-      .nav-links-wrapper::-webkit-scrollbar-track {
-        background: #222;
-      }
-      .sports-navbar .nav-links-wrapper a {
-        font-size: 14px;
-        margin-right: 12px;
-      }
-      .sports-navbar .nav-links-wrapper a img {
-        height: 20px;
-        width: 20px;
-      }
-      .nav-links-wrapper a:last-child {
-        margin-right: 0;
-      }
-      .footer-container {
-        padding-left: 5px;
-        padding-right: 5px;
-      }
-      .notice-bar {
-        font-size: 13px;
-        padding: 8px;
-        margin-bottom: 10px;
-      }
-      .footer-menu a {
-        font-size: 13px;
-        margin: 5px 10px;
-      }
+    .tab button:hover {
+      color: #F97316; /* UPDATED - accent orange */
+      background-color: #2B3B52; /* UPDATED - slightly lighter card bg */
+      box-shadow: 0 4px 8px rgba(249, 115, 22, 0.25); /* UPDATED - accent orange shadow */
     }
 
-    .site-footer {
-      background-color: #111;
-      color: #ccc;
-      padding: 25px 15px;
-      border-top: 1px solid #222;
-      text-align: center;
-      margin-top: 40px;
+    .tab button.active {
+      color: #F97316; /* UPDATED - accent orange */
+      background-color: #0A192F; /* UPDATED - main bg */
+      box-shadow:
+        inset 0 -3px 0 0 #F97316, /* UPDATED - accent orange */
+        0 6px 12px rgba(249, 115, 22, 0.4); /* UPDATED - accent orange shadow */
+      font-weight: 700;
     }
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    
+    .tabcontent {
+      display: none;
+      padding: 20px 0 0; /* No horizontal padding on tabcontent itself */
+      background-color: #0A192F; /* UPDATED - main bg */
+      min-height: 800px;
+      /* Removed border-radius from tabcontent to allow iframes to be truly edge-to-edge if they have no radius */
+      /* border-radius: 0 0 12px 12px; */
+      box-shadow: inset 0 1px 5px rgba(255, 255, 255, 0.05); /* Kept original inner shadow */
     }
-    .notice-bar {
-      background-color: #000;
-      color: #00e676;
-      padding: 12px 15px;
-      margin-bottom: 20px;
-      border-radius: 4px;
-      font-size: 14px;
+
+    .tabcontent iframe {
       width: 100%;
-      max-width: 800px;
-      box-sizing: border-box;
+      height: 1000px;
+      border: none;
+      background-color: #0A192F; /* UPDATED - main bg */
+      /* border-radius: 0 0 12px 12px; */ /* Consider removing radius on mobile for edge-to-edge */
+      display: block;
     }
-    .notice-bar p {
-      margin: 0;
-      padding: 0;
+
+    @media (max-width: 768px) { /* Mobile styles for main tab iframes */
+        .tabcontent iframe {
+            border-radius: 0; /* Remove radius for edge-to-edge look */
+        }
     }
-    .footer-menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
+
+
+    @media (max-width: 1000px) {
+      .tab button {
+        padding: 12px 18px;
+        font-size: 13px;
+        margin: 0 3px;
+      }
+      .tabcontent iframe {
+        height: 900px;
+      }
     }
-    .footer-menu a {
-      color: #aaa;
-      text-decoration: none;
-      margin: 8px 15px;
-      font-size: 14px;
-      transition: color 0.3s ease;
-    }
-    .footer-menu a:hover {
-      color: #00e676;
-    }
-    .feed-links {
-      display: none !important;
-    }
-  ]]></b:skin>
+  </style>
+  
+  
 </head>
 <body>
-  <div class='sports-navbar'>
-    <div class='logo'>
-       <a expr:href='data:blog.homepageUrl'>SportsTV</a>
-    </div>
 
-    <div class='nav-links-wrapper'>
-      <a expr:href='data:blog.homepageUrl' id='home-link'>
-        Home
-      </a>
-      
-       <a href='https://khelaview.blogspot.com/p/live-event.html'> Live Event</a>
+  <div class="tab">
+    
 
-      <a href='https://khelaview.blogspot.com/p/football_27.html'><img alt='Football' src='https://watch.cricstream.me/imgs/menu/soccer.svg'/>Football</a>
-      <a href='#'><img alt='Cricket' src='https://watch.cricstream.me/img/cricstream.svg'/>Cricket</a>
-    </div>
 
-    <div class='clock-wrapper'>
-      <span class='current-date-display' id='current-date'/>
-      <span class='digital-clock-display' id='digital-clock'/>
-      <span class='clock-format-toggle-btn' id='clock-format-toggle'>(24h)</span>
-    </div>
+    <button class="tablinks" id="defaultOpen" onclick="openTab(event, 'server2')">Live Event 1</button>
+
+
+    <button class="tablinks" onclick="openTab(event, 'server1')">
+  <img src="https://www.svgrepo.com/show/236509/football.svg" style="height: 20px; margin-right: 8px; vertical-align: middle; width: 20px;" /> 
+  Live Score &amp; Schedule
+   </button>
+    
+    <button class="tablinks" onclick="openTab(event, 'laliga')">
+  <img src="https://www.svgrepo.com/show/236509/football.svg" style="display: inline-block; height: 20px; margin-right: 8px; vertical-align: middle; width: 20px;" />
+  point Table
+   </button>
+    
+    <button class="tablinks" onclick="openTab(event, 'server3')">Add Free TV Channel</button>
+
+    <button class="tablinks" onclick="openTab(event, 'server4')">
+  <img src="https://www.svgrepo.com/show/405146/cricket-game.svg" style="height: 20px; margin-right: 8px; vertical-align: middle; width: 20px;" /> 
+  live Score
+    </button>
+    
+    
+    <!-- END OF 5 NEW DUPLICATED CHAMPIONS LEAGUE BUTTONS -->
   </div>
 
-  <b:section class='main' id='main' showaddelement='yes'>
-    <b:widget id='HTML1' locked='false' title='' type='HTML'>
-      <b:widget-settings>
-        <b:widget-setting name='content'><![CDATA[<style>
-/* --- PREMIUM ULTRA-WIDE DESIGN --- */
+   
+<div class="tabcontent" id="server5">
 
-/* ১. এই সেকশনটিকে জোর করে ফুল উইডথ করা */
-.premium-sport-hub {
-    width: 100vw !important;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw !important;
-    margin-right: -50vw !important;
-    background: #05080a; /* Deep Space Dark */
-    padding: 40px 0;
-    font-family: 'Montserrat', sans-serif;
-    color: #fff;
-    border-top: 2px solid #e50914; /* Netflix Red Accent */
-}
-
-/* ২. প্রিমিয়াম হেডার ডিজাইন */
-.p-header {
-    max-width: 95%;
-    margin: 0 auto 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.p-title {
-    font-size: 22px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    position: relative;
-    display: inline-block;
-    color: #fff;
-}
-
-.p-title span {
-    color: #e50914;
-    text-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
-}
-
-/* ৩. প্রিমিয়াম স্লাইডার কন্টেইনার */
-.p-slider {
-    display: flex;
-    gap: 25px;
-    overflow-x: auto;
-    padding: 20px 5% 40px; /* দুই পাশে ৫% গ্যাপ */
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-}
-.p-slider::-webkit-scrollbar { display: none; }
-
-/* ৪. লিগ কার্ড (Glassmorphism 2.0) */
-.league-card-pro {
-    flex: 0 0 220px;
-    height: 120px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    transition: all 0.5s ease;
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.league-card-pro img {
-    max-width: 75%;
-    max-height: 70%;
-    filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
-    transition: 0.5s;
-}
-
-.league-card-pro:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #e50914;
-    transform: scale(1.08) translateY(-10px);
-    box-shadow: 0 20px 40px rgba(229, 9, 20, 0.2);
-}
-
-/* ৫. ক্লাব গোল্ডেন অর্ব (Circular Glow) */
-.club-orb-pro {
-    flex: 0 0 130px;
-    display: flex; flex-direction: column;
-    align-items: center;
-    transition: 0.4s;
-}
-
-.orb-wrapper {
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #111, #222);
-    border: 1px solid rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    transition: 0.5s;
-    position: relative;
-}
-
-.orb-wrapper::after {
-    content: '';
-    position: absolute;
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    transition: 0.5s;
-}
-
-.orb-wrapper img {
-    width: 60%; height: 60%;
-    object-fit: contain;
-}
-
-.club-orb-pro:hover .orb-wrapper {
-    transform: rotate(10deg) scale(1.1);
-    border-color: #e50914;
-    box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
-}
-
-.club-orb-pro:hover .orb-wrapper::after {
-    border-color: #e50914;
-    transform: scale(1.2);
-    opacity: 0;
-}
-
-.club-name-pro {
-    margin-top: 15px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #999;
-    letter-spacing: 1px;
-}
-
-.club-orb-pro:hover .club-name-pro {
-    color: #fff;
-    text-shadow: 0 0 10px #fff;
-}
-
-/* নেভিগেশন বাটন */
-.p-nav-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #fff;
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.p-nav-btn:hover { background: #e50914; box-shadow: 0 0 20px #e50914; }
-
-/* মোবাইলের জন্য রেসপন্সিভ */
-@media screen and (max-width: 768px) {
-    .league-card-pro { flex: 0 0 160px; height: 90px; }
-    .orb-wrapper { width: 80px; height: 80px; }
-}
-</style>
-
-<div class="premium-sport-hub">
+  
+</div>
+  
+  
+  <div class="tabcontent" id="server4"> 
     
-    <!-- লিগ সেকশন -->
-    <div class="p-header">
-        <div class="p-title">Live <span>Leagues</span></div>
-        <div class="p-nav">
-            <button class="p-nav-btn" onclick="pScroll('pL', -300)"><i class="fas fa-arrow-left"></i></button>
-            <button class="p-nav-btn" onclick="pScroll('pL', 300)"><i class="fas fa-arrow-right"></i></button>
-        </div>
-    </div>
-
-    <div class="p-slider" id="pL">
-        <!-- কার্ড ১: Champions League -->
-        <a href="/search/label/UCL" class="league-card-pro">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/UEFA_Champions_League_logo_2021.svg/1200px-UEFA_Champions_League_logo_2021.svg.png" alt="UCL" />
-        </a>
-        <!-- কার্ড ২: Premier League -->
-        <a href="/search/label/PremierLeague" class="league-card-pro">
-            <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="PL" />
-        </a>
-        <!-- কার্ড ৩: La Liga -->
-        <a href="/search/label/LaLiga" class="league-card-pro">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/1200px-LaLiga_logo_2023.svg.png" alt="La Liga" />
-        </a>
-        <!-- কার্ড ৪: IPL -->
-        <a href="/search/label/IPL" class="league-card-pro">
-            <img src="https://upload.wikimedia.org/wikipedia/en/8/84/Indian_Premier_League_Official_Logo.svg" alt="IPL" />
-        </a>
-        <!-- কার্ড ৫: Bundesliga -->
-        <a href="/search/label/Bundesliga" class="league-card-pro">
-            <img src="https://upload.wikimedia.org/wikipedia/en/d/df/Bundesliga_logo_%282017%29.svg" alt="Bundesliga" />
-        </a>
-    </div>
-
-    <!-- ক্লাব সেকশন -->
-    <div class="p-header" style="margin-top: 40px;">
-        <div class="p-title">Elite <span>Clubs</span></div>
-        <div class="p-nav">
-            <button class="p-nav-btn" onclick="pScroll('pC', -300)"><i class="fas fa-arrow-left"></i></button>
-            <button class="p-nav-btn" onclick="pScroll('pC', 300)"><i class="fas fa-arrow-right"></i></button>
-        </div>
-    </div>
-
-    <div class="p-slider" id="pC">
-        <!-- ক্লাব ১: Real Madrid -->
-        <a href="/search/label/RealMadrid" class="club-orb-pro">
-            <div class="orb-wrapper"><img src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" /></div>
-            <span class="club-name-pro">REAL MADRID</span>
-        </a>
-        <!-- ক্লাব ২: Man City -->
-        <a href="/search/label/ManCity" class="club-orb-pro">
-            <div class="orb-wrapper"><img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" /></div>
-            <span class="club-name-pro">MAN CITY</span>
-        </a>
-        <!-- ক্লাব ৩: Al Nassr -->
-        <a href="/search/label/AlNassr" class="club-orb-pro">
-            <div class="orb-wrapper"><img src="https://upload.wikimedia.org/wikipedia/en/c/c5/Al_Nassr_FC_Logo.svg" /></div>
-            <span class="club-name-pro">AL NASSR</span>
-        </a>
-        <!-- ক্লাব ৪: Barcelona -->
-        <a href="/search/label/Barcelona" class="club-orb-pro">
-            <div class="orb-wrapper"><img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" /></div>
-            <span class="club-name-pro">BARCELONA</span>
-        </a>
-        <!-- ক্লাব ৫: Inter Miami -->
-        <a href="/search/label/InterMiami" class="club-orb-pro">
-            <div class="orb-wrapper"><img src="https://upload.wikimedia.org/wikipedia/en/5/5c/Inter_Miami_CF_logo.svg" /></div>
-            <span class="club-name-pro">INTER MIAMI</span>
-        </a>
-    </div>
+    <!-- এই মেইন কন্টেইনারটি উপরের অংশটি হাইড করবে -->
+<div style="height: 600px; overflow: hidden; position: relative; width: 100%;">
+    
+    <iframe allowfullscreen="" id="frame" src="https://crex.com/" style="border: none; height: 650px; left: 0; position: absolute; top: -50px; width: 100%;">
+    </iframe>
 
 </div>
+    
+  </div>
+  
+<!-- SERVER 2 RESPONSIVE CONTENT START -->
+<div id="server2" class="tabcontent" style="display: block;">
+  
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-<script>
-function pScroll(id, val) {
-    document.getElementById(id).scrollBy({ left: val, behavior: 'smooth' });
+      :root {
+        --s2-bg: #020617; 
+        --s2-card-bg: #0f172a; 
+        --s2-card-hover: #1e293b;
+        --s2-accent: #3b82f6; 
+        --s2-timer-text: #38bdf8;
+        --s2-text: #f8fafc;
+        --s2-text-muted: #94a3b8;
+        --s2-border: rgba(255, 255, 255, 0.08);
+        --s2-live-color: #ef4444;
+      }
+      
+      .s2-main-container { background-color: var(--s2-bg); font-family: 'Inter', sans-serif; color: var(--s2-text); width: 100%; letter-spacing: -0.01em; }
+      .s2-flex-body { display: flex; flex-direction: row; gap: 0; max-width: 100%; margin: 0; }
+
+      /* PLAYER SECTION */
+      .s2-player-section { flex: 4.5; background: #000; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+
+      /* FULL SCREEN & ORIENTATION */
+      .s2-player-section:fullscreen { width: 100vw; height: 100vh; background: #000; padding: 0; }
+      .s2-player-section:fullscreen .s2-player-header { background: rgba(15, 23, 42, 0.95); padding: 20px 40px; display: flex; align-items: center; border-bottom: 2px solid var(--s2-accent); position: relative;}
+      
+      /* MATCH TITLE STYLE (PLAYER HEADER) */
+      #s2_current_match_title { 
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 18px;
+      }
+      .s2-title-team { color: #facc15; } 
+      .s2-title-vs { 
+        background: linear-gradient(180deg, #f97316 0%, #ea580c 100%); 
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+      .s2-player-section:fullscreen #s2_current_match_title { 
+        position: absolute; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        font-size: 26px; 
+      }
+
+      /* GLASSY MOBILE FULLSCREEN BUTTON */
+      .s2-mobile-fs-btn { 
+        display: none; 
+        position: absolute; 
+        top: 75px; 
+        right: 15px; 
+        z-index: 30; 
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        border-radius: 12px; 
+        padding: 10px; 
+        cursor: pointer; 
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); 
+        transition: 0.3s;
+      }
+      
+      @media (max-width: 992px) { 
+          .s2-mobile-fs-btn { display: block; } 
+          .s2-flex-body { flex-direction: column; } 
+          .s2-sidebar-section { min-width: 100%; border-left: none; max-height: none; } 
+          #s2_current_match_title { font-size: 14px; gap: 6px; }
+          .s2-title-vs { font-size: 10px; padding: 1px 5px; }
+      }
+
+      #s2_exit_btn { display: none; background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 11px; z-index: 100; }
+      .s2-player-section:fullscreen #s2_exit_btn { display: block; }
+      .s2-player-section:fullscreen .s2-theater-btn-main { display: none; }
+      .s2-player-section:fullscreen .s2-video-wrapper { flex-grow: 1; padding-bottom: 0; display: flex; align-items: center; justify-content: center; }
+      .s2-player-section:fullscreen iframe { width: 100% !important; height: 100% !important; }
+
+      .s2-theater-btn-main { display: none; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 1px solid var(--s2-border); color: #fff; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 700; margin-right: 15px; }
+      @media (min-width: 1024px) { .s2-theater-btn-main { display: flex; } }
+
+      .s2-player-header { background: var(--s2-card-bg); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--s2-border); }
+      .s2-video-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
+      .s2-video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; }
+      
+      .s2-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; cursor: pointer; text-align: center; }
+      .s2-ph-center-row { display: flex; align-items: center; gap: 40px; margin-bottom: 15px; }
+      .s2-ph-flag { width: 70px; height: 70px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,255,255,0.1)); display: none; }
+      .s2-play-btn-circle { width: 80px; height: 80px; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(59, 130, 246, 0.5); animation: s2-pulse 2s infinite; }
+      @keyframes s2-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+      .s2-play-btn-circle svg { fill: white; width: 35px; margin-left: 5px; }
+
+      .s2-server-row { padding: 15px; background: var(--s2-card-bg); display: flex; gap: 10px; flex-wrap: wrap; border-bottom: 1px solid var(--s2-border); }
+      .s2-srv-btn { padding: 9px 16px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--s2-border); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
+      .s2-srv-btn.active { background: var(--s2-accent); border-color: var(--s2-accent); }
+      .s2-tab-btn { background: rgba(59, 130, 246, 0.15); border-color: var(--s2-accent); }
+
+      .s2-streaming-note { background: #020617; padding: 12px 20px; font-size: 12px; color: var(--s2-text-muted); border-bottom: 1px solid var(--s2-border); line-height: 1.5; }
+
+      /* SIDEBAR */
+      .s2-sidebar-section { flex: 1.5; min-width: 360px; background: #070e1e; display: flex; flex-direction: column; max-height: 850px; border-left: 1px solid var(--s2-border); overflow: hidden; }
+      .s2-sidebar-fixed-header { flex-shrink: 0; z-index: 5; background: #070e1e; }
+      
+      .s2-list-title { 
+        padding: 18px; 
+        background: var(--s2-card-bg); 
+        border-bottom: 1px solid var(--s2-border);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 15px;
+      }
+      .s2-list-title-yellow { color: #facc15; }
+      .s2-list-title-orange-badge {
+        background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+      
+      .s2-filter-bar { display: flex; gap: 15px; padding: 15px; background: #0b1224; overflow-x: auto; border-bottom: 1px solid var(--s2-border); scrollbar-width: none; }
+      .s2-filter-item { display: flex; flex-direction: column; align-items: center; min-width: 65px; cursor: pointer; opacity: 0.6; }
+      .s2-filter-item.active { opacity: 1; }
+      .s2-filter-item img { width: 42px; height: 42px; object-fit: contain; background: #1e293b; padding: 8px; border-radius: 12px; margin-bottom: 8px; }
+      .s2-filter-item span { display: block !important; font-size: 11px; font-weight: 700; color: #cbd5e1; text-transform: uppercase; }
+
+      .s2-status-filter-row { display: flex; gap: 8px; padding: 10px 15px; background: #0b1224; border-bottom: 1px solid var(--s2-border); overflow-x: auto; scrollbar-width: none; }
+      .s2-st-btn { padding: 6px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--s2-border); color: #94a3b8; border-radius: 4px; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; white-space: nowrap; transition: 0.3s; }
+      .s2-st-btn.active { background: var(--s2-accent); color: #fff; border-color: var(--s2-accent); }
+
+      #s2_match_list_container { overflow-y: auto; padding: 12px 10px; flex-grow: 1; }
+      .s2-match-card { background: var(--s2-card-bg); border-radius: 12px; margin-bottom: 12px; cursor: pointer; border: 1px solid var(--s2-border); padding-bottom: 10px; overflow: hidden; transition: 0.3s;}
+      .s2-match-card.active { border-color: var(--s2-accent); background: linear-gradient(145deg, #1e293b, #0f172a); }
+      .s2-league-header { background: rgba(255, 255, 255, 0.03); color: #64748b; font-size: 9px; text-align: center; padding: 5px; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--s2-border); margin-bottom: 10px; }
+
+      .s2-match-main { display: grid; grid-template-columns: 85px 1fr 85px; align-items: center; padding: 0 5px; }
+      .s2-timer-val { color: var(--s2-timer-text); font-size: 12px; font-weight: 800; display: block; }
+      .s2-teams-box { display: flex; gap: 5px; justify-content: center; align-items: flex-start; }
+      .s2-team { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 68px; text-align: center; }
+      .s2-team img { width: 32px; height: 32px; object-fit: contain; margin-bottom: 6px; }
+      .s2-team-name { font-size: 10px; color: #fff; font-weight: 700; display: block; width: 100%; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .s2-vs-divider { color: #475569; font-weight: 900; font-size: 9px; margin-top: 10px; background: rgba(255,255,255,0.05); padding: 2px 4px; border-radius: 4px;}
+      .s2-kickoff-time { font-size: 12px; font-weight: 800; color: #fff; text-align: right; padding-right: 5px; }
+
+      .s2-live-status { display: inline-flex; align-items: center; gap: 5px; background: rgba(239, 68, 68, 0.1); padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444 !important; font-weight: 800; font-size: 9px; }
+      .s2-live-dot { width: 7px; height: 7px; background-color: #ef4444; border-radius: 50%; position: relative; }
+      .s2-live-dot::after { content: ''; width: 100%; height: 100%; background-color: #ef4444; border-radius: 50%; position: absolute; top: 0; left: 0; animation: s2-status-pulse 2s infinite; }
+      @keyframes s2-status-pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+      .s2-shimmer { background: linear-gradient(90deg, #ef4444 0%, #fca5a5 50%, #ef4444 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: s2-shimmer-text 2s linear infinite; }
+      
+      .s2-player-section:fullscreen {
+    cursor: pointer;
 }
-</script>]]></b:widget-setting>
-      </b:widget-settings>
-      <b:includable id='main'>
-  <!-- only display title if it's non-empty -->
-  <b:if cond='data:title != &quot;&quot;'>
-    <h2 class='title'><data:title/></h2>
-  </b:if>
-  <div class='widget-content'>
-    <data:content/>
-  </div>
+.s2-player-section:fullscreen .s2-server-row, 
+.s2-player-section:fullscreen .s2-player-header {
+    cursor: default; /* বাটন এরিয়াতে মাউস কার্সর স্বাভাবিক থাকবে */
+}
+      
+    </style>
 
-  <b:include name='quickedit'/>
-</b:includable>
-    </b:widget>
-    <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog' version='1'>
-      <b:widget-settings>
-        <b:widget-setting name='showDateHeader'>false</b:widget-setting>
-        <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
-        <b:widget-setting name='showShareButtons'>false</b:widget-setting>
-        <b:widget-setting name='authorLabel'>By</b:widget-setting>
-        <b:widget-setting name='showCommentLink'>false</b:widget-setting>
-        <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
-        <b:widget-setting name='showAuthor'>false</b:widget-setting>
-        <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
-        <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
-        <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
-        <b:widget-setting name='reactionsLabel'/>
-        <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
-        <b:widget-setting name='style.layout'>1x1</b:widget-setting>
-        <b:widget-setting name='showLabels'>false</b:widget-setting>
-        <b:widget-setting name='showLocation'>false</b:widget-setting>
-        <b:widget-setting name='showTimestamp'>false</b:widget-setting>
-        <b:widget-setting name='postsPerAd'>1</b:widget-setting>
-        <b:widget-setting name='showBacklinks'>false</b:widget-setting>
-        <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
-        <b:widget-setting name='showInlineAds'>false</b:widget-setting>
-        <b:widget-setting name='showReactions'>false</b:widget-setting>
-      </b:widget-settings>
-      <b:includable id='main' var='top'>
-  <b:if cond='!data:mobile'>
-    <!-- posts -->
-    <div class='blog-posts hfeed'>
+    <div class="s2-flex-body">
+      <div class="s2-player-section" id="s2_player_area">
+        <button class="s2-mobile-fs-btn" onclick="toggleS2Theater()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
 
-      <b:include data='top' name='status-message'/>
-
-      <b:loop values='data:posts' var='post'>
-        <b:if cond='data:post.isDateStart and not data:post.isFirstPost'>
-          &lt;/div&gt;&lt;/div&gt;
-        </b:if>
-        <b:if cond='data:post.isDateStart'>
-          &lt;div class=&quot;date-outer&quot;&gt;
-        </b:if>
-        <b:if cond='data:post.dateHeader'>
-          <h2 class='date-header'><span><data:post.dateHeader/></span></h2>
-        </b:if>
-        <b:if cond='data:post.isDateStart'>
-          &lt;div class=&quot;date-posts&quot;&gt;
-        </b:if>
-        <div class='post-outer'>
-          <b:include data='post' name='post'/>
-          <b:include cond='data:blog.pageType in {&quot;static_page&quot;,&quot;item&quot;}' data='post' name='comment_picker'/>
-        </div>
-
-        <!-- Ad -->
-        <b:if cond='data:post.includeAd'>
-          <div class='inline-ad'>
-            <data:adCode/>
+        <div class="s2-player-header">
+          <button id="s2_exit_btn" onclick="exitS2FullScreen()">EXIT THEATER</button>
+          <div id="s2_current_match_title">Select Match</div>
+          <div style="display: flex; align-items: center;">
+            <button class="s2-theater-btn-main" onclick="toggleS2Theater()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+              <span>Theater Mode</span>
+            </button>
+            <div class="s2-live-status"><span class="s2-live-dot"></span><span class="s2-shimmer">LIVE EVENT</span></div>
           </div>
-        </b:if>
-      </b:loop>
-      <b:if cond='data:numPosts != 0'>
-        &lt;/div&gt;&lt;/div&gt;
-      </b:if>
-    </div>
-
-    <!-- navigation -->
-    <b:include name='nextprev'/>
-
-    <!-- feed links -->
-    <b:include name='feedLinks'/>
-
-  <b:else/>
-    <b:include name='mobile-main'/>
-  </b:if>
-</b:includable>
-      <b:includable id='backlinkDeleteIcon' var='backlink'/>
-      <b:includable id='backlinks' var='post'/>
-      <b:includable id='comment-form' var='post'>
-  <div class='comment-form'>
-    <a name='comment-form'/>
-    <b:if cond='data:mobile'>
-      <h4 id='comment-post-message'>
-        <a expr:id='data:widget.instanceId + &quot;_comment-editor-toggle-link&quot;' href='javascript:void(0)'><data:postCommentMsg/></a></h4>
-      <p><data:blogCommentMessage/></p>
-      <data:blogTeamBlogMessage/>
-      <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
-      <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' style='display: none' width='100%'/>
-    <b:else/>
-      <h4 id='comment-post-message'><data:postCommentMsg/></h4>
-      <p><data:blogCommentMessage/></p>
-      <data:blogTeamBlogMessage/>
-      <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
-      <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
-    </b:if>
-    <data:post.cmtfpIframe/>
-    <script type='text/javascript'>
-      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
-    </script>
-  </div>
-</b:includable>
-      <b:includable id='commentDeleteIcon' var='comment'>
-  <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
-    <b:if cond='data:showCmtPopup'>
-      <div class='goog-toggle-button'>
-        <div class='goog-inline-block comment-action-icon'/>
-      </div>
-    <b:else/>
-      <a class='comment-delete' expr:href='data:comment.deleteUrl' expr:title='data:top.deleteCommentMsg'>
-        <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
-      </a>
-    </b:if>
-  </span>
-</b:includable>
-      <b:includable id='comment_count_picker' var='post'>
-  <a class='comment-link' expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'>
-    <data:post.commentLabelFull/>:
-  </a>
-</b:includable>
-      <b:includable id='comment_picker' var='post'>
-  <b:if cond='data:post.showThreadedComments'>
-    <b:include data='post' name='threaded_comments'/>
-  <b:else/>
-    <b:include data='post' name='comments'/>
-  </b:if>
-</b:includable>
-      <b:includable id='comments' var='post'>
-  <div class='comments' id='comments'>
-    <a name='comments'/>
-    <b:if cond='data:post.allowComments'>
-      <h4><data:post.commentLabelFull/>:</h4>
-
-      <b:if cond='data:post.commentPagingRequired'>
-        <span class='paging-control-container'>
-          <b:if cond='data:post.hasOlderLinks'>
-            <a expr:class='data:post.oldLinkClass' expr:href='data:post.oldestLinkUrl'><data:post.oldestLinkText/></a>
-              &#160;
-            <a expr:class='data:post.oldLinkClass' expr:href='data:post.olderLinkUrl'><data:post.olderLinkText/></a>
-              &#160;
-          </b:if>
-
-          <data:post.commentRangeText/>
-
-          <b:if cond='data:post.hasNewerLinks'>
-            &#160;
-            <a expr:class='data:post.newLinkClass' expr:href='data:post.newerLinkUrl'><data:post.newerLinkText/></a>
-            &#160;
-            <a expr:class='data:post.newLinkClass' expr:href='data:post.newestLinkUrl'><data:post.newestLinkText/></a>
-          </b:if>
-        </span>
-      </b:if>
-
-      <div expr:id='data:widget.instanceId + &quot;_comments-block-wrapper&quot;'>
-        <dl expr:class='data:post.avatarIndentClass' id='comments-block'>
-          <b:loop values='data:post.comments' var='comment'>
-            <dt expr:class='&quot;comment-author &quot; + data:comment.authorClass' expr:id='data:comment.anchorName'>
-              <b:if cond='data:comment.favicon'>
-                <img expr:src='data:comment.favicon' height='16px' style='margin-bottom:-2px;' width='16px'/>
-              </b:if>
-              <a expr:name='data:comment.anchorName'/>
-              <b:if cond='data:blog.enabledCommentProfileImages'>
-                <data:comment.authorAvatarImage/>
-              </b:if>
-              <b:if cond='data:comment.authorUrl'>
-                <a expr:href='data:comment.authorUrl' rel='nofollow'><data:comment.author/></a>
-              <b:else/>
-                <data:comment.author/>
-              </b:if>
-              <data:commentPostedByMsg/>
-            </dt>
-            <dd class='comment-body' expr:id='data:widget.instanceId + data:comment.cmtBodyIdPostfix'>
-              <b:if cond='data:comment.isDeleted'>
-                <span class='deleted-comment'><data:comment.body/></span>
-              <b:else/>
-                <p>
-                  <data:comment.body/>
-                </p>
-              </b:if>
-            </dd>
-            <dd class='comment-footer'>
-              <span class='comment-timestamp'>
-                <a expr:href='data:comment.url' title='comment permalink'>
-                  <data:comment.timestamp/>
-                </a>
-                <b:include data='comment' name='commentDeleteIcon'/>
-              </span>
-            </dd>
-          </b:loop>
-        </dl>
+        </div>
+        
+        <div class="s2-video-wrapper">
+          <div id="s2_video_placeholder" class="s2-placeholder" onclick="startS2Streaming()">
+            <div class="s2-ph-center-row">
+                <img id="s2_ph_flag1" src="" class="s2-ph-flag">
+                <div class="s2-play-btn-circle" id="s2_main_play_btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <img id="s2_ph_flag2" src="" class="s2-ph-flag">
+            </div>
+            <h3 id="s2_placeholder_teams" style="color:white; margin:0; font-size: 20px; font-weight: 800;">Ready to Watch?</h3>
+            <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px; align-items: center;">
+                <div id="s2_ph_kickoff_static" style="color: #94a3b8; font-size: 14px; font-weight: 600;"></div>
+                <div id="s2_ph_countdown" style="color: var(--s2-timer-text); font-weight: 800; font-size: 16px;">Choose an Event to start</div>
+            </div>
+          </div>
+          <iframe id="s2_iframe_player" 
+        sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" 
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
+        referrerpolicy="no-referrer" 
+        allowfullscreen 
+        src="about:blank">
+</iframe>
+        </div>
+        
+        <div class="s2-server-row" id="s2_servers_container"></div>
+        <div class="s2-streaming-note">
+          <span style="color: var(--s2-accent); font-weight: 800;">PRO TIP:</span> For best experience, use the <a href="https://brave.com/" target="_blank" style="color: #fff; text-decoration: underline; font-weight: 700;">Brave Browser</a>.
+        </div>
       </div>
 
-      <b:if cond='data:post.commentPagingRequired'>
-        <span class='paging-control-container'>
-          <a expr:class='data:post.oldLinkClass' expr:href='data:post.oldestLinkUrl'>
-            <data:post.oldestLinkText/>
-          </a>
-          <a expr:class='data:post.oldLinkClass' expr:href='data:post.olderLinkUrl'>
-            <data:post.olderLinkText/>
-          </a>
-          &#160;
-          <data:post.commentRangeText/>
-          &#160;
-          <a expr:class='data:post.newLinkClass' expr:href='data:post.newerLinkUrl'>
-            <data:post.newerLinkText/>
-          </a>
-          <a expr:class='data:post.newLinkClass' expr:href='data:post.newestLinkUrl'>
-            <data:post.newestLinkText/>
-          </a>
-        </span>
-      </b:if>
-
-      <p class='comment-footer'>
-        <b:if cond='data:post.embedCommentForm'>
-          <b:if cond='data:post.allowNewComments'>
-            <b:include data='post' name='comment-form'/>
-          <b:else/>
-            <data:post.noNewCommentsText/>
-          </b:if>
-        <b:elseif cond='data:post.allowComments'/>
-          <a expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'><data:postCommentMsg/></a>
-        </b:if>
-      </p>
-    </b:if>
-    <b:if cond='data:showCmtPopup'>
-      <div id='comment-popup'>
-        <iframe allowtransparency='true' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
-        </iframe>
-      </div>
-    </b:if>
-
-  </div>
-</b:includable>
-      <b:includable id='feedLinks'>
-  <b:if cond='data:blog.pageType != &quot;item&quot;'> <!-- Blog feed links -->
-    <b:if cond='data:feedLinks'>
-      <div class='blog-feeds'>
-        <b:include data='feedLinks' name='feedLinksBody'/>
-      </div>
-    </b:if>
-
-  <b:else/> <!--Post feed links -->
-    <div class='post-feeds'>
-      <b:loop values='data:posts' var='post'>
-        <b:include cond='data:post.allowComments and data:post.feedLinks' data='post.feedLinks' name='feedLinksBody'/>
-      </b:loop>
-    </div>
-  </b:if>
-</b:includable>
-      <b:includable id='feedLinksBody' var='links'>
-  <div class='feed-links'>
-  <data:feedLinksMsg/>
-  <b:loop values='data:links' var='f'>
-     <a class='feed-link' expr:href='data:f.url' expr:type='data:f.mimeType' target='_blank'><data:f.name/> (<data:f.feedType/>)</a>
-  </b:loop>
-  </div>
-</b:includable>
-      <b:includable id='iframe_comments' var='post'>
-  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
-</b:includable>
-      <b:includable id='mobile-index-post' var='post'>
-  <div class='mobile-date-outer date-outer'>
-    <b:if cond='data:post.dateHeader'>
-      <div class='date-header'>
-        <span><data:post.dateHeader/></span>
-      </div>
-    </b:if>
-
-    <div class='mobile-post-outer'>
-      <a expr:href='data:post.url'>
-        <h3 class='mobile-index-title entry-title' itemprop='name'>
-          <data:post.title/>
-        </h3>
-
-        <div class='mobile-index-arrow'>&amp;rsaquo;</div>
-
-        <div class='mobile-index-contents'>
-          <b:if cond='data:post.thumbnailUrl'>
-            <div class='mobile-index-thumbnail'>
-              <div class='Image'>
-                <img expr:src='data:post.thumbnailUrl'/>
+      <div class="s2-sidebar-section">
+        <div class="s2-sidebar-fixed-header">
+            <div class="s2-list-title">
+              <span class="s2-list-title-yellow">Upcoming</span>
+              <span class="s2-list-title-yellow">&</span>
+              <span class="s2-list-title-orange-badge">Live</span>
+            </div>
+            <div class="s2-filter-bar" id="s2_category_filter">
+              <div class="s2-filter-item active" onclick="filterS2Category('All', this)">
+                <img src="https://cdn-icons-png.flaticon.com/512/7542/7542602.png">
+                <span>All</span>
               </div>
             </div>
-          </b:if>
-
-          <div class='post-body'>
-            <b:if cond='data:post.snippet'><data:post.snippet/></b:if>
-          </div>
-        </div>
-
-        <div style='clear: both;'/>
-      </a>
-
-      <div class='mobile-index-comment'>
-        <b:include cond='data:blog.pageType != &quot;static_page&quot;                          and data:post.allowComments                          and data:post.numComments != 0' data='post' name='comment_count_picker'/>
-      </div>
-    </div>
-  </div>
-</b:includable>
-      <b:includable id='mobile-main' var='top'>
-    <!-- posts -->
-    <div class='blog-posts hfeed'>
-
-      <b:include data='top' name='status-message'/>
-
-      <b:if cond='data:blog.pageType == &quot;index&quot;'>
-        <b:loop values='data:posts' var='post'>
-          <b:include data='post' name='mobile-index-post'/>
-        </b:loop>
-      <b:else/>
-        <b:loop values='data:posts' var='post'>
-          <b:include data='post' name='mobile-post'/>
-        </b:loop>
-      </b:if>
-    </div>
-
-   <b:include name='mobile-nextprev'/>
-</b:includable>
-      <b:includable id='mobile-nextprev'>
-  <div class='blog-pager' id='blog-pager'>
-    <b:if cond='data:newerPageUrl'>
-      <div class='mobile-link-button' id='blog-pager-newer-link'>
-      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:newerPageTitle'>&amp;lsaquo;</a>
-      </div>
-    </b:if>
-
-    <b:if cond='data:olderPageUrl'>
-      <div class='mobile-link-button' id='blog-pager-older-link'>
-      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:olderPageTitle'>&amp;rsaquo;</a>
-      </div>
-    </b:if>
-
-    <div class='mobile-link-button' id='blog-pager-home-link'>
-    <a class='home-link' expr:href='data:blog.homepageUrl'><data:homeMsg/></a>
-    </div>
-
-    <div class='mobile-desktop-link'>
-      <a class='home-link' expr:href='data:desktopLinkUrl'><data:desktopLinkMsg/></a>
-    </div>
-
-  </div>
-  <div class='clear'/>
-</b:includable>
-      <b:includable id='mobile-post' var='post'>
-  <div class='date-outer'>
-    <b:if cond='data:post.dateHeader'>
-      <h2 class='date-header'><span><data:post.dateHeader/></span></h2>
-    </b:if>
-    <div class='date-posts'>
-      <div class='post-outer'>
-
-        <div class='post hentry uncustomized-post-template' itemscope='itemscope' itemtype='http://schema.org/BlogPosting'>
-          <b:if cond='data:post.thumbnailUrl'>
-            <meta expr:content='data:post.thumbnailUrl' itemprop='image_url'/>
-          </b:if>
-          <meta expr:content='data:blog.blogId' itemprop='blogId'/>
-          <meta expr:content='data:post.id' itemprop='postId'/>
-
-          <a expr:name='data:post.id'/>
-          <b:if cond='data:post.title'>
-            <h3 class='post-title entry-title' itemprop='name'>
-              <b:if cond='data:post.link'>
-                <a expr:href='data:post.link'><data:post.title/></a>
-              <b:elseif cond='data:post.url and data:blog.url != data:post.url'/>
-                <a expr:href='data:post.url'><data:post.title/></a>
-              <b:else/>
-                <data:post.title/>
-              </b:if>
-            </h3>
-          </b:if>
-
-          <div class='post-header'>
-            <div class='post-header-line-1'/>
-          </div>
-
-          <div class='post-body entry-content' expr:id='&quot;post-body-&quot; + data:post.id' itemprop='articleBody'>
-            <data:post.body/>
-            <div style='clear: both;'/> <!-- clear for photos floats -->
-          </div>
-
-          <div class='post-footer'>
-            <div class='post-footer-line post-footer-line-1'>
-              <span class='post-author vcard'>
-                <b:if cond='data:top.showAuthor'>
-                  <b:if cond='data:post.authorProfileUrl'>
-                    <span class='fn' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
-                      <meta expr:content='data:post.authorProfileUrl' itemprop='url'/>
-                      <a expr:href='data:post.authorProfileUrl' rel='author' title='author profile'>
-                        <span itemprop='name'><data:post.author/></span>
-                      </a>
-                    </span>
-                  <b:else/>
-                    <span class='fn' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
-                      <span itemprop='name'><data:post.author/></span>
-                    </span>
-                  </b:if>
-                </b:if>
-              </span>
-
-              <span class='post-timestamp'>
-                <b:if cond='data:top.showTimestamp'>
-                  <data:top.timestampLabel/>
-                  <b:if cond='data:post.url'>
-                    <meta expr:content='data:post.url.canonical' itemprop='url'/>
-                    <a class='timestamp-link' expr:href='data:post.url' rel='bookmark' title='permanent link'><abbr class='published' expr:title='data:post.timestampISO8601' itemprop='datePublished'><data:post.timestamp/></abbr></a>
-                  </b:if>
-                </b:if>
-              </span>
-
-              <span class='post-comment-link'>
-                <b:include cond='data:blog.pageType not in {&quot;item&quot;,&quot;static_page&quot;}                                  and data:post.allowComments' data='post' name='comment_count_picker'/>
-              </span>
+            <div class="s2-status-filter-row">
+                <button class="s2-st-btn active" id="s2_all_st_btn" onclick="filterS2Status('All', this)">ALL</button>
+                <button class="s2-st-btn" id="s2_live_btn" onclick="filterS2Status('Live', this)">LIVE (0)</button>
+                <button class="s2-st-btn" id="s2_upcoming_btn" onclick="filterS2Status('Upcoming', this)">UPCOMING (0)</button>
+                <button class="s2-st-btn" id="s2_ended_btn" onclick="filterS2Status('Ended', this)">ENDED (0)</button>
             </div>
-
-            <div class='post-footer-line post-footer-line-2'>
-              <b:if cond='data:top.showMobileShare'>
-                <div class='mobile-link-button goog-inline-block' id='mobile-share-button'>
-                  <a href='javascript:void(0);'><data:shareMsg/></a>
-                </div>
-              </b:if>
-            </div>
-
-          </div>
         </div>
-
-        <b:include cond='data:blog.pageType in {&quot;static_page&quot;,&quot;item&quot;}' data='post' name='comment_picker'/>
-      </div>
-    </div>
-  </div>
-</b:includable>
-      <b:includable id='nextprev'>
-  <div class='blog-pager' id='blog-pager'>
-    <b:if cond='data:newerPageUrl'>
-      <span id='blog-pager-newer-link'>
-      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:newerPageTitle'><data:newerPageTitle/></a>
-      </span>
-    </b:if>
-
-    <b:if cond='data:olderPageUrl'>
-      <span id='blog-pager-older-link'>
-      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:olderPageTitle'><data:olderPageTitle/></a>
-      </span>
-    </b:if>
-
-    <a class='home-link' expr:href='data:blog.homepageUrl'><data:homeMsg/></a>
-
-    <b:if cond='data:mobileLinkUrl'>
-      <div class='blog-mobile-link'>
-        <a expr:href='data:mobileLinkUrl'><data:mobileLinkMsg/></a>
-      </div>
-    </b:if>
-
-  </div>
-  <div class='clear'/>
-</b:includable>
-      <b:includable id='post' var='post'>
-  <div class='post hentry uncustomized-post-template' itemprop='blogPost' itemscope='itemscope' itemtype='http://schema.org/BlogPosting'>
-    <b:if cond='data:post.firstImageUrl'>
-      <meta expr:content='data:post.firstImageUrl' itemprop='image_url'/>
-    </b:if>
-    <meta expr:content='data:blog.blogId' itemprop='blogId'/>
-    <meta expr:content='data:post.id' itemprop='postId'/>
-
-    <a expr:name='data:post.id'/>
-    <b:if cond='data:post.title'>
-      <h3 class='post-title entry-title' itemprop='name'>
-      <b:if cond='data:post.link or (data:post.url and data:blog.url != data:post.url)'>
-        <a expr:href='data:post.link ? data:post.link : data:post.url'><data:post.title/></a>
-      <b:else/>
-        <data:post.title/>
-      </b:if>
-      </h3>
-    </b:if>
-
-    <div class='post-header'>
-    <div class='post-header-line-1'/>
-    </div>
-
-    <!-- Then use the post body as the schema.org description, for good G+/FB snippeting. -->
-    <div class='post-body entry-content' expr:id='&quot;post-body-&quot; + data:post.id' expr:itemprop='(data:blog.metaDescription ? &quot;&quot; : &quot;description &quot;) + &quot;articleBody&quot;'>
-      <data:post.body/>
-      <div style='clear: both;'/> <!-- clear for photos floats -->
-    </div>
-
-    <b:if cond='data:post.hasJumpLink'>
-      <div class='jump-link'>
-        <a expr:href='data:post.url + &quot;#more&quot;' expr:title='data:post.title'><data:post.jumpText/></a>
-      </div>
-    </b:if>
-
-    <div class='post-footer'>
-    <div class='post-footer-line post-footer-line-1'>
-      <span class='post-author vcard'>
-        <b:if cond='data:top.showAuthor'>
-          <data:top.authorLabel/>
-            <b:if cond='data:post.authorProfileUrl'>
-              <span class='fn' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
-                <meta expr:content='data:post.authorProfileUrl' itemprop='url'/>
-                <a class='g-profile' expr:href='data:post.authorProfileUrl' rel='author' title='author profile'>
-                  <span itemprop='name'><data:post.author/></span>
-                </a>
-              </span>
-            <b:else/>
-              <span class='fn' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
-                <span itemprop='name'><data:post.author/></span>
-              </span>
-            </b:if>
-        </b:if>
-      </span>
-
-      <span class='post-timestamp'>
-        <b:if cond='data:top.showTimestamp'>
-          <data:top.timestampLabel/>
-          <b:if cond='data:post.url'>
-            <meta expr:content='data:post.url.canonical' itemprop='url'/>
-            <a class='timestamp-link' expr:href='data:post.url' rel='bookmark' title='permanent link'><abbr class='published' expr:title='data:post.timestampISO8601' itemprop='datePublished'><data:post.timestamp/></abbr></a>
-          </b:if>
-        </b:if>
-      </span>
-
-      <span class='post-comment-link'>
-        <b:include cond='data:blog.pageType not in {&quot;item&quot;,&quot;static_page&quot;}                          and data:post.allowComments' data='post' name='comment_count_picker'/>
-      </span>
-
-      <span class='post-icons'>
-        <!-- email post links -->
-        <b:if cond='data:post.emailPostUrl'>
-          <span class='item-action'>
-          <a expr:href='data:post.emailPostUrl' expr:title='data:top.emailPostMsg'>
-            <img alt='' class='icon-action' height='13' src='https://resources.blogblog.com/img/icon18_email.gif' width='18'/>
-          </a>
-          </span>
-        </b:if>
-
-        <!-- quickedit pencil -->
-        <b:include data='post' name='postQuickEdit'/>
-      </span>
-
-      <!-- share buttons -->
-      <div class='post-share-buttons goog-inline-block'>
-        <b:include cond='data:post.sharePostUrl' data='post' name='shareButtons'/>
-      </div>
-
-      </div>
-
-      <div class='post-footer-line post-footer-line-2'>
-      <span class='post-labels'>
-        <b:if cond='data:top.showPostLabels and data:post.labels'>
-          <data:postLabelsLabel/>
-          <b:loop values='data:post.labels' var='label'>
-            <a expr:href='data:label.url' rel='tag'><data:label.name/></a><b:if cond='not data:label.isLast'>,</b:if>
-          </b:loop>
-        </b:if>
-      </span>
-      </div>
-
-      <div class='post-footer-line post-footer-line-3'>
-      <span class='post-location'>
-        <b:if cond='data:top.showLocation and data:post.location'>
-          <data:postLocationLabel/>
-          <a expr:href='data:post.location.mapsUrl' target='_blank'><data:post.location.name/></a>
-        </b:if>
-      </span>
-      </div>
-      <b:if cond='data:post.authorAboutMe'>
-        <div class='author-profile' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
-          <b:if cond='data:post.authorPhoto.url'>
-            <img expr:src='data:post.authorPhoto.url' itemprop='image' width='50px'/>
-          </b:if>
-          <div>
-            <a class='g-profile' expr:href='data:post.authorProfileUrl' itemprop='url' rel='author' title='author profile'>
-              <span itemprop='name'><data:post.author/></span>
-            </a>
-          </div>
-          <span itemprop='description'><data:post.authorAboutMe/></span>
-        </div>
-      </b:if>
-    </div>
-  </div>
-</b:includable>
-      <b:includable id='postQuickEdit' var='post'>
-  <b:if cond='data:post.editUrl'>
-    <span expr:class='&quot;item-control &quot; + data:post.adminClass'>
-      <a expr:href='data:post.editUrl' expr:title='data:top.editPostMsg'>
-        <img alt='' class='icon-action' height='18' src='https://resources.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
-      </a>
-    </span>
-  </b:if>
-</b:includable>
-      <b:includable id='shareButtons' var='post'>
-  <b:if cond='data:top.showEmailButton'><a class='goog-inline-block share-button sb-email' expr:href='data:post.sharePostUrl + &quot;&amp;target=email&quot;' expr:title='data:top.emailThisMsg' target='_blank'><span class='share-button-link-text'><data:top.emailThisMsg/></span></a></b:if><b:if cond='data:top.showBlogThisButton'><a class='goog-inline-block share-button sb-blog' expr:href='data:post.sharePostUrl + &quot;&amp;target=blog&quot;' expr:onclick='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=270,width=475\&quot;); return false;&quot;' expr:title='data:top.blogThisMsg' target='_blank'><span class='share-button-link-text'><data:top.blogThisMsg/></span></a></b:if><b:if cond='data:top.showTwitterButton'><a class='goog-inline-block share-button sb-twitter' expr:href='data:post.sharePostUrl + &quot;&amp;target=twitter&quot;' expr:title='data:top.shareToTwitterMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToTwitterMsg/></span></a></b:if><b:if cond='data:top.showFacebookButton'><a class='goog-inline-block share-button sb-facebook' expr:href='data:post.sharePostUrl + &quot;&amp;target=facebook&quot;' expr:onclick='&quot;window.open(this.href, \&quot;_blank\&quot;, \&quot;height=430,width=640\&quot;); return false;&quot;' expr:title='data:top.shareToFacebookMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToFacebookMsg/></span></a></b:if><b:if cond='data:top.showPinterestButton'><a class='goog-inline-block share-button sb-pinterest' expr:href='data:post.sharePostUrl + &quot;&amp;target=pinterest&quot;' expr:title='data:top.shareToPinterestMsg' target='_blank'><span class='share-button-link-text'><data:top.shareToPinterestMsg/></span></a></b:if>
-</b:includable>
-      <b:includable id='status-message'>
-  <b:if cond='data:navMessage'>
-  <div class='status-msg-wrap'>
-    <div class='status-msg-body'>
-      <data:navMessage/>
-    </div>
-    <div class='status-msg-border'>
-      <div class='status-msg-bg'>
-        <div class='status-msg-hidden'><data:navMessage/></div>
-      </div>
-    </div>
-  </div>
-  <div style='clear: both;'/>
-  </b:if>
-</b:includable>
-      <b:includable id='threaded-comment-form' var='post'>
-  <div class='comment-form'>
-    <a name='comment-form'/>
-    <b:if cond='data:mobile'>
-      <p><data:blogCommentMessage/></p>
-      <data:blogTeamBlogMessage/>
-      <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
-      <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' style='display: none' width='100%'/>
-    <b:else/>
-      <p><data:blogCommentMessage/></p>
-      <data:blogTeamBlogMessage/>
-      <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
-      <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
-    </b:if>
-    <data:post.cmtfpIframe/>
-    <script type='text/javascript'>
-      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
-    </script>
-  </div>
-</b:includable>
-      <b:includable id='threaded_comment_js' var='post'>
-  <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
-
-  <script type='text/javascript'>
-    (function() {
-      var items = <data:post.commentJso/>;
-      var msgs = <data:post.commentMsgs/>;
-      var config = <data:post.commentConfig/>;
-
-// <![CDATA[
-      var cursor = null;
-      if (items && items.length > 0) {
-        cursor = parseInt(items[items.length - 1].timestamp) + 1;
-      }
-
-      var bodyFromEntry = function(entry) {
-        var text = (entry &&
-                    ((entry.content && entry.content.$t) ||
-                     (entry.summary && entry.summary.$t))) ||
-            '';
-        if (entry && entry.gd$extendedProperty) {
-          for (var k in entry.gd$extendedProperty) {
-            if (entry.gd$extendedProperty[k].name == 'blogger.contentRemoved') {
-              return '<span class="deleted-comment">' + text + '</span>';
-            }
-          }
-        }
-        return text;
-      }
-
-      var parse = function(data) {
-        cursor = null;
-        var comments = [];
-        if (data && data.feed && data.feed.entry) {
-          for (var i = 0, entry; entry = data.feed.entry[i]; i++) {
-            var comment = {};
-            // comment ID, parsed out of the original id format
-            var id = /blog-(\d+).post-(\d+)/.exec(entry.id.$t);
-            comment.id = id ? id[2] : null;
-            comment.body = bodyFromEntry(entry);
-            comment.timestamp = Date.parse(entry.published.$t) + '';
-            if (entry.author && entry.author.constructor === Array) {
-              var auth = entry.author[0];
-              if (auth) {
-                comment.author = {
-                  name: (auth.name ? auth.name.$t : undefined),
-                  profileUrl: (auth.uri ? auth.uri.$t : undefined),
-                  avatarUrl: (auth.gd$image ? auth.gd$image.src : undefined)
-                };
-              }
-            }
-            if (entry.link) {
-              if (entry.link[2]) {
-                comment.link = comment.permalink = entry.link[2].href;
-              }
-              if (entry.link[3]) {
-                var pid = /.*comments\/default\/(\d+)\?.*/.exec(entry.link[3].href);
-                if (pid && pid[1]) {
-                  comment.parentId = pid[1];
-                }
-              }
-            }
-            comment.deleteclass = 'item-control blog-admin';
-            if (entry.gd$extendedProperty) {
-              for (var k in entry.gd$extendedProperty) {
-                if (entry.gd$extendedProperty[k].name == 'blogger.itemClass') {
-                  comment.deleteclass += ' ' + entry.gd$extendedProperty[k].value;
-                } else if (entry.gd$extendedProperty[k].name == 'blogger.displayTime') {
-                  comment.displayTime = entry.gd$extendedProperty[k].value;
-                }
-              }
-            }
-            comments.push(comment);
-          }
-        }
-        return comments;
-      };
-
-      var paginator = function(callback) {
-        if (hasMore()) {
-          var url = config.feed + '?alt=json&v=2&orderby=published&reverse=false&max-results=50';
-          if (cursor) {
-            url += '&published-min=' + new Date(cursor).toISOString();
-          }
-          window.bloggercomments = function(data) {
-            var parsed = parse(data);
-            cursor = parsed.length < 50 ? null
-                : parseInt(parsed[parsed.length - 1].timestamp) + 1
-            callback(parsed);
-            window.bloggercomments = null;
-          }
-          url += '&callback=bloggercomments';
-          var script = document.createElement('script');
-          script.type = 'text/javascript';
-          script.src = url;
-          document.getElementsByTagName('head')[0].appendChild(script);
-        }
-      };
-      var hasMore = function() {
-        return !!cursor;
-      };
-      var getMeta = function(key, comment) {
-        if ('iswriter' == key) {
-          var matches = !!comment.author
-              && comment.author.name == config.authorName
-              && comment.author.profileUrl == config.authorUrl;
-          return matches ? 'true' : '';
-        } else if ('deletelink' == key) {
-          return config.baseUri + '/comment/delete/'
-               + config.blogId + '/' + comment.id;
-        } else if ('deleteclass' == key) {
-          return comment.deleteclass;
-        }
-        return '';
-      };
-
-      var replybox = null;
-      var replyUrlParts = null;
-      var replyParent = undefined;
-
-      var onReply = function(commentId, domId) {
-        if (replybox == null) {
-          // lazily cache replybox, and adjust to suit this style:
-          replybox = document.getElementById('comment-editor');
-          if (replybox != null) {
-            replybox.height = '250px';
-            replybox.style.display = 'block';
-            replyUrlParts = replybox.src.split('#');
-          }
-        }
-        if (replybox && (commentId !== replyParent)) {
-          replybox.src = '';
-          document.getElementById(domId).insertBefore(replybox, null);
-          replybox.src = replyUrlParts[0]
-              + (commentId ? '&parentID=' + commentId : '')
-              + '#' + replyUrlParts[1];
-          replyParent = commentId;
-        }
-      };
-
-      var hash = (window.location.hash || '#').substring(1);
-      var startThread, targetComment;
-      if (/^comment-form_/.test(hash)) {
-        startThread = hash.substring('comment-form_'.length);
-      } else if (/^c[0-9]+$/.test(hash)) {
-        targetComment = hash.substring(1);
-      }
-
-      // Configure commenting API:
-      var configJso = {
-        'maxDepth': config.maxThreadDepth
-      };
-      var provider = {
-        'id': config.postId,
-        'data': items,
-        'loadNext': paginator,
-        'hasMore': hasMore,
-        'getMeta': getMeta,
-        'onReply': onReply,
-        'rendered': true,
-        'initComment': targetComment,
-        'initReplyThread': startThread,
-        'config': configJso,
-        'messages': msgs
-      };
-
-      var render = function() {
-        if (window.goog && window.goog.comments) {
-          var holder = document.getElementById('comment-holder');
-          window.goog.comments.render(holder, provider);
-        }
-      };
-
-      // render now, or queue to render when library loads:
-      if (window.goog && window.goog.comments) {
-        render();
-      } else {
-        window.goog = window.goog || {};
-        window.goog.comments = window.goog.comments || {};
-        window.goog.comments.loadQueue = window.goog.comments.loadQueue || [];
-        window.goog.comments.loadQueue.push(render);
-      }
-    })();
-// ]]>
-  </script>
-</b:includable>
-      <b:includable id='threaded_comments' var='post'>
-  <div class='comments' id='comments'>
-    <a name='comments'/>
-    <h4><data:post.commentLabelFull/>:</h4>
-
-    <div class='comments-content'>
-      <b:include cond='data:post.embedCommentForm' data='post' name='threaded_comment_js'/>
-      <div id='comment-holder'>
-         <data:post.commentHtml/>
+        <div id="s2_match_list_container"></div>
       </div>
     </div>
 
-    <p class='comment-footer'>
-      <b:if cond='data:post.allowNewComments'>
-        <b:include data='post' name='threaded-comment-form'/>
-      <b:else/>
-        <data:post.noNewCommentsText/>
-      </b:if>
-    </p>
-
-    <b:if cond='data:showCmtPopup'>
-      <div id='comment-popup'>
-        <iframe allowtransparency='true' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
-        </iframe>
-      </div>
-    </b:if>
-
-    <div id='backlinks-container'>
-    <div expr:id='data:widget.instanceId + &quot;_backlinks-container&quot;'>
-    </div>
-    </div>
-  </div>
-</b:includable>
-    </b:widget>
-  </b:section>
-
-  <footer class='site-footer'>
-    <div class='footer-container'>
-      <div class='notice-bar'>
-        <p>This is a sample notice. Important updates or announcements will be displayed here!</p>
-      </div>
-      <nav class='footer-menu'>
-        <a href='#'>About Us</a>
-        <a href='#'>Contact</a>
-        <a href='#'>Privacy Policy</a>
-        <a href='#'>Terms of Service</a>
-        <a href='#'>DMCA</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script type='text/javascript'>
-  //<![CDATA[
-    let is24HourFormat = false;
-
-    function updateDateDisplay() {
-      const now = new Date();
-      const options = { weekday: 'short', month: 'short', day: 'numeric' };
-      const dateString = now.toLocaleDateString(undefined, options);
-      const dateElement = document.getElementById('current-date');
-      if (dateElement) {
-        dateElement.textContent = dateString;
-      }
-    }
-
-    function updateClockDisplay() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      let timeString;
-      if (is24HourFormat) {
-        const hours24 = hours.toString().padStart(2, '0');
-        timeString = `${hours24}:${minutes}`;
-      } else {
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        const hours12 = hours.toString().padStart(2, '0');
-        timeString = `${hours12}:${minutes} ${ampm}`;
-      }
-      const clockElement = document.getElementById('digital-clock');
-      if (clockElement) clockElement.textContent = timeString;
-
-      if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
-        updateDateDisplay();
-      }
-    }
-
-    function toggleClockFormat() {
-      is24HourFormat = !is24HourFormat;
-      updateClockDisplay();
-      const toggleButton = document.getElementById('clock-format-toggle');
-      if (toggleButton) toggleButton.textContent = is24HourFormat ? "(12h)" : "(24h)";
-    }
-
-    function initializeClockAndToggle() {
-      const toggleButtonElement = document.getElementById('clock-format-toggle');
-      if (toggleButtonElement) {
-        toggleButtonElement.addEventListener('click', toggleClockFormat);
-        toggleButtonElement.textContent = is24HourFormat ? "(12h)" : "(24h)";
-      }
-      updateDateDisplay();
-      updateClockDisplay();
-      setInterval(updateClockDisplay, 1000);
-    }
-
-    function initializeNavLinkActivation() {
-      const navLinksContainer = document.querySelector('.nav-links-wrapper');
-      if (!navLinksContainer) return;
-
-      const navLinks = navLinksContainer.querySelectorAll('a');
-      const currentUrl = window.location.href;
-
-      const normalizeUrl = (urlString) => {
-          try {
-              const urlObj = new URL(urlString, window.location.origin);
-              return (urlObj.origin + urlObj.pathname.replace(/\/$/, '')).toLowerCase();
-          } catch (e) {
-              return (urlString.replace(/\/$/, '')).toLowerCase();
-          }
-      };
-
-      const normalizedCurrentUrl = normalizeUrl(currentUrl);
-
-      navLinks.forEach(link => {
-        link.classList.remove('nav-link-active');
-      });
-
-      let activeLinkFound = false;
-      navLinks.forEach(link => {
-        if (link.href && link.getAttribute('href') !== '#') {
-            const normalizedLinkHref = normalizeUrl(link.href);
-            if (normalizedLinkHref === normalizedCurrentUrl) {
-              link.classList.add('nav-link-active');
-              activeLinkFound = true;
-            }
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-          if (this.getAttribute('href') === '#') {
-            event.preventDefault();
-            navLinks.forEach(l => l.classList.remove('nav-link-active'));
-            this.classList.add('nav-link-active');
-          }
-        });
-      });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeClockAndToggle();
-            initializeNavLinkActivation();
-        });
-    } else {
-        initializeClockAndToggle();
-        initializeNavLinkActivation();
-    }
-  //]]>
-  </script>
-
-  <b:if cond='data:view.isHomepage'>
-    <script type='text/javascript'>
-    //<![CDATA[
-      document.addEventListener('DOMContentLoaded', function() {
-        const homeLink = document.getElementById('home-link');
-        if (homeLink) {
-          const allNavLinks = document.querySelectorAll('.nav-links-wrapper a');
-          allNavLinks.forEach(link => {
-            link.classList.remove('nav-link-active');
-          });
-          homeLink.classList.add('nav-link-active');
-        }
-      });
-    //]]>
-    </script> 
-  </b:if>
-  
-<script type='text/javascript'>
-  var ctrlUTries = 0;
-
-  document.addEventListener(&#39;keydown&#39;, function(e) {
-    var key = e.key.toLowerCase();
-
-    if (e.ctrlKey &amp;&amp; key === &#39;u&#39;) {
-      e.preventDefault();
-      e.stopPropagation();
-      ctrlUTries++;
-
-      if (ctrlUTries &gt;= 1) {
-        window.location.href = &quot;https://khelaview.blogspot.com/p/contact.html&quot;;
-      }
-      return false;
-    }
-
-    if (key === &quot;f12&quot; || (e.ctrlKey &amp;&amp; e.shiftKey &amp;&amp; key === &#39;i&#39;)) {
-      e.preventDefault();
-      e.stopPropagation();
-      window.location.href = &quot;https://khelaview.blogspot.com/&quot;;
-    }
-  });
-
-  document.addEventListener(&#39;contextmenu&#39;, function(e) {
-    e.preventDefault();
-  });
-
+<script>
   (function() {
-    var devtoolsOpen = false;
-    var threshold = 160;
+    let currentS2Url = ""; 
+    let activeCat = "All"; 
+    let activeStatus = "All";
+    let currentActiveMatchIdx = -1;
 
-    function detectDevTools() {
-      var widthThreshold = window.outerWidth - window.innerWidth &gt; threshold;
-      var heightThreshold = window.outerHeight - window.innerHeight &gt; threshold;
+    const liveMatches = [
+      { 
+        category: "Cricket",
+        categoryIcon: "https://www.svgrepo.com/show/405146/cricket-game.svg",
+        league: "Cricket | Series | 1st Test", team1: "AFG", 
+        logo1: "https://flagpedia.net/data/flags/w1160/af.webp?v=un", 
+        team2: "IND", logo2: "https://flagpedia.net/data/flags/w1160/in.webp", 
+        kickoffTime: "2026-06-08T10:00:00",
+        urls: ["https://khelaview.blogspot.com/p/willow-tv-iptv.html"],
+        tabButtons: [{ name: "STREAM 1 HD", link: "https://www.google.com" }] 
+      },
+      
+            { 
+        category: "Cricket",
+        categoryIcon: "https://www.svgrepo.com/show/405146/cricket-game.svg",
+        league: "Cricket | Series | 2nd ODI", team1: "BAN", 
+        logo1: "https://flagpedia.net/data/flags/w1160/bd.webp", 
+        team2: "AUS", logo2: "https://flagpedia.net/data/flags/w1160/au.webp", 
+        kickoffTime: "2026-06-11T11:00:00",
+        urls: ["https://khelaview.blogspot.com/p/t-sports_0963545693.html","https://khelaview.blogspot.com/p/click-to-play-video.html","https://khelaview.blogspot.com/p/ban-vs-aus.html"],
+        tabButtons: [{ name: "STREAM 1 HD", link: "https://www.google.com" }] 
+      },
+      
+      
+      { 
+        category: "Cricket",
+        categoryIcon: "https://www.svgrepo.com/show/405146/cricket-game.svg",
+        league: "Cricket | Series | 3rd ODI", team1: "Sri Lanka ", 
+        logo1: "https://flagpedia.net/data/flags/w1160/lk.webp", 
+        team2: "West Indies ", logo2: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMWB4nMBThrGxL_wQL7M24_i7w0QD_plK1aA&s", 
+        kickoffTime: "2026-06-09T01:00:00",
+        urls: ["https://khelaview.blogspot.com/p/willow-tv-iptv.html","https://khelaview.blogspot.com/p/click-to-play-video.html"],
+        tabButtons: [{ name: "STREAM 1 HD", link: "https://www.google.com" }] 
+      },
+      
+      
+      
 
-      if (widthThreshold || heightThreshold) {
-        if (!devtoolsOpen) {
-          devtoolsOpen = true;
-          window.location.href = &quot;https://khelaview.blogspot.com/p/contact.html&quot;;
+      
+      
+ 
+  {
+    "category": "Football",
+    "categoryIcon": "https://www.svgrepo.com/show/236509/football.svg",
+    "league": "International Friendly",
+    "team1": "Portugal",
+    "logo1": "https://flagcdn.com/w160/pt.png",
+    "team2": "Nigeria",
+    "logo2": "https://flagcdn.com/w160/ng.png",
+    "kickoffTime": "2026-06-11T01:45:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv1.php",
+      "https://ww2.sporttsonline.click/channels/bra/br1.php"
+    ],
+    "tabButtons": [
+      { "name": "STREAM 1 HD", "link": "https://ww2.sporttsonline.click/channels/hd/hd2.php" }
+
+    ]
+  },
+  {
+    "category": "Football",
+    "categoryIcon": "https://www.svgrepo.com/show/236509/football.svg",
+    "league": "International Friendly",
+    "team1": "England",
+    "logo1": "https://flagcdn.com/w160/gb-eng.png",
+    "team2": "Costa Rica",
+    "logo2": "https://flagcdn.com/w160/cr.png",
+    "kickoffTime": "2026-06-11T02:00:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv3.php",
+      "https://ww2.sporttsonline.click/channels/bra/br2.php"
+    ],
+    "tabButtons": [
+      { "name": "STREAM 1 HD", "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php" }
+ 
+    ]
+  },
+  {
+    "category": "Football",
+    "categoryIcon": "https://www.svgrepo.com/show/236509/football.svg",
+    "league": "International Friendly",
+    "team1": "Bolivia",
+    "logo1": "https://flagcdn.com/w160/bo.png",
+    "team2": "Algeria",
+    "logo2": "https://flagcdn.com/w160/dz.png",
+    "kickoffTime": "2026-06-11T02:00:00",
+    "urls": ["https://ww2.sporttsonline.click/channels/hd/hd5.php"],
+    "tabButtons": [{ "name": "STREAM 1 HD", "link": "https://ww2.sporttsonline.click/channels/hd/hd5.php" }]
+  },
+      
+      
+     
+  {
+    "category": "Football",
+    "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+    "league": "FIFA World Cup 2026™ | Group A",
+    "team1": "Mexico",
+    "logo1": "https://flagcdn.com/w160/mx.png",
+    "team2": "South Africa",
+    "logo2": "https://flagcdn.com/w160/za.png",
+    "kickoffTime": "2026-06-12T01:00:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv1.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv5.php",
+      "https://ww2.sporttsonline.click/channels/bra/br4.php",
+      "https://ww2.sporttsonline.click/channels/bra/br1.php"
+    ],
+    "tabButtons": [
+      {
+        "name": "STREAM HD 1",
+        "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+      }
+    ]
+  },
+  {
+    "category": "Football",
+    "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+    "league": "FIFA World Cup 2026™ | Group A",
+    "team1": "Korea Republic",
+    "logo1": "https://flagcdn.com/w160/kr.png",
+    "team2": "Czech Republic",
+    "logo2": "https://flagcdn.com/w160/cz.png",
+    "kickoffTime": "2026-06-12T08:00:00",
+    "urls": [
+      "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd5.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+      "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+      "https://ww2.sporttsonline.click/channels/pt/sporttv5.php",
+      "https://ww2.sporttsonline.click/channels/bra/br3.php"
+    ],
+    "tabButtons": [
+      {
+        "name": "STREAM HD 1",
+        "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+      }
+    ]
+  },
+      
+      
+      {
+  "category": "Football",
+  "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+  "league": "FIFA World Cup 2026™ | Group B",
+  "team1": "Canada",
+  "logo1": "https://flagcdn.com/w160/ca.png",
+  "team2": "Bosnia and Herzegovina",
+  "logo2": "https://flagcdn.com/w160/ba.png",
+  "kickoffTime": "2026-06-13T01:00:00",
+  "urls": [
+    "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd5.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+    "https://ww2.sporttsonline.click/channels/pt/sporttv1.php",
+    "https://ww2.sporttsonline.click/channels/bra/br2.php",
+    "https://ww2.sporttsonline.click/channels/bra/br3.php"
+  ],
+  "tabButtons": [
+    {
+      "name": "STREAM HD 1",
+      "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+    }
+  ]
+},
+      
+   {
+  "category": "Football",
+  "categoryIcon": "https://soccerbox.me/img/soccerstream.svg",
+  "league": "FIFA World Cup 2026™ | Group D",
+  "team1": "United States",
+  "logo1": "https://flagcdn.com/w160/us.png",
+  "team2": "Paraguay",
+  "logo2": "https://flagcdn.com/w160/py.png",
+  "kickoffTime": "2026-06-13T07:00:00",
+  "urls": [
+    "https://ww2.sporttsonline.click/channels/hd/hd1.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd2.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd5.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd3.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd4.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd6.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd7.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd8.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd9.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd10.php",
+    "https://ww2.sporttsonline.click/channels/hd/hd11.php",
+    "https://ww2.sporttsonline.click/channels/pt/sporttv5.php",
+    "https://ww2.sporttsonline.click/channels/bra/br1.php",
+    "https://ww2.sporttsonline.click/channels/bra/br4.php"
+  ],
+  "tabButtons": [
+    {
+      "name": "STREAM HD 1",
+      "link": "https://ww2.sporttsonline.click/channels/hd/hd1.php"
+    }
+  ]
+}
+
+
+     
+      
+      
+      
+      
+    ];
+
+// ফুলস্ক্রিন টগল করার মেইন ফাংশন
+    window.toggleS2Theater = async function() {
+      const elem = document.getElementById('s2_player_area');
+      
+      // যদি বর্তমানে ফুলস্ক্রিন না থাকে, তবে ফুলস্ক্রিন করো
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        try {
+          if (elem.requestFullscreen) {
+            await elem.requestFullscreen();
+          } else if (elem.webkitRequestFullscreen) {
+            await elem.webkitRequestFullscreen();
+          }
+          
+          // মোবাইল ল্যান্ডস্কেপ মোড (আড়াআড়ি)
+          if (screen.orientation && screen.orientation.lock) {
+            await screen.orientation.lock('landscape').catch(() => {});
+          }
+        } catch (err) {
+          console.log(err);
         }
       } else {
-        devtoolsOpen = false;
+        // যদি অলরেডি ফুলস্ক্রিন থাকে, তবে এক্সিট করো
+        exitS2FullScreen();
       }
-    }
+    };
 
-    setInterval(detectDevTools, 1000);
+    // ফুলস্ক্রিন থেকে বের হওয়ার ফাংশন
+    window.exitS2FullScreen = function() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      
+      if (screen.orientation && screen.orientation.unlock) {
+        screen.orientation.unlock();
+      }
+    };
 
-    setInterval(function() {
-      var start = new Date();
-      debugger;
-      var end = new Date();
-      if (end - start &gt; 100) {
-        if (!devtoolsOpen) {
-          devtoolsOpen = true;
-          window.location.href = &quot;https://khelaview.blogspot.com/p/contact.html&quot;;
+    // স্মার্ট ক্লিক লজিক: ভিডিও এরিয়াতে ক্লিক করলে ফুলস্ক্রিন টগল হবে
+    // কিন্তু বাটনগুলোতে ক্লিক করলে যেন ফুলস্ক্রিন বন্ধ না হয়
+    document.getElementById('s2_player_area').addEventListener('click', function(e) {
+      // যদি ক্লিকটি বাটন (Button), লিঙ্ক (A) বা সার্ভার লিস্টের ওপর না হয়
+      if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && !e.target.closest('.s2-server-row')) {
+        // শুধুমাত্র ফুলস্ক্রিন মুডে থাকা অবস্থায় এই ক্লিক কাজ করবে (স্মার্ট এক্সিট)
+        if (document.fullscreenElement || document.webkitFullscreenElement) {
+            toggleS2Theater();
         }
       }
-    }, 2000);
+    });
+    function getMatchDuration(category) { return category === "Cricket" ? 10 * 3600000 : 4 * 3600000; }
+
+    window.startS2Streaming = function() {
+      const p = document.getElementById('s2_iframe_player'); const ph = document.getElementById('s2_video_placeholder');
+      if(currentS2Url) { p.src = currentS2Url; p.style.display = "block"; ph.style.display = "none"; }
+    };
+
+    window.filterS2Category = function(cat, element) {
+      activeCat = cat; activeStatus = "All"; 
+      document.querySelectorAll('.s2-filter-item').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      renderMatchList();
+    };
+
+    window.filterS2Status = function(status, element) {
+      activeStatus = status; activeCat = "All"; 
+      document.querySelectorAll('.s2-st-btn').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+      renderMatchList();
+    };
+
+    function formatDate(d) {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      return `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+    }
+
+    function renderMatchList() {
+      const listDiv = document.getElementById('s2_match_list_container'); listDiv.innerHTML = '';
+      const now = new Date().getTime();
+
+      // COUNTING LOGIC (RESTORED)
+      let totalLive = 0, totalUpcoming = 0, totalEnded = 0;
+      liveMatches.forEach(m => {
+        const k = new Date(m.kickoffTime).getTime();
+        const dur = getMatchDuration(m.category);
+        if(now >= k && now <= (k + dur)) totalLive++;
+        else if (now < k) totalUpcoming++;
+        else if (now > (k + dur)) totalEnded++;
+      });
+      document.getElementById('s2_live_btn').innerText = `LIVE (${totalLive})`;
+      document.getElementById('s2_upcoming_btn').innerText = `UPCOMING (${totalUpcoming})`;
+      document.getElementById('s2_ended_btn').innerText = `ENDED (${totalEnded})`;
+
+      let filtered = liveMatches.filter(match => {
+        const k = new Date(match.kickoffTime).getTime();
+        const dur = getMatchDuration(match.category);
+        const isLive = now >= k && now <= (k + dur);
+        const isUpcoming = now < k;
+        const isEnded = now > (k + dur);
+        if (activeCat !== "All") return match.category === activeCat;
+        if (activeStatus !== "All") {
+          if (activeStatus === "Live") return isLive;
+          if (activeStatus === "Upcoming") return isUpcoming;
+          if (activeStatus === "Ended") return isEnded;
+        }
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        const aK = new Date(a.kickoffTime).getTime();
+        const bK = new Date(b.kickoffTime).getTime();
+        const aDur = getMatchDuration(a.category);
+        const bDur = getMatchDuration(b.category);
+        let pA = (now >= aK && now <= (aK + aDur)) ? 0 : (now < aK ? 1 : 2);
+        let pB = (now >= bK && now <= (bK + bDur)) ? 0 : (now < bK ? 1 : 2);
+        if (pA !== pB) return pA - pB;
+        return aK - bK; 
+      });
+
+      filtered.forEach(match => {
+        const idx = liveMatches.indexOf(match); const k = new Date(match.kickoffTime);
+        const hrs = k.getHours() % 12 || 12; const mins = k.getMinutes().toString().padStart(2, '0');
+        const card = document.createElement('div'); card.className = 's2-match-card' + (idx === currentActiveMatchIdx ? ' active' : '');
+        card.innerHTML = `<div class="s2-league-header">${match.league}</div>
+          <div class="s2-match-main">
+            <div class="s2-timer-box"><span class="s2-timer-val" id="s2-timer-${idx}">--</span><span style="font-size:9px; color:#facc15; font-weight:600;">${formatDate(k)}</span></div>
+            <div class="s2-teams-box">
+              <div class="s2-team"><img src="${match.logo1}"><span class="s2-team-name">${match.team1}</span></div>
+              <div class="s2-vs-divider">VS</div>
+              <div class="s2-team"><img src="${match.logo2}"><span class="s2-team-name">${match.team2}</span></div>
+            </div>
+            <div class="s2-kickoff-time">${hrs}:${mins} ${k.getHours() >= 12 ? 'PM' : 'AM'}</div>
+          </div>`;
+        card.onclick = () => playS2Match(match, card, false, idx);
+        listDiv.appendChild(card);
+      });
+      updateTimers();
+    }
+
+    function playS2Match(ch, element, isAuto = false, idx = 0) {
+      currentActiveMatchIdx = idx;
+      const k = new Date(ch.kickoffTime);
+      document.getElementById('s2_current_match_title').innerHTML = `<span class="s2-title-team">${ch.team1}</span><span class="s2-title-vs">VS</span><span class="s2-title-team">${ch.team2}</span>`;
+      const hrs = k.getHours() % 12 || 12; const mins = k.getMinutes().toString().padStart(2, '0');
+      document.getElementById('s2_ph_kickoff_static').innerText = `${formatDate(k)} | ${hrs}:${mins} ${k.getHours() >= 12 ? 'PM' : 'AM'}`;
+      document.getElementById('s2_ph_flag1').src = ch.logo1; document.getElementById('s2_ph_flag1').style.display = 'block';
+      document.getElementById('s2_ph_flag2').src = ch.logo2; document.getElementById('s2_ph_flag2').style.display = 'block';
+      document.querySelectorAll('.s2-match-card').forEach(el => el.classList.remove('active'));
+      if(element) element.classList.add('active');
+      const p = document.getElementById('s2_iframe_player'); const ph = document.getElementById('s2_video_placeholder');
+      p.src = "about:blank"; p.style.display = "none"; ph.style.display = "flex";
+      document.getElementById('s2_placeholder_teams').innerText = `${ch.team1} VS ${ch.team2}`;
+      currentS2Url = ch.urls[0];
+      const srvBox = document.getElementById('s2_servers_container'); srvBox.innerHTML = '';
+      ch.urls.forEach((url, i) => {
+        const btn = document.createElement('button'); btn.className = 's2-srv-btn' + (i === 0 ? ' active' : '');
+        btn.innerText = `SERVER ${i+1}`; btn.onclick = () => {
+          document.querySelectorAll('.s2-srv-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active'); currentS2Url = url; startS2Streaming();
+        }; srvBox.appendChild(btn);
+      });
+      if(ch.tabButtons) {
+        ch.tabButtons.forEach(tab => {
+          const btn = document.createElement('button'); btn.className = 's2-srv-btn s2-tab-btn';
+          btn.innerText = tab.name; btn.onclick = () => window.open(tab.link, '_blank');
+          srvBox.appendChild(btn);
+        });
+      }
+      if(!isAuto) document.getElementById('s2_player_area').scrollIntoView({ behavior: 'smooth' });
+    }
+
+function updateTimers() {
+      const now = new Date().getTime();
+      liveMatches.forEach((match, idx) => {
+        const k = new Date(match.kickoffTime).getTime(); 
+        const diff = k - now; 
+        const dur = getMatchDuration(match.category);
+        const el = document.getElementById(`s2-timer-${idx}`);
+        const phCountdown = document.getElementById('s2_ph_countdown');
+        
+        let displayStr = "";
+        
+        if(now > (k + dur)) {
+          // খেলা শেষ হয়ে গেলে
+          displayStr = "ENDED";
+          if(idx === currentActiveMatchIdx && phCountdown) {
+            phCountdown.innerText = "Match Ended";
+          }
+        }
+        else if(diff <= 0) {
+          // খেলা যখন লাইভ (Live Now)
+          displayStr = `<span class="s2-live-status"><span class="s2-live-dot"></span> LIVE NOW</span>`;
+          if(idx === currentActiveMatchIdx && phCountdown) {
+            phCountdown.innerText = "Match Started - Watch Now!";
+            phCountdown.style.color = "#ef4444"; // লাইভ হলে লাল রঙ দেখাবে
+          }
+        }
+        else {
+          // খেলা শুরু হতে দেরি থাকলে (Countdown)
+          const d = Math.floor(diff / 86400000); 
+          const h = Math.floor((diff % 86400000) / 3600000);
+          const m = Math.floor((diff % 3600000) / 60000); 
+          const s = Math.floor((diff % 60000) / 1000);
+          
+          displayStr = d > 0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m`;
+          
+          if(idx === currentActiveMatchIdx && phCountdown) {
+            phCountdown.innerText = `Starts in: ${d > 0 ? d+'d ' : ''}${h}h ${m}m ${s}s`;
+            phCountdown.style.color = "var(--s2-timer-text)"; // সাধারণ রঙ
+          }
+        }
+        
+        if(el) el.innerHTML = displayStr;
+      });
+    }
+    
+    // এটি যেকোনো ফুলস্ক্রিন ইভেন্ট ডিটেক্ট করবে (ভিডিওর ভেতর বা বাইরে)
+    document.addEventListener('fullscreenchange', handleS2Orientation);
+    document.addEventListener('webkitfullscreenchange', handleS2Orientation);
+
+    async function handleS2Orientation() {
+      // যদি পেজে কোনো কিছু ফুলস্ক্রিন অবস্থায় থাকে
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        try {
+          // মোবাইল ল্যান্ডস্কেপ মোড লক করার চেষ্টা
+          if (screen.orientation && screen.orientation.lock) {
+            await screen.orientation.lock('landscape').catch(function(error) {
+              console.log("Orientation lock ignore: ", error);
+            });
+          }
+        } catch (err) {
+          console.log("Orientation error: ", err);
+        }
+      } else {
+        // ফুলস্ক্রিন থেকে বের হয়ে গেলে রোটেশন আনলক করে দিবে
+        if (screen.orientation && screen.orientation.unlock) {
+          screen.orientation.unlock();
+        }
+      }
+    }
+    function initS2Filter() {
+      const fb = document.getElementById('s2_category_filter');
+      const cats = []; liveMatches.forEach(m => { if(!cats.find(c => c.name === m.category)) cats.push({name: m.category, icon: m.categoryIcon}); });
+      cats.forEach(cat => {
+        const item = document.createElement('div'); item.className = 's2-filter-item';
+        item.onclick = function() { filterS2Category(cat.name, this); };
+        item.innerHTML = `<img src="${cat.icon}"><span>${cat.name}</span>`;
+        fb.appendChild(item);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => { initS2Filter(); renderMatchList(); setInterval(updateTimers, 1000); });
   })();
 </script>
   
-  <script type='text/javascript'>
-// <![CDATA[
-(function() {
-  if (sessionStorage.getItem('popupShown')) {
-    // Popup already shown this session, do nothing
-    return;
-  }
+  
+  
+  
+  
+  
+</div>
+  
+  
+  <div class="tabcontent" id="server3">
+ 
+<!-- SERVER 3 RESPONSIVE CONTENT START -->
+<div class="s3-main-container">
+  
+  <style>
+    :root {
+      --s3-bg: #0A192F;
+      --s3-card-bg: #112240;
+      --s3-accent: #F97316; 
+      --s3-primary: #3B82F6; 
+      --s3-text: #CBD5E1;
+      --s3-border: #233554;
+    }
 
-  var style = document.createElement("style");
-  style.textContent = `
-    #glassBackdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(5px);
-      z-index: 9998;
-      animation: fadeIn 0.3s ease forwards;
+    .s3-main-container {
+      background-color: var(--s3-bg);
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      padding: 15px;
+      color: var(--s3-text);
     }
-    #glassPopup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      color: #fff;
-      font-family: Segoe UI, sans-serif;
-      z-index: 9999;
-      width: 85%;
-      max-width: 360px;
-      opacity: 0;
-      animation: fadeInPopup 0.4s ease forwards;
+
+    .s3-flex-body {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      max-width: 1500px;
+      margin: 0 auto;
     }
-    #glassPopup h2 {
-      margin-top: 0;
-      font-size: 24px;
-      color: #fff;
+
+    .s3-player-section {
+      flex: 4.5; 
+      background: var(--s3-card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 1px solid var(--s3-border);
     }
-    #glassPopup p {
-      font-size: 16px;
-      margin: 15px 0;
+
+    .s3-sidebar-section {
+      flex: 1.5;
+      min-width: 280px;
+      background: var(--s3-card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--s3-border);
+      display: flex;
+      flex-direction: column;
+      max-height: 800px; /* এখানে হাইট ফিক্সড করা হয়েছে যাতে স্ক্রল করা যায় */
     }
-    #glassPopup button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: #00bcd4;
+
+    .s3-video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; 
+      background: #000;
+    }
+    .s3-video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
       border: none;
-      border-radius: 25px;
+    }
+
+    .s3-player-header {
+      background: linear-gradient(90deg, #1E293B, #0F172A);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--s3-border);
+    }
+    .s3-ch-name-top {
+      font-size: 18px;
+      font-weight: 700;
       color: #fff;
-      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .s3-server-row {
+      padding: 15px;
+      background: #0F172A;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .s3-srv-btn {
+      padding: 8px 16px;
+      background: var(--s3-border);
+      color: #fff;
+      border: 1px solid transparent;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s;
+      font-size: 13px;
+      font-weight: 600;
+      transition: 0.3s;
     }
-    #glassPopup button:hover {
-      background: #0097a7;
+    .s3-srv-btn.active {
+      background: var(--s3-accent);
+      color: #000;
     }
-    @keyframes fadeIn {
-      to {opacity: 1;}
+
+    .s3-list-title {
+      padding: 15px;
+      background: #1E293B;
+      color: var(--s3-accent);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--s3-border);
     }
-    @keyframes fadeInPopup {
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+
+    /* চ্যানেল লিস্ট স্ক্রল করার জন্য নিচের CSS টুকু */
+    #s3_channels_list_container {
+      overflow-y: auto; /* ভার্টিক্যাল স্ক্রল */
+      padding: 10px;
+      flex-grow: 1;
+    }
+
+    .s3-chan-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 1px solid transparent;
+    }
+    .s3-chan-item:hover {
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateX(5px);
+    }
+    .s3-chan-item.active {
+      background: linear-gradient(90deg, rgba(249, 115, 22, 0.2), transparent);
+      border-left: 4px solid var(--s3-accent);
+    }
+    .s3-chan-icon {
+      width: 40px; height: 40px;
+      background: var(--s3-border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-right: 15px; font-size: 18px;
+    }
+    .s3-chan-name { display: block; font-weight: 600; font-size: 14px; color: #F8FAFC; }
+    .s3-chan-status { font-size: 11px; color: #94A3B8; }
+
+    .s3-live-tag {
+      background: #EF4444;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    #s3_channels_list_container::-webkit-scrollbar { width: 5px; }
+    #s3_channels_list_container::-webkit-scrollbar-thumb { background: var(--s3-accent); border-radius: 10px; }
+
+    @media (max-width: 992px) {
+      .s3-main-container { padding: 0 !important; }
+      .s3-flex-body { flex-direction: column; gap: 0 !important; }
+      .s3-player-section, .s3-sidebar-section { width: 100% !important; border-radius: 0 !important; }
+      .s3-sidebar-section { max-height: 500px; } /* মোবাইলে একটি নির্দিষ্ট হাইট */
+    }
+  </style>
+
+  <div class="s3-flex-body">
+    <!-- Player Section -->
+    <div class="s3-player-section" id="s3_player_top">
+      <div class="s3-player-header">
+        <div class="s3-ch-name-top">
+          <i class="fas fa-play-circle" style="color: var(--s3-accent);"></i>
+          <span id="s3_title_text">Select Channel</span>
+        </div>
+        <span class="s3-live-tag">LIVE</span>
+      </div>
+      
+      <div class="s3-video-wrapper">
+        <iframe allowfullscreen="" id="s3_iframe_player" src="about:blank"></iframe>
+      </div>
+      
+      <div class="s3-server-row" id="s3_servers_container"></div>
+    </div>
+
+    <!-- Sidebar Section -->
+    <div class="s3-sidebar-section">
+      <div class="s3-list-title"><i class="fas fa-list-ul"></i> Ad Free Channels</div>
+      <div id="s3_channels_list_container">
+        <!-- Channels load here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const myChannels = [
+       { name: 'LaLiga TV', urls: ['','https://khelaview.blogspot.com/p/laliga-tv.html','https://khelaview.blogspot.com/p/laliga-sportz.html','https://khelaview.blogspot.com/p/tsn-5.html'] },
+        { name: 'Fubo Sports Network', urls: ['https://khelaview.blogspot.com/p/fubo-sports.html','https://khelaview.blogspot.com/p/fubo-sport-secure-player.html'] },
+        { name: 'Premier Sports 1', urls: ['https://khelaview.blogspot.com/p/premiersports-1.html'] },
+        
+        { name: 'Premier Sports 2', urls: ['https://khelaview.blogspot.com/p/bokul-sports-player-javascript-bokul_8.html'] },
+        { name: 'Universo TV', urls: ['https://khelaview.blogspot.com/p/t-sports.html'] },
+        
+       { name: 'T Sports ', urls: ['https://khelaview.blogspot.com/p/t-sports_0963545693.html'] },
+
+         { name: 'Fox ', urls: ['https://khelaview.blogspot.com/p/margin-0-padding-0-box-sizing-border.html'] },
+        
+        { name: 'DAZN ENG', urls: ['https://khelaview.blogspot.com/p/dazn-eng.html'] },
+        { name: 'Nova Sports', urls: ['https://khelaview.blogspot.com/p/nova-sports.html','https://khelaview.blogspot.com/p/nova-sports_02101215100.html'] },
+        { name: 'Ziggo Sports Tv 1 ', urls: ['https://khelaview.blogspot.com/p/ziggo-sports.html'] },
+        { name: 'Ziggo Sports Tv 2 ', urls: ['https://khelaview.blogspot.com/p/oqn6c1ari98bzf9fjqo-id-1776373628642286.html'] },
+        
+        { name: 'USA TV', urls: ['https://khelaview.blogspot.com/p/usa-tv.html'] },
+        { name: 'SportDIGI', urls: ['https://khelaview.blogspot.com/p/sportdigi.html','https://khelaview.blogspot.com/p/bein-sports-3_01702251778.html'] },
+        { name: 'Sky Sport 2', urls: ['https://khelaview.blogspot.com/p/bokul-sports-live-body-html-background_01744004052.html'] },
+        { name: 'Sky Sport 8', urls: ['https://khelaview.blogspot.com/p/sky-sports-8.html'] },
+        
+        { name: 'TNT Sports 1', urls: ['https://khelaview.blogspot.com/p/tnt-sports-1.html','https://khelaview.blogspot.com/p/bokul-sports-player-javascript-bokul.html'] },
+        { name: 'TNT Sports 2', urls: ['https://khelaview.blogspot.com/p/tnt-sports-2.html','https://khelaview.blogspot.com/p/tnt-sports-2_01153482812.html'] },
+        { name: 'TNT Sports 3', urls: ['https://khelaview.blogspot.com/p/tnt-sports-3.html','https://khelaview.blogspot.com/p/tnt-sports-3_0320725789.html'] },
+        { name: 'TNT Sports 4', urls: ['https://khelaview.blogspot.com/p/tnt-sports-4.html'] },
+        { name: 'TSN 2', urls: ['https://khelaview.blogspot.com/p/tsn-2.html'] },
+        { name: 'Bein Sports 1 ENG', urls: ['https://khelaview.blogspot.com/p/willow-tv-2.html'] },
+        { name: 'Bein Sports 2 ENG', urls: ['https://khelaview.blogspot.com/p/bein-sports-2-eng.html'] },
+        { name: 'Bein Sports 3 ENG', urls: ['https://khelaview.blogspot.com/p/bein-sports-3.html','https://khelaview.blogspot.com/p/premium-media-player-body-html-margin-0.html'] },
+        { name: 'PTV Sports', urls: ['https://khelaview.blogspot.com/p/ptv-sports.html'] },
+        { name: 'Fan Code 1', urls: ['https://khelaview.blogspot.com/p/fan-code.html'] },
+        { name: 'Fan Code 2', urls: ['https://khelaview.blogspot.com/p/t-sports_9.html'] },
+        { name: 'Fan Code 3', urls: ['https://khelaview.blogspot.com/p/plyr-hls-player-full-screen-big-margin0.html'] },
+        { name: 'Fan Code 4', urls: ['https://khelaview.blogspot.com/p/bein-sports-3_01230618824.html'] },
+        { name: 'Fox Deportes', urls: ['https://khelaview.blogspot.com/p/fox-deportes.html'] },
+        { name: 'Willow TV', urls: ['https://tvsen5.aynaott.com/willowhd/index.m3u8?e=1779346505&u=78be6644-0a65-48ec-81a4-089ac65a2619&token=a095eb076c6d0c0bdcfca9c6550ebccb','https://tvsen5.aynaott.com/willowhd/index.m3u8?e=1779178079&u=617d0e90-2bc6-4dc5-8897-f5638f8fd01a&token=d71d71025ad8ed99266bb333137dc3e0','https://khelaview.blogspot.com/p/plyr-hls-player-margin-0-padding-0-box.html','https://khelaview.blogspot.com/p/sky-sport-2_10.html'] }
+      ];
+
+      function playS3Channel(ch, element) {
+        const player = document.getElementById('s3_iframe_player');
+        document.getElementById('s3_title_text').innerText = ch.name;
+        document.querySelectorAll('.s3-chan-item').forEach(el => el.classList.remove('active'));
+        if(element) element.classList.add('active');
+
+        const srvBox = document.getElementById('s3_servers_container');
+        srvBox.innerHTML = '';
+        
+        ch.urls.forEach((url, i) => {
+          const btn = document.createElement('button');
+          btn.className = 's3-srv-btn' + (i === 0 ? ' active' : '');
+          btn.innerHTML = `<i class="fas fa-server"></i> Server ${i+1}`;
+          btn.onclick = function() {
+            document.querySelectorAll('.s3-srv-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            player.src = url;
+          };
+          srvBox.appendChild(btn);
+          if(i === 0) {
+            player.src = url;
+          }
+        });
+
+        // চ্যানেলে ক্লিক করলে প্লেয়ারের কাছে নিয়ে যাবে
+        document.getElementById('s3_player_top').scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function initS3() {
+        const listDiv = document.getElementById('s3_channels_list_container');
+        if(!listDiv) return;
+        listDiv.innerHTML = '';
+        myChannels.forEach((ch, idx) => {
+          const div = document.createElement('div');
+          div.className = 's3-chan-item';
+          div.innerHTML = `
+            <div class="s3-chan-icon">📺</div>
+            <div class="s3-chan-info-text">
+              <span class="s3-chan-name">${ch.name}</span>
+              <span class="s3-chan-status">Online • 1080p</span>
+            </div>
+          `;
+          div.onclick = function() { playS3Channel(ch, div); };
+          listDiv.appendChild(div);
+          if(idx === 0) playS3Channel(ch, div);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', initS3);
+    })();
+  </script>
+</div>
+<!-- SERVER 3 RESPONSIVE CONTENT END -->
+   
+  </div>
+  
+  
+
+  <div class="tabcontent" id="laliga">
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8"></meta>
+  <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+  <title>Responsive Vertical Tabs with Search</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100%;
+      width: 100%;
+    }
+
+    #verticalTabsContainer {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      background-color: #1a1d26;
+      overflow: hidden;
+    }
+
+    #sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 240px;
+      background: #141821;
+      border-right: 1px solid #222a3a;
+    }
+
+    #titleBar {
+      height: 50px;
+      line-height: 50px;
+      padding: 0 20px;
+      color: #00e1ff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      border-bottom: 1px solid #222a3a;
+      background-color: #10141c;
+      user-select: none;
+    }
+
+    #tabSearchBar {
+      padding: 10px 20px;
+      background-color: #10141c;
+      border-bottom: 1px solid #222a3a;
+    }
+
+    #tabSearchBar input {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #1f2735;
+      color: #fff;
+    }
+
+    #verticalTabsMenu {
+      flex-grow: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #verticalTabsMenu button {
+      background: transparent;
+      border: none;
+      color: #a0a0a0;
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    #verticalTabsMenu button:hover {
+      background-color: rgba(0, 225, 255, 0.1);
+      color: #00e1ff;
+    }
+
+    #verticalTabsMenu button.active {
+      background-color: rgba(0, 225, 255, 0.2);
+      color: #fff;
+      border-left-color: #00e1ff;
+      box-shadow: 2px 0 8px #00e1ff;
+    }
+
+    #verticalTabsContent {
+      flex-grow: 1;
+      background: #232733;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabContent { /* This class is used by #laliga's internal tab system */
+      display: none;
+      flex-grow: 1;
+    }
+
+    #laliga .tabContent.active { /* Specificity for #laliga's internal active tab */
+      display: flex;
+    }
+
+    #laliga .tabContent iframe { /* Specificity for #laliga's internal iframes */
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* MOBILE STYLES */
+    @media (max-width: 768px) {
+      #laliga #verticalTabsContainer { /* Scoped to #laliga */
+        flex-direction: column;
+      }
+
+      #laliga #sidebar { /* Scoped to #laliga */
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #222a3a;
+      }
+
+      #laliga #tabSearchBar { /* Scoped to #laliga */
+        order: 0;
+        border-bottom: none;
+        padding: 10px;
+      }
+
+      #laliga #verticalTabsMenu { /* Scoped to #laliga */
+        order: 1;
+        flex-direction: row;
+        height: 50px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+      }
+
+      #laliga #verticalTabsMenu::-webkit-scrollbar { /* Scoped to #laliga */
+        display: none;
+      }
+
+      #laliga #verticalTabsMenu button { /* Scoped to #laliga */
+        flex: 0 0 auto;
+        padding: 12px 16px;
+        text-align: center;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+        white-space: nowrap;
+        font-weight: 700;
+      }
+
+      #laliga #verticalTabsMenu button.active { /* Scoped to #laliga */
+        border-bottom-color: #00e1ff;
+        background-color: rgba(0, 225, 255, 0.2);
+        color: white;
+        box-shadow: none;
+      }
+
+      #laliga #verticalTabsContent { /* Scoped to #laliga */
+        height: calc(100vh - 100px); /* Adjust if titleBar is also part of the 100px */
       }
     }
-  `;
-  document.head.appendChild(style);
-
-  var backdrop = document.createElement("div");
-  backdrop.id = "glassBackdrop";
-
-  var popup = document.createElement("div");
-  popup.id = "glassPopup";
-
-  // Check if user visited before
-  var visitedBefore = localStorage.getItem('visitedBefore');
-
-  if (!visitedBefore) {
-    // First time visitor popup
-    popup.innerHTML = "<h2>🚨 Important</h2><p>This website uses cookies and local storage for better performance.</p><button id='popupCloseBtn'>OK, Got It</button>";
-  } else {
-    // Returning visitor popup (new session)
-    popup.innerHTML = "<h2>👋 Welcome Back</h2><p>Thanks for visiting again! Enjoy your time here.</p><button id='popupCloseBtn'>Close</button>";
+  /* সব tabContent এর জন্য কমন ডিজাইন */
+  .tabContent {
+    width: 100%;
+    height: 600px; /* আপনার প্রয়োজন মতো হাইট দিন */
+    overflow: hidden; /* বাড়তি অংশ ঢেকে দেবে */
+    position: relative;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
   }
 
-  document.body.appendChild(backdrop);
-  document.body.appendChild(popup);
+  /* এই কোডটি সব iframe-কে ৪৫ পিক্সেল উপরে তুলে লোগো হাইড করবে */
+  .tabContent iframe {
+    position: absolute;
+    top: -45px; /* লোগোর হাইট অনুযায়ী এটি কম-বেশি করতে পারেন */
+    left: 0;
+    width: 100%;
+    height: 645px; /* (মূল হাইট + উপরে যতটুকু সরালেন) */
+    border: none;
+  }
 
-  document.getElementById("popupCloseBtn").addEventListener("click", function() {
-    popup.remove();
-    backdrop.remove();
+    
+  </style>
+</head>
+<body>
 
-    // Mark popup shown for this session
-    sessionStorage.setItem("popupShown", "true");
+<div id="verticalTabsContainer">
+  <aside id="sidebar">
+    <div id="titleBar">A-Z Details</div>
+    <div id="tabSearchBar">
+      <input id="tabSearchInput" placeholder="Search..." type="text" />
+    </div>
+    <nav id="verticalTabsMenu">
+      
+      
 
-    // If first time visitor, mark visitedBefore for localStorage
-    if (!visitedBefore) {
-      localStorage.setItem("visitedBefore", "true");
-    }
-  });
-})();
-// ]]>
+
+      <button class="active" data-tab="tab1_laliga">FIFA World Cup</button> <!-- data-tab made unique for laliga -->
+      <button data-tab="tab2_laliga">Premier League</button>
+      <button data-tab="tab3_laliga">La Liga</button>
+      <button data-tab="tab4_laliga">Serie A</button>
+      <button data-tab="tab5_laliga">Bundesliga</button>
+      <button data-tab="tab6_laliga">Ligue 1</button>
+      <button data-tab="tab7_laliga">UEFA Champions League</button>
+      <button data-tab="tab8_laliga">UEFA Europa League</button>
+      <button data-tab="tab9_laliga">UEFA Conference League</button>
+  
+
+      
+    </nav>
+  </aside>
+
+  <section id="verticalTabsContent">
+    <div class="tabContent active" id="tab1_laliga"> <!-- id made unique for laliga -->
+      <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/fifa-world-cup/?token=MTg1ODI2XzE3NzkwNTU0NTdfZWY2MDg5YmI0Mzg2OWMzYjUyYTgyMTQzNTExNGJiMGUxMzU0YmIzZQ==&amp;pref=%7B%22nomaxwidth%22%3Atrue%7D"></iframe>
+    </div>
+<div class="tabContent" id="tab2_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/england-premier-league/?token=demo"></iframe>
+</div>
+
+<div class="tabContent" id="tab3_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/spain-la-liga/?token=demo"></iframe>
+</div>
+
+<div class="tabContent" id="tab4_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/italy-serie-a/?token=demo"></iframe>
+</div>
+
+<div class="tabContent" id="tab5_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/germany-bundesliga/?token=demo"></iframe>
+</div>
+
+<div class="tabContent" id="tab6_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/competition/france-ligue-1/?token=demo"></iframe>
+</div>
+
+<div class="tabContent" id="tab7_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/uefa-champions-league/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg=="></iframe>
+</div>
+
+<div class="tabContent" id="tab8_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/uefa-europa-league/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg=="></iframe>
+</div>
+
+<div class="tabContent" id="tab9_laliga">
+  <iframe allowfullscreen="" src="https://www.scorebat.com/embed/league/uefa-conference-league/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg=="></iframe>
+</div>
+    
+   
+    
+    
+    
+  </section>
+</div>
+
+<script>
+  // Script for #laliga tab's internal tabbing system
+  const laligaContainer = document.getElementById('laliga'); // Get the parent container
+  if (laligaContainer) {
+      const tabs_laliga = laligaContainer.querySelectorAll('#verticalTabsMenu button');
+      const contents_laliga = laligaContainer.querySelectorAll('#verticalTabsContent > .tabContent'); // Direct children
+      const searchInput_laliga = laligaContainer.querySelector('#tabSearchInput');
+
+      function activateTab_laliga(tab) {
+        tabs_laliga.forEach(t => t.classList.remove('active'));
+        contents_laliga.forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        const targetId = tab.getAttribute('data-tab');
+        const targetContent = laligaContainer.querySelector(`#${targetId}`); // Query within laligaContainer
+        if (targetContent) {
+            targetContent.classList.add('active');
+            
+            const iframeInTarget = targetContent.querySelector('iframe');
+            if (iframeInTarget && iframeInTarget.dataset.originalSrc) { 
+                // This is generally handled by the main openTab's iframe logic when switching main tabs.
+                // If this internal tab was just hidden/shown without main tab change, this might be needed.
+                // However, the problem focuses on main tab switching.
+            }
+        }
+      }
+
+      tabs_laliga.forEach(tab => {
+        tab.addEventListener('click', () => activateTab_laliga(tab));
+      });
+
+      if (searchInput_laliga) {
+        searchInput_laliga.addEventListener('input', () => {
+          const query = searchInput_laliga.value.toLowerCase();
+          let firstMatch = null;
+
+          tabs_laliga.forEach(tab => {
+            const text = tab.textContent.toLowerCase();
+            const match = text.includes(query);
+            tab.style.display = match || query === "" ? "block" : "none";
+            if (match && !firstMatch) firstMatch = tab;
+          });
+
+          if (firstMatch) {
+            if (!firstMatch.classList.contains('active')) {
+                 activateTab_laliga(firstMatch);
+            }
+          } else if (query === "") {
+              const firstVisibleTab = Array.from(tabs_laliga).find(t => t.style.display !== "none");
+              if(firstVisibleTab && !firstVisibleTab.classList.contains('active')){
+                  activateTab_laliga(firstVisibleTab);
+              } else if (!firstVisibleTab && tabs_laliga.length > 0 && !tabs_laliga[0].classList.contains('active')) {
+                  activateTab_laliga(tabs_laliga[0]);
+              }
+          }
+        });
+      }
+      const defaultActiveButtonLaliga = laligaContainer.querySelector('#verticalTabsMenu button.active');
+      if (defaultActiveButtonLaliga) {
+          // Default already active, no explicit call needed here unless iframe needs reload logic specific to internal tabs.
+      } else if (tabs_laliga.length > 0) {
+          // activateTab_laliga(tabs_laliga[0]); // Activate first tab if none are marked active
+      }
+
+  }
 </script>
 
+</body>
+</html>
+  </div>
+
+  <div class="tabcontent" id="server1">
+   <!-- মেইন কন্টেইনার যা বাড়তি অংশগুলো ঢেকে রাখবে -->
+<div style="border: 1px solid #ddd; height: 600px; overflow: hidden; position: relative; width: 100%;">
+    
+    <iframe allowfullscreen="" id="frame" src="https://www.scorebat.com/embed/livescore/?token=MTg1ODI2XzE3MzE1MTIyODFfYzJhZmIyMDg5MGQ5YzJmNGEwMDE3YzQxMTcwMTRkM2Y1MjIyMDZkNg==" style="border: none; height: 650px; left: -45px; position: absolute; top: -48px; width: calc(100% + 45px);">
+    </iframe>
+
+</div>
+  </div>
   
   
+ 
+  
+
+  <script>
+    let previouslyActiveTabContent = null;
+
+    function randomlySelectChannelForTab(tabRootElement) {
+        if (!tabRootElement) {
+            // console.log("Tab root element not provided for random selection.");
+            return;
+        }
+
+        // Delay slightly to ensure any internal tab/channel setup has a chance to complete
+        // and a default channel might have been loaded by the tab's own script.
+        // Our random selection will then override this if applicable.
+        setTimeout(() => {
+            const activeChannelPanel = tabRootElement.querySelector('.channel-list .channel-panel.active');
+
+            if (activeChannelPanel) {
+                // Get all channel items within the active panel
+                const channelItems = activeChannelPanel.querySelectorAll('.channel-item');
+                
+                // Filter for items that are currently visible (not hidden by search, for example)
+                const visibleChannelItems = Array.from(channelItems).filter(item => {
+                    const computedStyle = window.getComputedStyle(item);
+                    return computedStyle.display !== 'none';
+                });
+
+                if (visibleChannelItems.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * visibleChannelItems.length);
+                    const randomChannelToSelect = visibleChannelItems[randomIndex];
+                    
+                    // console.log(`In tab ${tabRootElement.id}, randomly selecting channel: ${randomChannelToSelect.querySelector('.channel-name')?.textContent || 'Unknown Name'}`);
+                    
+                    // Simulate a click on the channel item to trigger its existing selection logic
+                    if (typeof randomChannelToSelect.click === 'function') {
+                        randomChannelToSelect.click();
+                    } else {
+                        // console.warn("Randomly selected channel item does not have a click method.", randomChannelToSelect);
+                    }
+                } else {
+                    // console.log(`No visible channels to select randomly in active panel of tab ${tabRootElement.id}.`);
+                }
+            } else {
+                // console.log(`No active channel panel found in tab ${tabRootElement.id} for random selection.`);
+            }
+        }, 100); // 100ms delay. This can be adjusted if necessary.
+    }
+
+
+    function openTab(evt, tabName) {
+        const currentTabContent = document.getElementById(tabName);
+        if (!currentTabContent) {
+            console.error("Target tab content not found:", tabName);
+            return;
+        }
+
+        // 1. Unload iframes in the previously active tab (if it's different from the current)
+        if (previouslyActiveTabContent && previouslyActiveTabContent !== currentTabContent) {
+            const iframesToUnload = previouslyActiveTabContent.querySelectorAll("iframe");
+            iframesToUnload.forEach(iframe => {
+                const currentIframeSrc = iframe.src;
+                if (currentIframeSrc && currentIframeSrc.toLowerCase() !== 'about:blank') {
+                    if (!iframe.dataset.originalSrc || iframe.dataset.originalSrc.toLowerCase() !== 'about:blank') {
+                         iframe.dataset.originalSrc = currentIframeSrc; 
+                    }
+                    iframe.src = 'about:blank'; 
+                } else if (!iframe.dataset.originalSrc && iframe.dataset.src) { 
+                     iframe.dataset.originalSrc = iframe.dataset.src;
+                }
+            });
+        }
+
+        // 2. Hide all tab contents and remove active class from tab links
+        document.querySelectorAll(".tabcontent").forEach(tc => {
+            if (tc !== currentTabContent) {
+                tc.style.display = "none";
+            }
+        });
+        document.querySelectorAll(".tablinks").forEach(tl => tl.classList.remove("active"));
+
+        // 3. Show the current tab and set active class on its link
+        currentTabContent.style.display = "block";
+        if (evt && evt.currentTarget) { 
+            evt.currentTarget.classList.add("active");
+        }
+
+        // 4. Randomly select a channel if the tab is a TV channel tab
+        const targetTabId = currentTabContent.id;
+        if (targetTabId === 'premier' || 
+            targetTabId === 'premier2' ||
+            targetTabId.startsWith('premier2_c')) { // Covers premier2_c1, premier2_c2, etc.
+            
+            randomlySelectChannelForTab(currentTabContent);
+        }
+
+        // 5. Load/Reload iframes in the current tab (main iframes like in 'laliga' or 'server1')
+        // The iframes within premier*, premier2* are handled by their respective selectChannel functions.
+        const iframesInCurrentTab = currentTabContent.querySelectorAll("iframe"); 
+        iframesInCurrentTab.forEach(iframe => {
+            // This logic primarily targets top-level iframes in tabs like 'laliga' or 'server1',
+            // or iframes inside info-sections of 'premier' tabs that are not the main player.
+            // The main player iframe (e.g. #streamFrame) in premier* tabs gets its src updated by selectChannel_...
+            // So, we need to be careful not to overwrite what selectChannel just did if random selection occurred.
+
+            // Only proceed if this iframe is NOT one of the main player iframes handled by selectChannel_...
+            if (iframe.id && (iframe.id.startsWith('streamFrame') || iframe.id.startsWith('streamFrame_2'))) {
+                 // This iframe's src is managed by selectChannel_... or changeStream_...
+                 // If it's blank and has an originalSrc, it means it was unloaded.
+                 // The random selection (if it happened) would have already set its src.
+                 // If random selection didn't happen (e.g., no channels),
+                 // and it was previously unloaded, we might want to restore its originalSrc.
+                 // However, for premier* tabs, a channel should be selected (default or random).
+                 // So, usually, we don't need to do much here for the main player iframe.
+                 // If it's still 'about:blank' after random selection attempt, it means no channel loaded.
+                 if (iframe.src.toLowerCase() === 'about:blank' && iframe.dataset.originalSrc && iframe.dataset.originalSrc.toLowerCase() !== 'about:blank') {
+                    // This case is tricky. If random selection failed to pick a channel,
+                    // and this iframe was previously active and then unloaded, should we restore it?
+                    // For now, let the selectChannel logic be the sole source of truth for these player iframes.
+                 }
+                 return; // Skip further processing for main player iframes here
+            }
+
+
+            let intendedSrc = iframe.dataset.originalSrc; 
+
+            if (!intendedSrc && iframe.dataset.src) { 
+                intendedSrc = iframe.dataset.src;
+                iframe.dataset.originalSrc = intendedSrc; 
+                iframe.removeAttribute("data-src"); 
+            }
+            
+            if (!intendedSrc && iframe.src && iframe.src.toLowerCase() !== 'about:blank') {
+                intendedSrc = iframe.src;
+                iframe.dataset.originalSrc = intendedSrc; 
+            }
+
+            if (intendedSrc && intendedSrc.toLowerCase() !== 'about:blank') {
+                if (iframe.src.toLowerCase() === 'about:blank' || iframe.src !== intendedSrc) {
+                    iframe.src = intendedSrc;
+                }
+            } else if (intendedSrc && intendedSrc.toLowerCase() === 'about:blank' && iframe.src.toLowerCase() !== 'about:blank') {
+                iframe.src = 'about:blank';
+            }
+        });
+        previouslyActiveTabContent = currentTabContent;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const defaultOpenButton = document.getElementById("defaultOpen");
+    if (defaultOpenButton) {
+        const simulatedEvent = { currentTarget: defaultOpenButton };
+        const tabNameToOpen = 'server2'; // এটি পরিবর্তন করে server2 করা হয়েছে
+        openTab(simulatedEvent, tabNameToOpen);
+    }
+});
+  </script>
+
 </body>
 </html>
